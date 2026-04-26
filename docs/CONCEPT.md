@@ -1,6 +1,6 @@
 # AnniFilter — Project Concept
 
-Status: v0.2 · 2026-04-26 · Phase 0 + Phase 1 shipped (engine end-to-end with 86 unit tests; both shipped filters round-trip with deep-equal AST). Phase 2 (UI) not yet started.
+Status: v0.3 · 2026-04-26 · Phases 0-2 shipped. Editor is end-to-end usable: open `.filter`, browse virtualized rule list with cascaded in-game preview, edit rules through typed controls, add/delete/reorder, save back. 110 unit tests, both shipped filters round-trip with deep-equal AST. **Phase 3 (preset library UI) is up next.** Open improvements catalogued in [`docs/next-up.md`](./next-up.md).
 Authoritative spec reference: [`docs/wiki/Item_Filter.md`](./wiki/Item_Filter.md) ∪ [`docs/wiki/extensions_observed.md`](./wiki/extensions_observed.md)
 
 ## What we're building
@@ -236,27 +236,34 @@ Nothing in this list blocks Phase 0 or Phase 1 — the bootstrap catalogs are en
 - `engine/data/spec.ts` — every wiki-enumerated value + bootstrap suggestion catalogs from shipped filters.
 - 86 unit tests including round-trip identity on both shipped filters (~248 blocks each).
 
-**Phase 2 — block editor UI ⏳ NEXT**:
-- Split AppShell placeholders into real `RuleList`, `RuleDetail`, `Simulator`, `TopBar`, `RawEditor` components.
-- Rule list (per `docs/ui/preview-1-rule-list.html`): indexed compact rows, in-game-style preview cell, indicator lane for sound/minimap, drag-reorder, search, kind-filter pills.
-- Rule detail editor (per `preview-2/3`): typed condition + action controls, palette grid for `SetTextColor`, RGB swatch for borders/bg, font/blend combo previews, template-string editor with placeholder pills, condition chips with grouped pickers.
-- Block-mutation surface added to `filterStore` (add/remove/reorder/toggle blocks; add/update/remove conditions and actions).
-- The four UX quick-wins from the agent review (boolean toggle chips, palette grid, minimap dot scaled by size, Ctrl+G jump-to-index).
-- Live preview panel: applies the matcher to a user-described item and renders the resulting nameplate.
+**Phase 2 — block editor UI ✅ DONE** (commits `6f827c3`, `d6b1d17`, `2319bcd`, `fce6e86`, `29047ad`, `fb7741a`, `f2bc489`):
+- AppShell split into TopBar / RuleList / RuleDetail / RawEditor with `store/selectors.ts`.
+- Block-mutation API on filterStore (add/remove/duplicate/move/toggle/updateKind/updateLabel + condition + action mutations) — every mutation regenerates rawText + reruns validator. 23 unit tests.
+- RuleList: virtualized via `@tanstack/react-virtual`; drag-reorder via `@dnd-kit`; search input + kind-filter pills; per-row 180px in-game preview cell + 24px sound/minimap indicator lane; selected-row affordance (amber edge bar + bg tint + amber-bold index); Ctrl+G jump-to-index overlay.
+- RuleDetail: header (kind pill group / editable label / Delete with inline two-step confirmation); condition rows with typed controls; action rows with palette grid for SetTextColor, native color picker for RGB, font/blend dropdowns, template input with placeholder-pill popover; SoundActionList for multi-PlayAlertSound; bottom preview area showing cascaded in-game appearance + rule-alone + chat message.
+- ItemPreview is shared: rendered per row (compact, ellipsized) AND in the rule detail; takes effective actions from `previewActionsForBlock(document, blockId)` — the cascaded matcher walks 0..targetIdx accumulating decorators.
+- Raw tab is read-only with a Copy button; Monaco deferred to Phase 6.
+- Simulator panel dropped (per-row + rule-detail previews are sufficient).
+- Sidebar collapse dropped (empty stripe served no purpose).
 
-**Phase 3 — preset library UI**:
-- Rules / Presets tabs in left panel; preset cards with usage count + swatch strip; preset picker in rule-detail header; per-action-row override indicators.
-- Migration tool: signature-hash-based detection of repeated style patterns in imported filters with extract-as-preset prompts.
-- Parser hooks that already-implemented preset metadata round-trip becomes load-bearing here.
+**Phase 3 — preset library UI ⏳ NEXT** (see `docs/next-up.md` §3):
+- The engine + AST already support presets; generator emits round-trip metadata. Two pieces missing:
+  - **3a · Parser hookup** for `# @preset-def` / `# @preset` / `# @preset-overrides` — currently parser drops them as comments.
+  - **3b · UI**: Rules/Presets tabs in left panel; preset cards with usage count + swatch strip + clone/rename/delete; preset picker in rule-detail header; per-action-row override indicators (preset / overridden / suppressed); detach-from-preset button.
+- **3c · Migration tool** (P2): signature-hash detection of repeated style patterns in imported filters with extract-as-preset prompts.
 
-**Phase 4 — quick visibility grid**:
+**Phase 4 — categorization in rule list** (user-requested; see `docs/next-up.md` §4):
+- Collapsible sections grouped by inferred category (Riftstones, Runes, etc.). The `categorizer.ts` already labels blocks; UI consumes it. Sections are visual only — global index unchanged.
+
+**Phase 5 — quick visibility grid + legacy import** (P3):
 - Category × rarity matrix as a coarse onboarding surface; edits write back to the rule list.
+- Drag-drop a Legacy filter, emit converted current-format filter + ambiguity report.
 
-**Phase 5 — legacy import**:
-- Drag-drop a Legacy filter, emit converted current-format filter + ambiguity report (`low`, `superior`, codes that don't map to ItemName).
-
-**Phase 6 — polish**:
-- Keyboard shortcuts, undo/redo visibility, sample-item library, exportable snippets, P2-deferred phase-3 power-user inputs (range slider, multi-value popover, RGB picker w/ recents, search filter chips, sound preview button).
+**Phase 6 — polish** (deferred items catalogued in `docs/next-up.md` §6):
+- Power-user inputs from agent review: dual-handle range slider, multi-value popover for ItemType/ItemName/HasAffix, RGB picker with hex + recents, search filter chips beyond kind-only, sound preview ▶ button, inline template preview per field, multi-select bulk-edit bar, drag-reorder of conditions/actions within a block.
+- Style-row visual treatment, resize handle for rule list, Monaco raw editor.
+- Keyboard shortcuts beyond Ctrl+G; sample-item gallery for previews.
+- Engine: extend `ItemDescription` with the missing condition fields (ImplicitTier / AffixTier / AffixCount / PrefixTier / SuffixTier / Stack / Runeword); refactor matcher to reuse `matchesBlock.ts`.
 
 ## Phase 0 — scaffold · detail
 
@@ -519,6 +526,18 @@ tests/fixtures/
 > **Actual exit-gate state at completion (2026-04-26):** all met except (1) shipped filters round-trip via the source samples directly, not copies in `tests/fixtures/shipped/` — `tests/fixtures/` was never created, and the test reads from `samples/` via cwd-relative path (vitest cwd = project root). (2) Categorizer coverage threshold relaxed from ≥95% to ≥70%: most "uncategorized" shipped blocks are intentional cross-cutting Style decorators on numeric conditions only (e.g. blanket `Tier == Elite` style), which the heuristic correctly cannot label without ItemType. (3) Coverage % not measured — we have 86 tests across 7 files covering all five engine modules + the spec data; chasing a numeric coverage target adds noise without value at this scale.
 
 ## Phase 2 — UI · detail
+
+> **Status: completed** (2026-04-26). Deviations from plan:
+> - **Simulator panel dropped** (commit `d6b1d17`): per-row preview + rule-detail bottom preview communicate everything the planned right-side panel would have. The matcher engine remains for future "test arbitrary item" features.
+> - **Sidebar collapse dropped** (commit `fb7741a`): the 32px collapsed stripe added no value vs the panel itself; resize-handle is a Phase 6 polish item if friction emerges.
+> - **Raw tab is read-only** (commit `f2bc489`): a Copy button replaces editing. Monaco deferred to Phase 6.
+> - **Per-row preview is cascaded** (commit `fb7741a`): renders effective actions from `previewActionsForBlock(document, blockId)` walking 0..targetIdx, not just the row's own actions. RuleDetail bottom shows BOTH cascaded and rule-alone for contrast.
+> - **Conditions are form rows, not chips** (commit `29047ad`): inline typed controls with operator selector + value editor + `×` remove. Chip-style with popover-edit was deferred — current form is denser per row but works fine. Polish later if it becomes friction.
+> - **MinimapDot is inline in IndicatorLane**, not a separate component.
+> - **TemplateInput** with `{…}` popover replaced the planned `TemplateEditor` (contenteditable approach).
+> - **`itemCatalog.ts` not split out** — bootstrap suggestion catalogs live in `engine/data/spec.ts`; split when autocomplete consumers actually need them.
+> - **`shortcuts.tsx` not created** — only Ctrl+G exists, lives in `JumpToIndexOverlay.tsx`. Move to a shared shortcuts file when adding more.
+> - Engine helpers added that weren't on the original plan: `synthesizeItem.ts`, `preview.ts`, `matchesBlock.ts` (extracted from matcher for reuse without circular import — `matcher.ts` still has its own copy of the condition matcher; merging is a low-priority follow-up).
 
 ### Goal
 Replace `AppShell.tsx`'s placeholder panels with real components driven by `filterStore`. Users can open a `.filter`, navigate the rule list, edit rule conditions and actions through typed controls, see the resulting nameplate previewed live, and save the modified filter. The four UX quick-wins from agent review folded in. Preset library UI is **out of scope** — that's Phase 3.
