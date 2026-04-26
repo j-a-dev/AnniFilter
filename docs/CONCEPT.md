@@ -191,6 +191,9 @@ The following resolutions are committed. Future sessions should not re-open thes
 | `{Color}` literal in the wiki placeholder docs | Ignore as wiki typo; real syntax is `{<ColorName>}`. | Every concrete example in wiki and shipped filters uses a named color (`{Red}`, `{Purple}`). |
 | Unterminated string literals | Terminate at end-of-line; emit warning but continue parsing. | Shipped filters contain unterminated strings and the game still loads them. |
 | `ItemName` match semantics (exact vs substring) | Treat as substring/fuzzy match [UNVERIFIED]. Editor shows the literal string the user typed; does not attempt to resolve to specific items. | Shipped filters use `ItemName` with both exact rune names (`"Eth"`) and affix-like tokens (`"of Everliving"`), suggesting substring matching. Formal semantics unconfirmed. |
+| Block-body AST representation | **Flat `conditions[]` / `actions[]` / `intraBlockComments[]` arrays.** Mid-block comment *position* relative to conditions/actions is NOT preserved on round-trip. | A `BlockEntry` union preserved position perfectly but forced every store mutation to reason in entry-array indices instead of typed condition/action arrays — too much complexity for a feature that real shipped filters use vanishingly rarely (section banners are between-block, not within). |
+| Block IDs at parse time | Parser emits deterministic `parsed-${index}` IDs. Store mutations that insert blocks generate `mut-${nanoid}`; mutations preserve IDs of moved/edited blocks. | Round-trip identity (`parse(generate(parse(T))).deep-equal(parse(T))`) holds without ID-stripping. IDs are session-scoped — they don't survive save/load round-trips, which is fine since UI binds to current IDs. |
+| Style preset library (display-action bundles) | **Adopted as first-class AST entity.** `FilterDocument.presets: StylePreset[]` is a parallel top-level array. `FilterBlock` gains `presetId?` + `presetOverrides?: Partial<Record<ActionKeyword, Action \| null>>` (`null` = suppress). Presets are applicable to all block kinds (Show / Hide / Style), not Style-only. Generator always emits effective actions inline; preset associations preserved via structured `# @preset-def` / `# @preset` / `# @preset-overrides` comments. | Real shipped filters demonstrate the repetition (Riftstone tier series, Uber key series, every rarity border). CSS-class abstraction lets users edit a preset once and update every linked rule. |
 
 ## Data catalogs — what we have, what we still need
 
@@ -321,29 +324,37 @@ Parser + generator + validator + matcher + categorizer for the union of `docs/wi
 
 export type FilterDocument = {
   blocks: FilterBlock[];
+  presets: StylePreset[];           // top-level user-editable display presets
   preamble: string[];               // comment lines before the first block
   trailingComments: string[];       // comment lines after the last block
 };
 
 export type FilterBlock = {
-  id: string;                       // stable, generated (nanoid or content-hash)
+  id: string;                       // parsed-${index} from parser; nanoid for store mutations
   kind: 'Show' | 'Hide' | 'Style';
   enabled: boolean;                 // false ⇒ generator emits each line prefixed with `# `
   label?: string;                   // trailing comment on header line: `Show #my label`
-  entries: BlockEntry[];            // ordered: conditions, actions, intra-block comments
+  conditions: Condition[];
+  actions: Action[];
+  intraBlockComments: string[];     // mid-block #comments collected in source order; position relative to conditions/actions NOT preserved
+  presetId?: string;                // when set, applies preset's actions before own (own act as overrides)
+  presetOverrides?: Partial<Record<ActionKeyword, Action | null>>;
+                                    // null = suppress preset's action for that keyword
 };
 
-export type BlockEntry =
-  | { kind: 'condition'; data: Condition }
-  | { kind: 'action'; data: Action }
-  | { kind: 'comment'; text: string };
+export type StylePreset = {
+  id: string;
+  name: string;
+  actions: Action[];                // canonical bundle, no conditions
+  createdAt: number;
+};
 
 export type Condition =
   | { keyword: 'Rarity'; op: ComparisonOp; value: string }                  // value: any string; validator checks against base-rarity OR runeword-rarity set based on adjacent ItemType
   | { keyword: 'Tier'; op: ComparisonOp; value: 'Normal' | 'Exceptional' | 'Elite' }
   | { keyword: NumericConditionKeyword; op: ComparisonOp; value: number }
   | { keyword: BooleanConditionKeyword; op: '==' | '!='; value: boolean }
-  | { keyword: 'ItemType' | 'ItemName' | 'HasAffix'; values: string[] }     // multi-arg, no operator
+  | { keyword: 'ItemType' | 'ItemName' | 'HasAffix'; values: string[] }     // multi-arg, no operator; only ItemType is enum-validated
   | { keyword: 'Unknown'; raw: string };                                     // passthrough
 
 export type NumericConditionKeyword =
@@ -355,6 +366,12 @@ export type NumericConditionKeyword =
 export type BooleanConditionKeyword =
   | 'Ethereal' | 'Identified' | 'Spectral' | 'Runeword' | 'Warped'
   | 'QuestItem';                                                             // extension
+
+export type ActionKeyword =
+  | 'SetBorderColor' | 'SetBackgroundColor' | 'SetTextColor'
+  | 'SetFont' | 'SetBlendMode' | 'SetItemName'
+  | 'AppendText' | 'PrependText' | 'ChatNotification'
+  | 'PlayAlertSound' | 'MinimapIcon';
 
 export type Action =
   | { keyword: 'SetBorderColor' | 'SetBackgroundColor'; r: number; g: number; b: number }
@@ -370,10 +387,10 @@ export type ComparisonOp = '==' | '!=' | '>' | '<' | '>=' | '<=';
 ```
 
 **Design notes:**
-- `BlockEntry` union preserves intra-block comment positions for round-trip. UI selectors derive `conditions: Condition[]` and `actions: Action[]` views; `entries` is the persisted source-of-truth.
-- `Unknown` variants carry the raw line so passthrough keeps unknown-but-valid features working when the mod adds new directives.
-- Block IDs are generated, not derived from source lines, so reordering/deleting blocks doesn't shift IDs.
-- No `rawSourceSpan` — round-trip is guaranteed via AST→generator, not by stashing source ranges.
+- **Flat `conditions[]` / `actions[]` / `intraBlockComments[]`** — chosen over a single `BlockEntry` union after agent review. The union preserved mid-block comment position perfectly but forced every store mutation to operate on entry-array indices instead of typed condition/action arrays. Real shipped filters use mid-block comments vanishingly rarely (section banners are between-block, captured in `preamble` / `trailingComments`); discarding intra-block comment position is acceptable.
+- **Block IDs are deterministic at parse time** — parser emits `parsed-${index}`. Re-parsing the same text produces identical IDs, so the round-trip property holds without ID-stripping. Store mutations that insert new blocks generate fresh nanoid IDs (`mut-${nanoid}`); IDs of moved/edited blocks are preserved by the mutation.
+- **`Unknown` variants** carry the raw line so passthrough keeps unknown-but-valid features working when the mod adds new directives.
+- **Presets are first-class.** The data model supports them on all three block kinds (Show/Hide/Style); the UI's preset picker doesn't filter by kind. Generator always emits effective actions inline (game engine knows nothing about presets). Round-trip preservation via structured comments — see the Generator contract below.
 
 ### Parser contract
 - **Permissive parse, strict validate.** Unknown opcodes/values become `Unknown` AST nodes; the validator surfaces them as warnings. Parser never errors on unknown keywords.
@@ -388,14 +405,26 @@ export type ComparisonOp = '==' | '!=' | '>' | '<' | '>=' | '<=';
 ### Generator contract
 - Deterministic: same AST → same bytes.
 - Stable formatting: tab indent, all enum values quoted, blank line between blocks, trailing newline.
-- **Round-trip property** (the core test): for any input text `T` that the parser accepts, `parse(generate(parse(T)))` deep-equals `parse(T)`. Whitespace inside blocks may differ; AST structure must not.
+- **Always inlines effective actions.** A block with `presetId` set emits the preset's actions merged with `presetOverrides` (override replaces; `null` override suppresses; rule's own actions for the same keyword take highest priority). The game engine sees no preset abstraction.
+- **Preset metadata via structured comments** (round-trip preservation):
+  - Preset definitions emit at the top of the file (in `preamble`), one per preset:
+    ```
+    # @preset-def riftstone-purple
+    #   SetBackgroundColor 25 25 25
+    #   SetBorderColor 200 0 200
+    #   SetFont Font16
+    # @preset-def-end
+    ```
+  - Each block linked to a preset gets `# @preset <name>` immediately before the block header. Per-keyword overrides emit `# @preset-overrides <keyword>` lines (one per overridden keyword). Hand-edits in a text editor that corrupt these comments cause the rule to detach silently — actions are still authoritative inline.
+- **Round-trip property** (the core test): for any input text `T` that the parser accepts, `parse(generate(parse(T)))` deep-equals `parse(T)`. Whitespace inside blocks may differ; AST structure must not. IDs match because parser emits deterministic `parsed-${index}`.
 
 ### Validator output
 ```typescript
 type ValidationIssue = {
   level: 'error' | 'warning' | 'info';
   blockId?: string;
-  entryIndex?: number;
+  conditionIndex?: number;          // index into block.conditions[] when issue is on a condition
+  actionIndex?: number;             // index into block.actions[] when issue is on an action
   code: string;       // 'unknown-keyword', 'unknown-itemtype', 'rgb-out-of-range', ...
   message: string;
 };

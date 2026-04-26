@@ -9,6 +9,7 @@ export function parse(_text: string): ParseResult {
   return {
     document: {
       blocks: [],
+      presets: [],
       preamble: [],
       trailingComments: [],
     },

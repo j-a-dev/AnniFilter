@@ -23,6 +23,7 @@ type FilterState = {
 
 const emptyDocument: FilterDocument = {
   blocks: [],
+  presets: [],
   preamble: [],
   trailingComments: [],
 }

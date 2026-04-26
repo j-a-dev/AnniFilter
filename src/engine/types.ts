@@ -37,6 +37,19 @@ export type Condition =
   | { keyword: StringListConditionKeyword; values: string[] }
   | { keyword: 'Unknown'; raw: string }
 
+export type ActionKeyword =
+  | 'SetBorderColor'
+  | 'SetBackgroundColor'
+  | 'SetTextColor'
+  | 'SetFont'
+  | 'SetBlendMode'
+  | 'SetItemName'
+  | 'AppendText'
+  | 'PrependText'
+  | 'ChatNotification'
+  | 'PlayAlertSound'
+  | 'MinimapIcon'
+
 export type Action =
   | {
       keyword: 'SetBorderColor' | 'SetBackgroundColor'
@@ -65,23 +78,41 @@ export type Action =
     }
   | { keyword: 'Unknown'; raw: string }
 
-export type BlockEntry =
-  | { kind: 'condition'; data: Condition }
-  | { kind: 'action'; data: Action }
-  | { kind: 'comment'; text: string }
-
 export type BlockKind = 'Show' | 'Hide' | 'Style'
 
 export type FilterBlock = {
+  /**
+   * Stable id. Parser emits `parsed-${index}`; store mutations use nanoid.
+   * Round-trip identity holds because deterministic parsed-{i} match across re-parses.
+   */
   id: string
   kind: BlockKind
   enabled: boolean
   label?: string
-  entries: BlockEntry[]
+  conditions: Condition[]
+  actions: Action[]
+  /** Mid-block `#comments` collected here in source order; position relative to conditions/actions is not preserved (acceptable: mid-block comments are vanishingly rare in real filters). */
+  intraBlockComments: string[]
+  /** When set, the block applies the named preset's actions before its own (own actions act as overrides for that keyword). */
+  presetId?: string
+  /**
+   * Per-action-keyword override map. `Action` value replaces the preset's
+   * action for that keyword; `null` suppresses the preset's action entirely.
+   * Keywords absent from this map use the preset's value.
+   */
+  presetOverrides?: Partial<Record<ActionKeyword, Action | null>>
+}
+
+export type StylePreset = {
+  id: string
+  name: string
+  actions: Action[]
+  createdAt: number
 }
 
 export type FilterDocument = {
   blocks: FilterBlock[]
+  presets: StylePreset[]
   preamble: string[]
   trailingComments: string[]
 }
@@ -89,7 +120,10 @@ export type FilterDocument = {
 export type ValidationIssue = {
   level: 'error' | 'warning' | 'info'
   blockId?: string
-  entryIndex?: number
+  /** Index into the block's conditions[] array, when the issue is on a condition. */
+  conditionIndex?: number
+  /** Index into the block's actions[] array, when the issue is on an action. */
+  actionIndex?: number
   code: string
   message: string
 }
