@@ -1,16 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
 import { parse } from '@/engine/parser'
 
-const REGULAR = resolve(
-  __dirname,
-  '../../../samples/lenzy\'s filter_regular.filter',
-)
-const STRICT = resolve(
-  __dirname,
-  '../../../samples/lenzy\'s filter_strict.filter',
-)
+// Vitest runs with cwd = project root, so paths are project-relative.
+const REGULAR = "samples/lenzy's filter_regular.filter"
+const STRICT = "samples/lenzy's filter_strict.filter"
 
 describe('parser: shipped filters smoke test', () => {
   it('parses lenzy\'s filter_regular.filter without throwing', () => {

@@ -179,15 +179,12 @@ function parseBlockBody(
       continue
     }
 
-    // Enabled block: blank line ends body only if next non-blank is a new block.
+    // Enabled block: any blank line ends the body. Real shipped filters never
+    // put blank lines inside a block, and treating blank-as-terminator avoids
+    // ambiguity over whether trailing comments belong to the last block or to
+    // the document's trailingComments[].
     if (trimmed.length === 0) {
-      // Look ahead: if the next non-blank is a block header, end here. Otherwise tolerate.
-      const next = peekNonBlank(lines, i + 1)
-      if (next == null || isBlockStart(next) || isDisabledBlockStart(next)) {
-        return skipBlanks(lines, i)
-      }
-      i++
-      continue
+      return skipBlanks(lines, i)
     }
 
     if (isBlockStart(line) || isDisabledBlockStart(line)) {
@@ -198,14 +195,6 @@ function parseBlockBody(
     i++
   }
   return i
-}
-
-function peekNonBlank(lines: string[], from: number): string | null {
-  for (let k = from; k < lines.length; k++) {
-    const l = lines[k] ?? ''
-    if (l.trim().length > 0) return l
-  }
-  return null
 }
 
 function skipBlanks(lines: string[], from: number): number {
