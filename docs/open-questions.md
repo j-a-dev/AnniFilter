@@ -4,7 +4,7 @@ Living document. Two sections:
 - **Language-level gaps** — questions about filter syntax/semantics that are unresolved from the current sources. Update when new evidence appears (new wiki pages, new shipped filters, user reports).
 - **Content catalogs** — data the language references whose contents change every mod patch. Update on every mod release.
 
-Last full review: 2026-04-24 (Annihilus beta patch 0.5.4-beta, 2025-12-25).
+Last full review: 2026-04-26 (Annihilus beta patch 0.5.4-beta, 2025-12-25). Engine work in Phase 1 made pragmatic assumptions for every gap below and shipped — the matcher's behavior on these is documented in code at `src/engine/matcher.ts`. Re-validate when in-game evidence arrives.
 
 ---
 
