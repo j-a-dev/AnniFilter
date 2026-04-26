@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AnniFilter — Rule list</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #0b0d10; color: #d7dadd; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; }
+  .mono { font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; }
+
+  @font-face {
+    font-family: "AvQest";
+    src: url("../../samples/AvQest.ttf") format("truetype");
+    font-display: block;
+  }
+
+  input[type=checkbox] { accent-color: #c8a94e; cursor: pointer; }
+
+  .k-show-chip  { color: #7fe08a; background: #1a3a22; border: 1px solid #2a5a38; }
+  .k-hide-chip  { color: #f09090; background: #3a1d1d; border: 1px solid #5a2a2a; }
+  .k-style-chip { color: #e0bc6a; background: #2e230d; border: 1px solid #4d3c18; }
+
+  /* Row kind via subtle left-edge strip only (no label) */
+  .edge-show  { box-shadow: inset 3px 0 0 #3a8a50; }
+  .edge-hide  { box-shadow: inset 3px 0 0 #8a3a3a; }
+  .edge-style { box-shadow: inset 3px 0 0 #8a7030; }
+
+  .row { border-bottom: 1px solid #151820; min-height: 54px; }
+  .row:hover { background: #12161a; }
+  .row.selected { background: #1a1f2b; }
+  .row.disabled { opacity: 0.42; }
+
+  .head { background: #0f1217; border-bottom: 1px solid #1d2128; }
+  .section-head { background: #12161a; color: #8b92a0; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding: 3px 10px; border-top: 1px solid #1d2128; border-bottom: 1px solid #1d2128; }
+
+  .kbd { background: #1a1d22; border: 1px solid #2a2d32; padding: 0 4px; border-radius: 2px; font-family: ui-monospace, monospace; font-size: 10px; color: #c0c3c7; }
+  .pill { display: inline-block; padding: 1px 6px; font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 3px; line-height: 1.4; }
+
+  /* ═══ Preview cell — never overlaid, always 200×44 ═══ */
+  .preview {
+    width: 200px;
+    height: 44px;
+    flex-shrink: 0;
+    /* Subtle gradient stands in for the in-game scene so the plate has
+       something to contrast against. Cell stays uniform across rules. */
+    background: radial-gradient(ellipse at center, #1a1c22 0%, #07080b 100%);
+    border: 1px solid #1d2128;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    overflow: hidden;
+  }
+  /* In-game item-label look: top+bottom 1px lines that fade at the edges
+     (in the border color), plus a background that fades to transparent on
+     the left and right. No rounded corners. SetBorderColor/SetBackgroundColor
+     overrides flow in as CSS custom properties via inline style. */
+  .pv-label {
+    --bg: 6, 6, 9;
+    --bg-a: 0.92;
+    --border: 255, 255, 255;
+    --border-a: 0.20;
+
+    position: relative;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 3px 18px;
+    font-family: "AvQest", serif;
+    letter-spacing: 0.02em;
+    font-size: 11.5px;
+    line-height: 1.3;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(var(--bg), var(--bg-a)) 4%,
+      rgba(var(--bg), var(--bg-a)) 96%,
+      transparent 100%);
+  }
+  .pv-label::before, .pv-label::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(var(--border), var(--border-a)) 4%,
+      rgba(var(--border), var(--border-a)) 96%,
+      transparent 100%);
+  }
+  .pv-label::before { top: 0; }
+  .pv-label::after  { bottom: 0; }
+  .preview.is-hide .pv-label {
+    color: #6b7280;
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: line-through;
+    text-decoration-color: #6b7280;
+  }
+
+  /* ═══ Indicator lane — fixed 24×44, right of preview, 2 stacked slots ═══ */
+  .ind-lane {
+    width: 24px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 2px;
+  }
+  .ind-slot {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ind-slot svg { width: 16px; height: 16px; color: #c8a94e; }
+  .ind-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.5); box-shadow: 0 0 0 1px #2a2d32; }
+</style>
+</head>
+<body>
+
+<div class="max-w-[560px] mx-auto p-3">
+  <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Preview 1 · Rule list</div>
+
+  <div class="border border-[#1d2128] rounded overflow-hidden bg-[#0d0f13]">
+
+    <div class="head px-3 py-1.5 flex items-center gap-2">
+      <div class="font-medium text-[12px] text-slate-200">lenzy's filter</div>
+      <div class="text-[10px] text-slate-500">226 rules</div>
+      <div class="flex-1"></div>
+      <input type="text" placeholder="search…" class="bg-[#0a0a0f] border border-[#2a2d32] rounded px-1.5 py-0.5 text-[11px] w-28 placeholder-slate-600 focus:outline-none focus:border-slate-600">
+      <span class="kbd">/</span>
+    </div>
+
+    <div class="head px-3 py-1 flex items-center gap-1 border-t border-[#1d2128]">
+      <button class="pill k-show-chip">Show 86</button>
+      <button class="pill k-hide-chip">Hide 17</button>
+      <button class="pill k-style-chip">Style 123</button>
+      <div class="flex-1"></div>
+      <button class="text-[10px] text-slate-500 hover:text-slate-300">+ rule</button>
+    </div>
+
+    <!-- ══ Riftstones ══ -->
+    <div class="section-head">▾ Riftstones</div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5" title="Active — uncheck to comment out">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">001</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-100 truncate leading-tight">Riftstone Tier 1</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Riftstone · RiftstoneTier = 1</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#c800c8; --bg:25,25,25; --bg-a:1; --border:200,0,200; --border-a:1;">[T1] Fractured Riftstone</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot" title="alert sound"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></div>
+        <div class="ind-slot" title="minimap icon"><span class="ind-dot" style="background:#c800c8"></span></div>
+      </div>
+    </div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">002</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Riftstone Tier 2</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Riftstone · RiftstoneTier = 2</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#c800c8; --bg:25,25,25; --bg-a:1; --border:200,0,200; --border-a:1;">[T2] Cosmic Riftstone</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <div class="row edge-style selected flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums w-7 text-right text-amber-300 font-bold">003</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-100 truncate leading-tight font-medium">Riftstone Tier 3</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Riftstone · RiftstoneTier = 3</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#c800c8; --bg:25,25,25; --bg-a:1; --border:200,0,200; --border-a:1;">[T3] Temporal Riftstone</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></div>
+        <div class="ind-slot"><span class="ind-dot" style="background:#c800c8"></span></div>
+      </div>
+    </div>
+
+    <!-- ══ General styles ══ -->
+    <div class="section-head">▾ General styles</div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">006</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Rare item border</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Rarity = Rare · AnyArmor/Weap/…</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#d7dadd; --border:255,255,0; --border-a:1;">Double Claw</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">009</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Ethereal tag</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Ethereal = True → "[ETH] "</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#d7dadd;">[ETH] Dusk Shroud</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <!-- ══ Runes ══ -->
+    <div class="section-head">▾ Runes</div>
+
+    <div class="row edge-show flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">088</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">High runes — alert + map</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">ItemType "High Runes"</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#ffa500; font-weight:600; font-size:13px;">Zod Rune</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></div>
+        <div class="ind-slot"><span class="ind-dot" style="background:#ffa500"></span></div>
+      </div>
+    </div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">089</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Mid runes (Gul–Pul)</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Runes · Gul/Ist/Mal/Um/Pul</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#ffffff; --bg:75,0,130; --bg-a:1; --border:255,255,255; --border-a:1;">Ist Rune</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <div class="row edge-hide disabled flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">091</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-400 truncate leading-tight italic">Low runes after maps</div>
+        <div class="text-[10px] text-slate-600 truncate leading-tight">Runes · El–Amn · AreaLevel &gt; 74</div>
+      </div>
+      <div class="preview is-hide">
+        <div class="pv-label">Tir Rune</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <!-- ══ Uniques ══ -->
+    <div class="section-head">▾ Uniques</div>
+
+    <div class="row edge-show flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">134</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Unique · Elite</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Rarity = Unique · Tier = Elite</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#ff8800; --bg:200,200,200; --bg-a:1; --border:255,122,77; --border-a:1; font-weight:700; font-size:11.5px;">[Elite] Shako</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></div>
+        <div class="ind-slot"><span class="ind-dot" style="background:#a59263"></span></div>
+      </div>
+    </div>
+
+    <!-- ══ Endgame cleanup ══ -->
+    <div class="section-head">▾ Endgame cleanup</div>
+
+    <div class="row edge-hide flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">210</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">White rings · late</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Rings · Normal · ImplicitTier = 1 · ilvl ≥ 74</div>
+      </div>
+      <div class="preview is-hide">
+        <div class="pv-label">Ring</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <!-- ══ Jewel affixes ══ -->
+    <div class="section-head">▾ Jewel affixes</div>
+
+    <div class="row edge-style flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">042</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Jewel: Maroon → T1 %fire</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Jewels · HasAffix "Maroon"</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#d7dadd;">Maroon Jewel <span style="color:#ff6b6b;">[T1 %fire]</span></div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"></div>
+        <div class="ind-slot"></div>
+      </div>
+    </div>
+
+    <div class="row edge-show flex items-center gap-3 pl-4 pr-3">
+      <input type="checkbox" checked class="w-3.5 h-3.5">
+      <div class="text-[10px] tabular-nums text-slate-500 w-7 text-right">054</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[12px] text-slate-200 truncate leading-tight">Jewel 2× T1 combo</div>
+        <div class="text-[10px] text-slate-500 truncate leading-tight">Jewels · AffixCount ≥ 2 · Prefix/Suffix = 1</div>
+      </div>
+      <div class="preview">
+        <div class="pv-label" style="color:#d7dadd; --border:200,0,200; --border-a:1;">Jewel</div>
+      </div>
+      <div class="ind-lane">
+        <div class="ind-slot"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></div>
+        <div class="ind-slot"><span class="ind-dot" style="background:#c800c8"></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-[10px] text-slate-500 mt-3 leading-relaxed">
+    Indicator lane sits right of the preview — never overlaps. Always 24×44 with two fixed 18×18 slots: top for sound, bottom for minimap. Sound is binary (speaker icon present = rule plays any alert sound; absent = none — the specific sound is set in the rule detail, not surfaced here). Minimap slot shows only a colored dot whose color matches the rule's minimap icon color. Rows with neither still render the empty lane so the column stays aligned.
+    <br><br>
+    A future refinement: hovering the speaker could play the sound and the minimap dot could show the icon's actual in-game shape once the engine-side dataset is available.
+  </div>
+</div>
+
+</body>
+</html>

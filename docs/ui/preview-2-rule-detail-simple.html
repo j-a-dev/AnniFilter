@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AnniFilter — Rule editor · simple</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #0b0d10; color: #d7dadd; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; }
+  .mono { font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; }
+
+  @font-face {
+    font-family: "AvQest";
+    src: url("../../samples/AvQest.ttf") format("truetype");
+    font-display: block;
+  }
+
+  input[type=checkbox] { accent-color: #c8a94e; width: 13px; height: 13px; }
+  input[type=text], input[type=number] { background: #0a0a0f; color: #d7dadd; border: 1px solid #2a2d32; border-radius: 3px; padding: 2px 7px; font-size: 11px; outline: none; }
+  input:focus { border-color: #c8a94e; }
+
+  .card { background: #0e1014; border: 1px solid #1d2128; border-radius: 6px; }
+  .section { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #7a8090; font-weight: 600; margin-bottom: 6px; padding-top: 10px; }
+  .section:first-child { padding-top: 0; }
+
+  .row { display: flex; align-items: center; gap: 8px; padding: 3px 0; min-height: 24px; }
+  .row.off { opacity: 0.38; }
+  .row.off > *:not(input[type=checkbox]):not(.lbl) { pointer-events: none; }
+
+  .lbl { font-size: 11px; color: #9aa2ad; width: 58px; flex-shrink: 0; }
+  .row.off .lbl { color: #60656e; }
+
+  /* Bare color swatch — click to open picker. No inline RGB. */
+  .swatch { width: 22px; height: 22px; border-radius: 3px; border: 1px solid #3a3f48; cursor: pointer; flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3); }
+  .swatch.empty { background: repeating-linear-gradient(45deg, #1a1d22 0, #1a1d22 3px, #0a0a0f 3px, #0a0a0f 6px); }
+
+  /* Dropdown replacement — shows preview + chevron */
+  .combo { background: #0a0a0f; border: 1px solid #2a2d32; border-radius: 3px; padding: 2px 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; min-width: 110px; }
+  .combo:hover { border-color: #3a3f48; }
+  .combo-chevron { color: #6b7280; font-size: 9px; margin-left: auto; }
+
+  /* Font preview uses rough CSS proxies (production will render real fonts) */
+  .fp-Font16 { font-family: "AvQest", serif; font-size: 12px; letter-spacing: 0.02em; }
+  .fp-Font24 { font-family: "AvQest", serif; font-size: 15px; letter-spacing: 0.02em; }
+  .fp-Font30 { font-family: "AvQest", serif; font-size: 17px; letter-spacing: 0.04em; }
+  .fp-Font42 { font-family: "AvQest", serif; font-size: 20px; letter-spacing: 0.05em; }
+  .fp-Exocet { font-family: "AvQest", serif; font-size: 13px; }
+
+  /* Blend preview — a small swatch showing the mode on a demo backdrop */
+  .blend { width: 22px; height: 16px; border: 1px solid #3a3f48; border-radius: 2px; position: relative; overflow: hidden; background: linear-gradient(45deg, #4a0080, #c800c8); flex-shrink: 0; }
+  .blend::after { content:""; position: absolute; inset: 0; background: #ffb0ff; }
+  .blend.Alpha25::after  { opacity: 0.25; }
+  .blend.Alpha50::after  { opacity: 0.50; }
+  .blend.Alpha75::after  { opacity: 0.75; }
+  .blend.Normal::after   { opacity: 1; }
+  .blend.Bright::after   { opacity: 0.9; mix-blend-mode: screen; }
+  .blend.Inverted::after { opacity: 1; mix-blend-mode: difference; }
+
+  /* Template input — inline content editable area with chips */
+  .tmpl { flex: 1; background: #0a0a0f; border: 1px solid #2a2d32; border-radius: 3px; padding: 3px 6px; min-height: 22px; font-family: ui-monospace, monospace; font-size: 10.5px; display: flex; align-items: center; flex-wrap: wrap; gap: 3px; cursor: text; color: #c8cdd4; }
+  .tmpl:hover { border-color: #3a3f48; }
+  .tag { background: #1a2030; border: 1px solid #2a3144; padding: 0 5px; border-radius: 3px; font-size: 10px; line-height: 15px; user-select: none; }
+  .tag-Purple { border-color:#8e3f8e; color:#ffb0ff; background:rgba(200,0,200,0.15); }
+  .tag-Red    { border-color:#7a3030; color:#ffb0b0; background:rgba(200,0,0,0.15); }
+  .tag-Gold   { border-color:#7a6025; color:#ffd880; background:rgba(200,150,0,0.15); }
+  .tag-Original { border-color:#33457a; color:#9fbaff; }
+  .tag-Break    { border-color:#3a4050; color:#7c8495; font-style: italic; }
+
+  .btn-add { background: transparent; border: 1px dashed #2a2d32; color: #6b7280; padding: 2px 8px; border-radius: 3px; font-size: 10.5px; cursor: pointer; }
+  .btn-add:hover { border-color: #3a4050; color: #9aa2ad; }
+
+  /* Condition chips */
+  .cond-chip { display: inline-flex; align-items: center; gap: 4px; background: #101827; border: 1px solid #1e2a44; border-radius: 4px; padding: 2px 6px 2px 8px; font-size: 11px; color: #b8c4df; cursor: pointer; }
+  .cond-chip:hover { border-color: #33457a; }
+  .cond-chip .k { color: #6b7e9a; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cond-chip .v { font-family: ui-monospace, monospace; font-size: 10.5px; }
+  .cond-chip .x { color: #5a6578; cursor: pointer; padding: 0 2px; }
+
+  .pill-group { display: inline-flex; background: #0a0a0f; border-radius: 3px; padding: 2px; gap: 2px; }
+  .pill-btn { background: transparent; border: 0; padding: 2px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280; cursor: pointer; border-radius: 2px; }
+  .pill-btn.active.show  { background: #2a5a38; color: #aaf5b9; }
+  .pill-btn.active.hide  { background: #5a2a2a; color: #f5aaaa; }
+  .pill-btn.active.style { background: #4d3c18; color: #e8c982; }
+
+  .preview-label { background:#000; padding:4px 10px; border-radius:2px; display:inline-block; line-height:1.25; border:1px solid transparent; }
+</style>
+</head>
+<body class="p-5">
+
+<div class="max-w-[780px] mx-auto">
+  <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Preview 2 · Rule editor · simple rule (Rare item border)</div>
+
+  <div class="card p-4">
+
+    <!-- Header -->
+    <div class="flex items-center gap-2 mb-3">
+      <div class="mono text-[11px] text-slate-500">#006</div>
+      <input type="checkbox" checked>
+      <div class="pill-group">
+        <button class="pill-btn">Hide</button>
+        <button class="pill-btn">Show</button>
+        <button class="pill-btn active style">Style</button>
+      </div>
+      <input type="text" value="Rare item border" class="flex-1 bg-transparent border-0 text-[13px] text-slate-100 font-medium px-2 py-0.5 focus:bg-[#12161a] rounded">
+      <div class="text-[10px] text-slate-400">layers</div>
+    </div>
+
+    <!-- Conditions as inline chips -->
+    <div class="flex flex-wrap items-center gap-2 mb-4">
+      <span class="section" style="padding:0; margin:0;">Matches</span>
+      <div class="cond-chip"><span class="k">Rarity</span><span class="v">== Rare</span><span class="x">×</span></div>
+      <div class="cond-chip"><span class="k">ItemType</span><span class="v">Any Weapon, Any Armor, Any Shield, Jewelry, Jewels, Potions</span><span class="x">×</span></div>
+      <button class="btn-add">+ condition</button>
+    </div>
+
+    <!-- Actions, two columns -->
+    <div class="grid grid-cols-2 gap-x-8">
+
+      <!-- Display -->
+      <div>
+        <div class="section">Display</div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Text</span>
+          <div class="swatch empty" title="click to pick palette color"></div>
+        </div>
+
+        <div class="row">
+          <input type="checkbox" checked>
+          <span class="lbl">Border</span>
+          <div class="swatch" style="background:#ffff00" title="255 255 0 — click to edit"></div>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">BG</span>
+          <div class="swatch empty"></div>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Font</span>
+          <button class="combo"><span class="fp-Font16">Aa Dusk Shroud</span><span class="combo-chevron">▾</span></button>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Blend</span>
+          <button class="combo"><span class="blend Normal"></span><span>Normal</span><span class="combo-chevron">▾</span></button>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <div class="section">Text</div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Prepend</span>
+          <div class="tmpl"><span class="text-slate-600 italic">empty</span></div>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Append</span>
+          <div class="tmpl"><span class="text-slate-600 italic">empty</span></div>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Name</span>
+          <div class="tmpl"><span class="text-slate-600 italic">empty</span></div>
+        </div>
+
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Chat</span>
+          <div class="tmpl"><span class="text-slate-600 italic">empty</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sound & Minimap strip -->
+    <div class="grid grid-cols-2 gap-x-8 mt-1">
+      <div>
+        <div class="section">Sound</div>
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Alert</span>
+          <button class="combo" style="min-width:180px;"><span class="mono">#11</span><span>higher pitched whir</span><span class="combo-chevron">▾</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="section">Minimap icon</div>
+        <div class="row off">
+          <input type="checkbox">
+          <span class="lbl">Icon</span>
+          <button class="combo"><span>Size 2</span><span class="combo-chevron">▾</span></button>
+          <div class="swatch empty"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="mt-4 pt-3 border-t border-[#1d2128] flex items-center gap-4">
+      <span class="section" style="padding:0; margin:0;">Preview</span>
+      <div class="preview-label" style="border-color:#ffff00;">
+        <span style="color:#d7dadd; font-size:12px;">Double Claw</span>
+      </div>
+      <span class="text-[10px] text-slate-500">Rare Quadarmor · stacks on top of Rarity border</span>
+    </div>
+  </div>
+
+  <div class="text-[10px] text-slate-500 mt-3 leading-relaxed max-w-[700px]">
+    <b>Compact simple-rule view.</b> Conditions are inline chips (click to edit, × to remove, <span class="mono">+ condition</span> to add via grouped picker). Action rows are always present for one-click enable; disabled rows collapse visually via opacity. Colors are a bare 22px swatch — click opens a popover with a hex picker + RGBA inputs (same as FilterEditor's <span class="mono">ColorSwatch.tsx</span>). Font dropdown shows a live rendering of the chosen font; Blend shows its actual effect on a sample backdrop. <b>"Minimap icon"</b> replaces the ambiguous "Map" label.
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1730 @@
+#===============================================================================================================
+# LeNzY's Annihilus Filter
+#===============================================================================================================
+# VERSION:  0.5.4-beta
+# PATCH:	December 25 2025
+# TYPE:     Regular
+# STYLE:	Default
+#
+#------------------------------------
+# LINKS TO HELP WITH FILTER EDITING
+#------------------------------------
+#
+# ANNIHILUS:					https://annihilus.net/
+# ANNIHILUS WIKI:				https://annihilus.net/wiki/index.php/Main_Page
+# ANNIHILUS FILTER WIKI: 		https://annihilus.net/wiki/index.php/Item_Filter
+#
+#------------------------------------
+# INSTALLATION / UPDATE :
+#------------------------------------
+#
+# 1a) INGAME: Enter a game in Annihilus SotR, ESC -> Options -> Gameplay -> Show Folder (under the "Item Filter" section)
+# 1b) Localize your Annihilus folder on your PC example: C:\Program Files (x86)\Annihilus\Apps\AnnihilusBeta\filters
+# 2)  Paste this file into the folder
+# 
+#
+#------------------------------------
+# CONTACT - if you need to get in touch with me:
+#------------------------------------
+#
+#
+# TWITCH:  https://www.twitch.tv/lenzyfly
+# YOUTUBE: https://www.youtube.com/LeNzYFly
+# DISCORD: lenzy
+#
+#
+#===============================================================================================================
+# Filtration Options
+#===============================================================================================================
+#
+# PlayAlertSound
+# 0 = very soft click / 1 = select hammer sound / 4 = soft click / 6 = level up / 7 = merc level up / 8 = item breaking  
+# 9 = eerie whir / 10 = cube / 11 = higher pitched whir / 12 = scroll identify / 13 = quest complete / 14 = repair
+# 15 = hostile / 16 = low woosh / 17 =  high woosh 1 / 18 =  high woosh 2 / 19 = high woosh 3 / 20 = gold
+#
+# SetFont
+# Font6     		Font8        	Font16        Font24        Font30        Font30    
+# FontFormal10      FontFormal11    FontFormal12    
+# FontExocet8       FontExocet10    
+# FontRidiculous    ReallyTheLastSucker        	  FontInGameChat
+#
+# SetBlendMode
+# Alpha25    	Alpha50     Alpha75    		Alpha50Bright 
+# Inverted 		Normal 		Alpha25Bright   Bright
+#
+# SetTextColor
+# LightGreen	Green		DarkGreen	Yellow		Orange		Red		Blue	Purple		
+# White			White2  	DarkWhite   DarkGold 	Gold		Grey 	Black 	Black2
+#===============================================================================================================
+# Styles - Following codes can be used in {} for effects in PrepentText, AppendText and SetItemName
+# ItemName	ItemLevel	Runeword	Sockets Original
+# Red	Green	Blue	Purple	Orange	Gold
+# Tan	White	Yellow	Color	Break
+#===============================================================================================================
+# General Style - Append and Prepend - Ethereal, Tiers, Itemlevels etc.
+#===============================================================================================================
+
+Show #Shows all items in town no matter what.
+	AreaLevel == 0
+
+Style #Riftstone Tier 1
+	ItemType "Riftstone"
+	RiftstoneTier == 1
+	PrependText "{Purple}[T1] "
+	SetBackgroundColor 25 25 25
+	SetBorderColor 200 0 200
+	SetFont "Font16"
+	SetItemName "{Purple}{Original}"
+	SetBlendMode "Alpha75"
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	ChatNotification "{Original}"
+	
+Style #Riftstone Tier 2
+	ItemType "Riftstone"
+	RiftstoneTier == 2
+	PrependText "{Purple}[T2] "
+	SetBackgroundColor 25 25 25
+	SetBorderColor 200 0 200
+	SetFont "Font16"
+	SetItemName "{Purple}{Original}"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Riftstone Tier 3
+	ItemType "Riftstone"
+	RiftstoneTier == 3
+	PrependText "{Purple}[T3] "
+	SetBackgroundColor 25 25 25
+	SetBorderColor 200 0 200
+	SetFont "Font16"
+	SetItemName "{Purple}{Original}"
+	SetBlendMode "Alpha75"
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	ChatNotification "{Original}"
+	
+Style #Riftstone Tier 4
+	ItemType "Riftstone"
+	RiftstoneTier == 4
+	PrependText "{Purple}[T4] "
+	SetBackgroundColor 25 25 25
+	SetBorderColor 200 0 200
+	SetFont "Font24"
+	SetItemName "{Purple}{Original}"
+	SetBlendMode "Alpha75"
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	ChatNotification "{Original}"
+	
+Style #Riftstone Tier 5
+	ItemType "Riftstone"
+	RiftstoneTier == 5
+	PrependText "{Purple}[T5] "
+	SetBackgroundColor 25 25 25
+	SetBorderColor 200 0 200
+	SetFont "Font24"
+	SetItemName "{Purple}{Original}"
+	SetBlendMode "Alpha75"
+    PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	ChatNotification "{Original}"
+
+Style #Style for Rare items
+	Rarity == "Rare"
+	ItemType "Any Armor" "Any Weapon" "Any Shield" "Jewelry" "Bow Quivers" "Crossbow Quivers" "Jewels" "Potions"
+	SetBorderColor 255 255 000
+	
+Style #Style for Magic items
+	Rarity == "Magic"
+	ItemType "Any Armor" "Any Weapon" "Any Shield" "Jewelry" "Bow Quivers" "Crossbow Quivers" "Jewels" "Potions"
+	SetBorderColor 065 105 225
+	
+Style #Style for Normal items
+	Rarity == "Normal"
+	ItemType "Any Armor" "Any Weapon" "Any Shield" "Jewelry" "Bow Quivers" "Crossbow Quivers" "Jewels" "Potions"
+	SetBorderColor 255 255 255
+	
+Style #Mysterious rift bases Elite uniques - Enter any base you want after ItemName
+	ItemName "Spiderweb Sash" "Champion Sword" "Colossus Blade" "Corona" "War Pike" "Hydra Bow" "Matriarchal Javelin" "Sacred Armor" "Spired Helm" "Shako" "Heavy Bracers"
+	Rarity == "Normal"
+	PrependText "{Gold}[Mysterious] "
+	SetFont "Font16"
+
+Style
+	Tier == Elite
+	PrependText "[Elite] "
+	SetBorderColor 130 233 240
+
+Style #Ethereal Items
+	Ethereal == True
+	PrependText "[ETH] "
+	
+Style #Show Implicit Tier 1
+	ImplicitTier == 1
+	Rarity == "Unique"
+	Tier == Elite
+	PrependText "{Red}[T1] "	
+	
+Style #Show Implicit Tier 1
+	Rarity == "Unique"
+	Tier == Exceptional
+	PrependText "[Exceptional] "
+	
+Style #Show Implicit Tier 1
+	ImplicitTier == 1
+	Rarity == "Unique"
+	Tier == Exceptional
+	PrependText "{Red}[T1] "
+	
+Style #Show Implicit Tier 1
+	ImplicitTier == 1
+	Rarity == "Unique"
+	Tier == Normal
+	PrependText "{Red}[T1] "	
+	
+Style #Show Implicit Tier 1
+	ImplicitTier == 1
+	Rarity <= "Rare"
+	PrependText "{Red}[T1] "
+	
+Style #Show Implicit Tier 2
+	ImplicitTier == 2
+	PrependText "[T2] "
+	
+Style #Show Implicit Tier 3
+	ImplicitTier == 3
+	ItemType "Rings" "Amulets"
+	PrependText "[T3] "
+	
+Style #Show Implicit Tier 4
+	ImplicitTier == 4
+	ItemType "Rings" "Amulets"
+	PrependText "[T4] "
+
+Style #Showing ItemLevel
+	ItemLevel >= 85
+	ItemType "Any Armor" "Any Weapon" "Any Shield" "Jewelry"
+	AppendText " {Red}({ItemLevel})"
+	
+#Style #Showing ItemLevel
+#	ItemLevel <= 84
+#	AppendText " ({ItemLevel})"
+
+Style #Other Runes
+	ItemType "Runes"
+	SetBorderColor 255 165 000
+	SetBlendMode "Alpha75"
+	
+Style #Other Runes
+	ItemType "Runes"
+	SetBorderColor 255 165 000
+	SetBlendMode "Alpha75"
+	PlayerLevel < 41
+	ChatNotification "{Original}"
+
+Style #High Runes
+	ItemType "High Runes"
+	SetBackgroundColor 255 255 255
+	SetBorderColor 255 127 80
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+	SetFont "Font42"
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+
+Style #Mid Runes 
+	ItemType "Runes"
+	ItemName "Gul" "Ist" "Mal" "Um" "Pul"
+	SetTextColor "White"
+	SetBackgroundColor 75 0 130
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Orange}* {Original} {Orange}*"
+	
+Style #Quest Items
+	QuestItem == True 
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	
+Style #More Quest Items
+	ItemName "Horadric Cube" "Book of Skill" "Khalim's Eye" "A Jade Figurine" "Khalim's Brain" "Khalim's Heart" "Mephisto's Soulstone" "Potion of Life" "Lam Esen's Tome" "Scroll Of Inifuss" "The Golden Bird" "Scroll of Inifuss" "Horadric Malus" "Horadric Scroll" "Key to the Cairn Stones"
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	
+Style #Uber Trist Key T1
+	ItemName "Key of Anguish"
+	PrependText "{Purple}[T1] "
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Uber Trist Key T2
+	ItemName "Key of Pain"
+	PrependText "{Purple}[T2] "
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Uber Trist Key T3
+	ItemName "Key of Hate"
+	PrependText "{Purple}[T3] "
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Uber Trist Key T4
+	ItemName "Key of Terror"
+	PrependText "{Purple}[T4] "
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Uber Trist Key T5
+	ItemName "Key of Destruction"
+	PrependText "{Purple}[T5] "
+	SetBorderColor 165 146 099
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Style #Token of Respecs
+	ItemName "Token of Absolution" "Token of Soul Grid"
+	SetBorderColor 165 146 099
+	SetFont "Font16"
+	SetBlendMode "Alpha75"	
+	
+Style #Rift Essences
+	ItemName "Rift Essence"
+	SetBackgroundColor 75 0 130
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	
+Style #Common Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Common"
+	SetBorderColor 255 255 255	
+	ChatNotification "{Original}"
+	
+Show #Common Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Common"
+	PlayAlertSound 11
+	MinimapIcon 2 255 255 255
+	
+Style #Uncommon Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Uncommon"
+	SetBorderColor 065 105 225
+	ChatNotification "{Original}"
+	
+Show #Uncommon Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Uncommon"
+	PlayAlertSound 11
+	MinimapIcon 2 065 105 225
+	
+Style #Rare Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Rare"
+	SetBorderColor 255 255 000
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Show #Rare Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Rare"
+	PlayAlertSound 11
+	MinimapIcon 2 255 255 000
+
+Style #Epic Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Epic"
+	SetBorderColor 255 127 80
+	SetTextColor "Orange"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Purple}* {Original} {Purple}*"
+	
+Show #Epic Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Epic"
+	PlayAlertSound 11
+	MinimapIcon 2 255 127 80
+	
+Style #Legendary Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Legendary"
+	SetBorderColor 255 127 80
+	SetTextColor "Orange"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Purple}** {Original} {Purple}**"
+	
+Show #Legendary Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Legendary"
+	PlayAlertSound 11
+	MinimapIcon 2 255 127 80
+
+Style #Mythic Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Mythic"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	SetBackgroundColor 200 200 200
+	SetBorderColor 200 200 200
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+	
+Show #Mythic Runewords
+	ItemType "Runeword Pattern"
+	Rarity == "Mythic"
+	PlayAlertSound 12
+	MinimapIcon 5 165 146 099
+	
+#===============================================================================================================
+# Magic Items
+#===============================================================================================================
+
+Show
+	ItemType "Any Weapon" "Any Shield" "Class Specific" "Helmets" "Circlets" "Body Armors" "Jewels"
+	AffixCount >= 2
+	PrefixTier == 1
+	SuffixTier == 1
+
+Style
+	ItemType "Any Weapon" "Any Shield" "Class Specific" "Helmets" "Circlets" "Body Armors"
+	Rarity == "Magic"
+	AffixCount >= 2
+	PrefixTier == 1
+	SuffixTier == 1
+	SetBorderColor 200 0 200
+	SetFont "Font16"
+	PrependText "{Red}[2x T1 MODS] "
+	SetBlendMode "Alpha75"
+    PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show
+	ItemType "Jewels"
+	AffixCount == 1
+	PrefixTier == 1	
+
+Show
+	ItemType "Jewels"
+	AffixCount == 1
+	SuffixTier == 1
+
+Show
+	ItemType "Jewels"
+	AffixCount >= 2
+	PrefixTier == 1
+	SuffixTier == 1
+	HasAffix "Maroon" "Cerulean" "Ocher" "Viridian" "Citrine" "Cabalistic" "Fiery" "Glacial" "Shocking" "Toxic" "Mystical" "Master's" "Sorcerer's" "Relentless" "Enlivening" "Steadiness" "of Might" "of Skill" "of the Mind" "of the Mammoth" "of Endowment" "of Scintillation"
+
+Style
+	ItemType "Jewels"
+	AffixCount >= 2
+	PrefixTier == 1
+	SuffixTier == 1
+	HasAffix "Maroon" "Cerulean" "Ocher" "Viridian" "Citrine" "Cabalistic" "Fiery" "Glacial" "Shocking" "Toxic" "Mystical" "Master's" "Sorcerer's" "Relentless" "Enlivening" "Steadiness" "of Might" "of Skill" "of the Mind" "of the Mammoth" "of Endowment" "of Scintillation"
+	SetBorderColor 200 0 200
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+    PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show
+	ItemType "Jewels"
+	AffixCount == 1
+	HasAffix "Maroon" "Cerulean" "Ocher" "Viridian" "Citrine" "Cabalistic" "Fiery" "Glacial" "Shocking" "Toxic" "Mystical" "Master's" "Sorcerer's" "Relentless" "Enlivening" "Steadiness" "of Might" "of Skill" "of the Mind" "of the Mammoth" "of Endowment" "of Scintillation"
+	
+Style
+	ItemType "Jewels"
+	AffixCount == 1
+	HasAffix "Maroon" "Cerulean" "Ocher" "Viridian" "Citrine" "Cabalistic" "Fiery" "Glacial" "Shocking" "Toxic" "Mystical" "Master's" "Sorcerer's" "Relentless" "Enlivening" "Steadiness" "of Might" "of Skill" "of the Mind" "of the Mammoth" "of Endowment" "of Scintillation"
+	SetBorderColor 200 0 200
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+    PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show
+	AffixCount >= 2
+	PrefixTier == 1
+	SuffixTier == 1
+	
+#===============================================================================================================
+# Jewel affixes - Style
+#===============================================================================================================
+
+# Prefixes
+
+Style
+	ItemType "Jewels"
+	HasAffix "Maroon"
+	AppendText " {Red}[T1 %fire res]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Cerulean"
+	AppendText " {Red}[T1 %cold res]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Ocher"
+	AppendText " {Red}[T1 %light res]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Viridian"
+	AppendText " {Red}[T1 %pois res]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Citrine"
+	AppendText " {Red}[T1 %magic res]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Flaming"
+	AppendText " {Red}[T1 +fire]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Freezing"
+	AppendText " {Red}[T1 +cold]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Electrifying"
+	AppendText " {Red}[T1 +light]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Otherwordly"
+	AppendText " {Red}[T1 +magic]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Grandmaster's"
+	AppendText " {Red}[T1 +phys]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Sorcerer's"
+	AppendText " {Red}[T1 %ele]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Occultist's"
+	AppendText " {Red}[T2 %ele]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Relentless"
+	AppendText " {Red}[T1 %phys]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Fierce"
+	AppendText " {Red}[T2 %phys]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Enlivening"
+	AppendText " {Red}[T1 %sum]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Invigorating"
+	AppendText " {Red}[T2 %sum]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Cabalistic"
+	AppendText " {Red}[T1 %spl]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "Esoteric"
+	AppendText " {Red}[T2 %spl]
+	
+# Suffixes
+
+Style
+	ItemType "Jewels"
+	HasAffix "of Steadiness"
+	AppendText " {Red}[T1 %fhr]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of Might"
+	AppendText " {Red}[T1 +str]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of Skill"
+	AppendText " {Red}[T1 +dex]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of the Mind"
+	AppendText " {Red}[T1 +ene]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of the Mammoth"
+	AppendText " {Red}[T1 +life]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of the Wolf"
+	AppendText " {Red}[T2 +life]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of Assimilation"
+	AppendText " {Red}[T1 +lws]
+	
+Style
+	ItemType "Jewels"
+	HasAffix "of Scintillation"
+	AppendText " {Red}[T1 %all res]
+
+#===============================================================================================================
+# Vendor Pickups
+#===============================================================================================================
+
+Show #Vendor for Fractured Rift Energy - Gives 10 Fractures
+	Sockets == 6
+	Rarity == "Normal"
+	SetItemName "{Red}[10x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha50"
+	SetFont "Font24"
+	ChatNotification "{Original}"
+	
+Show #Vendor for Fractured Rift Energy - 2x3 - Gives 5 Fractures
+	Sockets == 5
+	Rarity == "Normal"
+	Width == 2
+	Height == 3 
+	SetItemName "{Red}[5x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	SetFont "Font16"
+	
+Show #Vendor for Fractured Rift Energy - 2x4 - Gives 5 Fractures
+	Sockets == 5
+	Rarity == "Normal"
+	Width == 2
+	Height == 4 
+	SetItemName "{Red}[5x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	SetFont "Font16"
+	
+Show #Vendor for Fractured Rift Energy - 2x2 - Gives 3 Fractures
+	Sockets >= 3	
+	Rarity == "Normal"
+	Width == 2
+	Height == 2 
+	SetItemName "{Red}[3x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	
+Show #Vendor for Fractured Rift Energy - 1x3 - Gives 3 Fractures
+	Sockets >= 3
+	Rarity == "Normal"
+	Width == 1
+	Height == 3 
+	AreaLevel < 74
+	SetItemName "{Red}[3x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	
+Show #Vendor for Fractured Rift Energy - 1x4 - Gives 3 Fractures - Hides as soon as you hit T1 maps
+	Sockets >= 3
+	Rarity == "Normal"
+	Width == 1
+	Height == 4
+	AreaLevel < 74
+	SetItemName "{Red}[3x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	
+Show #Vendor for Fractured Rift Energy - 2x3 - Gives 3 Fractures - Hides as soon as you hit T1 maps
+	Sockets >= 3
+	Rarity == "Normal"
+	Width == 2
+	Height == 3 
+	AreaLevel < 74
+	SetItemName "{Red}[3x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	
+Show #Vendor for Fractured Rift Energy - 2x4 - Gives 3 Fractures - Hides as soon as you hit T1 maps
+	Sockets >= 3
+	Rarity == "Normal"
+	Width == 2
+	Height == 4 
+	AreaLevel < 74
+	SetItemName "{Red}[3x Frac] {Original}"
+	SetBorderColor 255 50 255
+	SetTextColor Red
+	SetBlendMode "Alpha75"
+	
+#===============================================================================================================
+# Unique & Set Items - Style
+#===============================================================================================================
+
+Style #Style normal uniques
+	Rarity == "Unique"
+	Tier == "Normal"
+	ItemType "Any Weapon" "Any Armor" "Any Shield" "Belts" "Bow Quivers" "Crossbow Quivers"
+	SetTextColor "Gold"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	SetItemName "{Original}"
+	
+Style #Style exceptional uniques
+	Rarity == "Unique"
+	Tier == "Exceptional"
+	SetBorderColor 255 127 80
+	SetTextColor "Gold"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+
+Style #Style elite uniques
+	Rarity == "Unique"
+	Tier == "Elite"
+	SetTextColor "Orange"
+	SetFont "Font42"
+	SetBlendMode "Alpha75"
+	SetBackgroundColor 200 200 200
+	SetBorderColor 255 127 80
+	
+Style #Style Unique Riftstones
+	ItemType "Riftstone"
+	Rarity == "Unique"
+	SetBackgroundColor 200 200 200
+	SetBorderColor 170 0 170
+	SetTextColor "Purple"
+	SetFont "Font42"
+	SetBlendMode "Alpha75"
+	
+Style #Style Unique Rings/Amulets
+	ItemType "Rings" "Amulets"
+	Rarity == "Unique"
+	SetTextColor "Gold"
+	SetFont "Font24"
+	SetItemName "{Original}"
+	SetBlendMode "Alpha75"
+	
+Style #Style Unique Jewels
+	ItemType "Jewels"
+	Rarity == "Unique"
+	SetTextColor "Gold"
+	SetFont "Font42"
+	SetBlendMode "Alpha75"
+	SetBackgroundColor 200 200 200
+	SetBorderColor 255 127 80
+	
+Style #Style set items
+	Rarity == "Set"
+	SetBorderColor 0 255 0
+	SetTextColor "Green"
+    SetFont "Font42"
+    SetBlendMode "Alpha75"
+    PlayAlertSound 7
+	MinimapIcon 2 0 255 0
+	
+#===============================================================================================================
+# Unique & Set Items - Style - Chat notifications - Unidentified
+#===============================================================================================================	
+	
+Style
+	Identified == False
+	Rarity == "Unique"
+	Tier == "Normal"
+	ItemType "Any Weapon" "Any Armor" "Any Shield" "Belts" "Bow Quivers" "Crossbow Quivers"
+	ChatNotification "{Purple}* {Original} {Purple}*"
+	
+Style
+	Identified == False
+	Rarity == "Unique"
+	Tier == "Exceptional"
+	ChatNotification "{Purple}** {Original} {Purple}**"
+	
+Style
+	Identified == False
+	Rarity == "Unique"
+	Tier == "Elite"
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+	
+Style # Amulets, Rings, Jewels
+	Identified == False
+	Rarity == "Unique"
+	Tier == "Normal"
+	Width == 1
+	Height == 1
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+	
+#===============================================================================================================
+# Unique & Set Items - Style - Chat notifications - Identified
+#===============================================================================================================
+	
+Style
+	Identified == True
+	Rarity == "Unique"
+	Tier == "Normal"
+	ItemType "Any Weapon" "Any Armor" "Any Shield" "Belts" "Bow Quivers" "Crossbow Quivers"
+	ChatNotification "{Purple}* {Gold}{ShortItemName} {Purple}*"
+	
+Style
+	Identified == True
+	Rarity == "Unique"
+	Tier == "Exceptional"
+	ChatNotification "{Purple}** {Gold}[Exceptional] {ShortItemName} {Purple}**"
+	
+Style
+	Identified == True
+	Rarity == "Unique"
+	Tier == "Elite"
+	ChatNotification "{Purple}*** {Gold}[Elite] {ShortItemName} {Purple}***"
+	
+Style # Amulets, Rings, Jewels
+	Identified == True
+	Rarity == "Unique"
+	Tier == "Normal"
+	Width == 1
+	Height == 1
+	ChatNotification "{Purple}*** {Gold}{ShortItemName} {Purple}***"
+	
+Style
+	Rarity == "Set"
+	ChatNotification "{Original}"
+	
+#===============================================================================================================
+# Item Bases - Chance bases - Use "Mysterious Rift Energy" on these
+#===============================================================================================================
+
+Style #Show Warped
+	Warped == True
+	AppendText "{Break}{Red}-Warped-"
+	
+#===============================================================================================================
+# Quest Items & Others
+#===============================================================================================================
+
+Show #Quest Items
+	QuestItem == True 
+	MinimapIcon 5 165 146 099
+	
+Show #More Quest Items
+	ItemName "Horadric Cube" "Book of Skill" "Khalim's Eye" "A Jade Figurine" "Khalim's Brain" "Khalim's Heart" "Mephisto's Soulstone" "Potion of Life" "Lam Esen's Tome" "Scroll Of Inifuss" "The Golden Bird" "Scroll of Inifuss" "Horadric Malus" "Horadric Scroll" "Key to the Cairn Stones"
+	MinimapIcon 5 165 146 099	
+	
+Show #Token of Respecs
+	ItemName "Token of Absolution" "Token of Soul Grid"
+	MinimapIcon 5 165 146 099
+	
+#===============================================================================================================
+# Unique Items
+#===============================================================================================================
+
+Show #Unique Riftstones
+	ItemType "Riftstone"
+	Rarity == "Unique"
+	PlayAlertSound 7
+	MinimapIcon 5 148 128 100
+	
+Show #Unique Rings/Amulets
+	ItemType "Rings" "Amulets"
+	Rarity == "Unique"
+	PlayAlertSound 12
+	MinimapIcon 5 165 146 099
+	
+Show #Uniques Normal
+	Rarity == "Unique"
+	Tier == "Normal"
+	PlayAlertSound 12
+	MinimapIcon 5 165 146 099
+
+Show #Uniques Exceptional
+	Rarity == "Unique"
+	Tier == "Exceptional"
+	PlayAlertSound 12
+	MinimapIcon 5 165 146 099
+	
+Show #Uniques Elite
+	Rarity == "Unique"
+	Tier == "Elite"
+	PlayAlertSound 7
+	MinimapIcon 5 165 146 099
+
+Show #Set Items
+	Rarity == "Set"
+	
+#===============================================================================================================
+# Item Bases - Late game
+#===============================================================================================================
+
+#===============================================================================================================
+# Item Bases - Leveling - Style - +Skills
+#===============================================================================================================
+
+Style #+1 all until +2 can spawn
+	HasAffix "Proficient"
+	AppendText " {Red}[+1 all]"
+	Rarity == "Magic"
+
+Style #+2 all
+	HasAffix "Adroit"
+	AppendText " {Red}[+2 all]"
+	Rarity == "Magic"
+
+Style #+1 spells until +2 can spawn
+	HasAffix "Spellcaster's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+1 spl]"
+	Rarity == "Magic"
+
+Style #+2 spells until +3 can spawn
+	HasAffix "Wizard's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+2 spl]"
+	Rarity == "Magic"
+
+Style #+3 spells
+	HasAffix "Witch's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+3 spl]"
+	Rarity == "Magic"
+	
+Style #+2 spells until +3 can spawn - TWO HANDED WEAPONS
+	HasAffix "Spellcaster's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+2 spl]"
+	Rarity == "Magic"	
+	
+Style #+3 spells until +5 can spawn - TWO HANDED WEAPONS
+	HasAffix "Wizard's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+3 spl]"
+	Rarity == "Magic"
+	
+Style #+5 spells - TWO HANDED WEAPONS
+	HasAffix "Witch's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+5 spl]"
+	Rarity == "Magic"
+
+Style #+1 summon until +2 can spawn
+	HasAffix "Trainer's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+1 smn]"
+	Rarity == "Magic"
+
+Style #+2 summon until +3 can spawn
+	HasAffix "Caretaker's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+2 smn]"
+	Rarity == "Magic"
+	
+Style
+	HasAffix "Keeper's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+3 smn]"
+	Rarity == "Magic"
+	
+Style #+2 summon until +3 can spawn - TWO HANDED WEAPONS
+	HasAffix "Trainer's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+2 smn]"
+	Rarity == "Magic"	
+	
+Style #+3 summon until +5 can spawn - TWO HANDED WEAPONS
+	HasAffix "Caretaker's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+3 smn]"
+	Rarity == "Magic"
+	
+Style #+5 summon - TWO HANDED WEAPONS
+	HasAffix "Keeper's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+5 smn]"
+	Rarity == "Magic"
+	
+Style #+1 ranged until +2 can spawn
+	HasAffix "Marksman's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+1 rng]"
+	Rarity == "Magic"
+	
+Style #+2 ranged until +3 can spawn
+	HasAffix "Sniper's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+2 rng]"
+	Rarity == "Magic"
+	
+Style #+3 ranged
+	HasAffix "Sharpshooter's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+3 rng]"
+	Rarity == "Magic"
+	
+Style #+2 ranged until +3 can spawn - TWO HANDED WEAPONS
+	HasAffix "Marksman's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+2 rng]"
+	Rarity == "Magic"	
+	
+Style #+3 ranged until +5 can spawn - TWO HANDED WEAPONS
+	HasAffix "Sniper's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+3 rng]"
+	Rarity == "Magic"
+	
+Style #+5 ranged - TWO HANDED WEAPONS
+	HasAffix "Sharpshooter's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+5 rng]"
+	Rarity == "Magic"
+
+Style #+1 weapon until +2 can spawn
+	HasAffix "Combatant's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+1 wep]"
+	Rarity == "Magic"
+
+Style #+2 weapon until +3 can spawn
+	HasAffix "Dueler's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+2 wep]"
+	Rarity == "Magic"
+
+Style #+3 weapon
+	HasAffix "Gladiator's"
+	ItemType "Jewelry" "One Handed Weapons" "Any Shield" "Any Armor"
+	AppendText " {Red}[+3 wep]"
+	Rarity == "Magic"
+
+Style #+2 weapon until +3 can spawn - TWO HANDED WEAPONS
+	HasAffix "Combatant's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+2 wep]"
+	Rarity == "Magic"
+
+Style #+3 weapon until +5 can spawn - TWO HANDED WEAPONS
+	HasAffix "Dueler's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+3 wep]"
+	Rarity == "Magic"
+
+Style #+5 weapon - TWO HANDED WEAPONS
+	HasAffix "Gladiator's"
+	ItemType "Two Handed Weapons"
+	AppendText " {Red}[+5 wep]"
+	Rarity == "Magic"
+	
+#===============================================================================================================
+# Item Bases - Leveling - Show - +Skills
+#===============================================================================================================
+Show
+	Rarity == "Magic"
+	PrefixTier <= 1
+	SuffixTier <= 1	
+	
+### ALL ###
+
+Show #+1 all until +2 can spawn
+	HasAffix "Proficient"
+	Rarity == "Magic"
+	ItemLevel < 61
+	ChatNotification "{Original}"
+
+Show #+2 all
+	HasAffix "Proficient"
+	Rarity == "Magic"
+	ChatNotification "{Original}"
+	ItemLevel < 75
+	
+Show #+2 all
+	HasAffix "Proficient"
+	Rarity == "Magic"
+	#ItemLevel < 85
+
+### SPELLS ###
+
+Show #+1 skills until +2 can spawn
+	HasAffix "Spellcaster's" "Trainer's" "Marksman's" "Combatant's"
+	Rarity == "Magic"
+	ItemLevel < 31
+	ChatNotification "{Original}"
+
+Show #+2 skills until +3 can spawn
+	HasAffix "Wizard's" "Caretaker's" "Sniper's" "Dueler's"
+	Rarity == "Magic"
+	ItemLevel < 61
+	ChatNotification "{Original}"
+
+Show #+3 skills
+	HasAffix "Witch's" "Keeper's" "Sharpshooter's" "Gladiator's"
+	Rarity == "Magic"
+	ChatNotification "{Original}"
+	ItemLevel < 75
+	
+Show #+3 skills
+	HasAffix "Witch's" "Keeper's" "Sharpshooter's" "Gladiator's"
+	Rarity == "Magic"
+
+### HIDE BELOW ILVL 15 ###
+
+Hide #All rings, amulets and quivers that are "magic" aka blue - After ilvl 20 magic rarity items will no longer show and only normal and rares from there on
+	ItemType "Rings" "Amulets" "Bow Quivers" "Crossbow Quivers"
+	Rarity == "Magic"
+	ItemLevel > 15
+	
+#===============================================================================================================
+# Item Bases - Leveling - Style - %Run Speed
+#===============================================================================================================	
+	
+Style
+	ItemType "Boots"
+	Rarity == "Magic"
+	HasAffix "of Inertia" "of Pacing" "of Haste" "of Speed" "of Acceleration"
+	AppendText " {Red}[MS Boots]"
+
+#===============================================================================================================
+# Item Bases - Leveling - Show - %Run Speed
+#===============================================================================================================	
+
+Show
+	ItemType "Boots"
+	Rarity == "Magic"
+	HasAffix "of Inertia"
+	ItemLevel <= 20
+	ChatNotification "{Original}"
+
+Show
+	ItemType "Boots"
+	Rarity == "Magic"
+	HasAffix "of Pacing"
+	ItemLevel <= 40
+	ChatNotification "{Original}"
+
+Show
+	ItemType "Boots"
+	Rarity == "Magic"
+	HasAffix "of Haste"
+	ItemLevel <= 60
+	ChatNotification "{Original}"
+
+Show
+	ItemType "Boots"
+	Rarity == "Magic"
+	HasAffix "of Speed"
+	ItemLevel <= 80
+
+#===============================================================================================================
+# Jewellery - Amulets & Rings
+#===============================================================================================================
+
+Show
+	ItemType "Amulets" "Rings"
+	Rarity == "Magic"
+	ImplicitTier == 1
+	ItemLevel < 74
+	
+Hide
+	ItemType "Amulets" "Rings"
+	Rarity == "Magic"
+	ImplicitTier == 1
+	ItemLevel >= 74
+	
+Show #White Amulet and Rings until maps + T1
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 1
+	
+#Hide #White Amulet and Rings until maps + T1
+#	ItemType "Amulets" "Rings"
+#	Rarity == "Normal"
+#	ImplicitTier == 1
+#	ItemLevel >= 74
+	
+Show #White Amulet and Rings until maps + T2
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 2
+	ItemLevel < 74
+	
+Hide #White Amulet and Rings until maps + T2
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 2
+	ItemLevel >= 74
+	
+Show #White Amulet and Rings until maps + T3
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 3
+	ItemLevel < 74
+	
+Hide #White Amulet and Rings until maps + T3
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 3
+	ItemLevel >= 74
+	
+Show #White Amulet and Rings until maps + T4
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 4
+	ItemLevel < 74
+	
+Hide #White Amulet and Rings until maps + T4
+	ItemType "Amulets" "Rings"
+	Rarity == "Normal"
+	ImplicitTier == 4
+	ItemLevel >= 74
+	
+Show #White Belts until maps
+	ItemType "Belts"
+	Rarity == "Normal"
+	ItemLevel < 74
+	
+Hide #White Belts until maps
+	ItemType "Belts"
+	Rarity == "Normal"
+	Tier > "Elite"
+	ItemLevel > 74
+	
+#===============================================================================================================
+# Runes
+#===============================================================================================================
+
+Show #High Runes
+	ItemType "High Runes"
+    PlayAlertSound 16
+	PlayAlertSound 17
+	PlayAlertSound 18
+	PlayAlertSound 19
+	MinimapIcon 5 255 165 000
+
+Show #Mid Runes 
+	ItemType "Runes"
+	ItemName "Gul" "Ist" "Mal" "Um" "Pul"
+    PlayAlertSound 20
+	MinimapIcon 2 255 165 000
+
+#Hide #Low Runes - Wont show up after getting into maps, but will still appear when in town
+#	ItemType "Runes"
+#	ItemName "El" "Eld" "Tir" "Nef" "Eth" "Dol" "Amn"
+#	AreaLevel > 74
+
+Show #Other Runes
+	ItemType "Runes"
+
+#===============================================================================================================
+# Rift Energies
+#===============================================================================================================
+	
+Style
+	ItemType "Rift Energies"
+	ItemName "Spectral"
+	SetItemName "Spectral Rift Energy"
+	SetBackgroundColor 255 255 255
+	SetBorderColor 255 0 0
+	SetTextColor "Red"
+	SetFont "Font42"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+		
+Show #Spectral Rift Energy - Most rare energy
+	ItemType "Rift Energies"
+	ItemName "Spectral"
+    PlayAlertSound 7
+	MinimapIcon 5 255 255 255
+	
+Style #Cosmic Rift Energy - +1 affix to a rare item
+	ItemType "Rift Energies"
+	ItemName "Cosmic
+	SetItemName "Cosmic Rift Energy"
+	SetBackgroundColor 255 255 255
+	SetBorderColor 200 000 200
+	SetTextColor "Purple"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+
+Show #Cosmic Rift Energy - +1 affix to a rare item
+	ItemType "Rift Energies"
+	ItemName "Cosmic"
+	PlayAlertSound 17
+	PlayAlertSound 18
+	PlayAlertSound 19
+	PlayAlertSound 1
+	PlayAlertSound 10
+	MinimapIcon 5 255 255 255
+	
+Style #Temporal Rift Energy - Rerolls numeric values of affixes on an item
+	ItemType "Rift Energies"
+	ItemName "Temporal"
+	SetItemName "Temporal Rift Energy"
+	SetBackgroundColor 255 255 255
+	SetBorderColor 200 000 200
+	SetTextColor "Purple"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Purple}*** {Original} {Purple}***"
+
+Show #Temporal Rift Energy - Rerolls numeric values of affixes on an item
+	ItemType "Rift Energies"
+	ItemName "Temporal"
+	PlayAlertSound 17
+	PlayAlertSound 18
+	PlayAlertSound 19
+	PlayAlertSound 1
+	PlayAlertSound 10
+	MinimapIcon 5 255 255 255
+
+Style #Ephemeral Rift Energy - Reroll rare item
+	ItemType "Rift Energies"
+	ItemName "Ephemeral"
+	SetItemName "Ephemeral Rift Energy"
+	SetBackgroundColor 75 0 130
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Orange}* {Original} {Orange}*"
+
+Show #Ephemeral Rift Energy - Reroll rare item
+	ItemType "Rift Energies"
+	ItemName "Ephemeral"
+	PlayAlertSound 17
+	MinimapIcon 3 75 0 130
+
+Style #Umbral Rift Energy - Remove a random affix from item
+	ItemType "Rift Energies"
+	ItemName "Umbral"
+	SetItemName "Umbral Rift Energy"
+	SetBackgroundColor 75 0 130
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font30"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Orange}* {Original} {Orange}*"
+
+Show #Umbral Rift Energy - Remove a random affix from item
+	ItemType "Rift Energies"
+	ItemName "Umbral"
+	PlayAlertSound 17
+	MinimapIcon 3 75 0 130
+
+Style #Potent Rift Energy - Upgrades unique item to a tier higher
+	ItemType "Rift Energies"
+	ItemName "Potent"
+	SetItemName "Potent Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+
+Show #Potent Rift Energy - Upgrades unique item to a tier higher
+	ItemType "Rift Energies"
+	ItemName "Potent"
+	MinimapIcon 3 215 105 215
+
+Style #Unstable Rift Energy - Warps an item, changes it unpredictably
+	ItemType "Rift Energies"
+	ItemName "Unstable"
+	SetItemName "Unstable Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+#	ChatNotification "{Original}"
+
+Show #Unstable Rift Energy - Warps an item, changes it unpredictably
+	ItemType "Rift Energies"
+	ItemName "Unstable"
+	MinimapIcon 3 215 105 215	
+
+Style #Voided Rift Energy
+	ItemType "Rift Energies"
+	ItemName "Voided"
+	SetItemName "Voided Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+
+Show #Voided Rift Energy - Downgrades a magic or rare item to a normal item
+	ItemType "Rift Energies"
+	ItemName "Voided"
+	MinimapIcon 3 215 105 215
+	
+Show #Brilliant Rift Energy - Upgrades a normal item to a rare item
+	ItemType "Rift Energies"
+	ItemName "Brilliant"
+	MinimapIcon 4 215 105 215
+    ItemType "Rift Energies"
+	ItemName "Brilliant"
+	SetItemName "Brilliant Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	PlayerLevel <= 90
+#	ChatNotification "{Original}"
+	
+Show #Brilliant Rift Energy - Upgrades a normal item to a rare item
+	ItemType "Rift Energies"
+	ItemName "Brilliant"
+	MinimapIcon 3 215 105 215
+	SetItemName "Brilliant Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetBlendMode "Alpha75"
+#	ChatNotification "{Original}"
+	
+Style #Veiled Rift Energy - Upgrades the base item to a higher tier
+	ItemType "Rift Energies"
+	ItemName "Veiled"
+	SetItemName "Veiled Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	ChatNotification "{Original}"
+	
+Show #Veiled Rift Energy - Upgrades the base item to a higher tier
+	ItemType "Rift Energies"
+	ItemName "Veiled"
+	MinimapIcon 3 215 105 215
+	
+Style #Luminous Rift Energy - Upgrades a magic item to a rare keeping affixes and adding a new one
+	ItemType "Rift Energies"
+	ItemName "Luminous"
+	SetItemName "Luminous Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"	
+	ChatNotification "{Original}"
+	
+Show #Luminous Rift Energy - Upgrades a magic item to a rare keeping affixes and adding a new one
+	ItemType "Rift Energies"
+	ItemName "Luminous"
+	MinimapIcon 3 215 105 215
+	
+#Show #Transient Rift Energy - Rerolls a magic item with new affixes
+#	ItemType "Rift Energies"
+#	ItemName "Transient"
+#	SetItemName "Transient Rift Energy"
+#	SetBackgroundColor 100 50 200
+#	SetBorderColor 255 255 255
+#	SetTextColor "White"
+#	SetFont "Font16"
+#	SetBlendMode "Alpha75"
+#	PlayerLevel >= 85
+#	MinimapIcon 3 215 105 215
+	
+Show #Transient Rift Energy - Rerolls a magic item with new affixes
+	ItemType "Rift Energies"
+	ItemName "Transient"
+	SetItemName "Transient Rift Energy"
+	SetBackgroundColor 100 50 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font24"
+	SetBlendMode "Alpha75"
+	MinimapIcon 3 215 105 215
+	
+Show #Fractured Rift Energy - Rerolls the amount of sockets on an item
+	ItemType "Rift Energies"
+	ItemName "Fractured"
+	SetItemName "Fractured Rift Energy"
+	SetBackgroundColor 000 050 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetBlendMode "Alpha75"
+
+Show #Immense Rift Energy - Adds a random affix to a magic item
+	ItemType "Rift Energies"
+	ItemName "Immense"
+	SetItemName "Immense Rift Energy"
+	SetBackgroundColor 000 050 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	
+Show #Mysterious Rift Energy - Upgrades a normal item to a random rarity
+	ItemType "Rift Energies"
+	ItemName "Mysterious"
+	SetItemName "Mysterious Rift Energy"
+	SetBackgroundColor 000 050 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	
+Show #Radiant Rift Energy - Upgrades a normal item to a magic item
+	ItemType "Rift Energies"
+	ItemName "Radiant"
+	SetItemName "Radiant Rift Energy"
+	SetBackgroundColor 000 050 200
+	SetBorderColor 255 255 255
+	SetTextColor "White"
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+
+#===============================================================================================================
+# Riftstones
+#===============================================================================================================
+
+Show #Riftstones T1
+	ItemType "Riftstone"
+	RiftstoneTier == 1
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show #Riftstones T2
+	ItemType "Riftstone"
+	RiftstoneTier == 2
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show #Riftstones T3
+	ItemType "Riftstone"
+	RiftstoneTier == 3
+	PlayAlertSound 11
+	MinimapIcon 2 200 0 200
+	
+Show #Riftstones T4
+	ItemType "Riftstone"
+	RiftstoneTier == 4
+	PlayAlertSound 11
+	MinimapIcon 3 200 0 200
+	
+Show #Riftstones T5
+	ItemType "Riftstone"
+	RiftstoneTier == 5
+	PlayAlertSound 11
+	MinimapIcon 4 200 0 200
+
+#===============================================================================================================
+# Essences
+#===============================================================================================================
+
+Show #Essences T1 Elemental damage
+	ItemName "of the Primordial"
+	SetItemName "[T1 Ele]{Purple} {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+	
+Show #Essences T1 All resist
+	ItemName "of the Prism"
+	SetItemName "[T1 Res] {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+	
+Show #Essences T1 Flat life
+	ItemName "of Everliving"
+	SetItemName "[T1 Flat Life] {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+	
+Show #Essences T1 %Max Life
+	ItemName "of the Aeon"
+	SetItemName "[T1 Max Life] {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+	
+Show #Essences T1 %Physical Damage
+	ItemName "of Rage"
+	SetItemName "[T1 Phys] {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+
+Show #Essences T1 %Defense
+	ItemName "of the Seraphim"
+	SetItemName "[T1 Def] {Original}"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+	
+Show #Essences
+	ItemName "Essence"
+	SetBorderColor 255 165 000
+	SetFont "Font16"
+	SetBlendMode "Alpha75"
+	SetTextColor "Orange"
+    PlayAlertSound 11
+	MinimapIcon 2 255 165 000
+
+#===============================================================================================================
+# Item Bases - Leveling
+#===============================================================================================================
+
+Show
+	Rarity == "Magic"
+	PrefixTier <= 1
+	SuffixTier <= 1
+
+Hide #All rings, amulets and quivers that are "magic" aka blue - After ilvl 20 magic rarity items will no longer show and only normal and rares from there on
+	ItemType "Rings" "Amulets" "Bow Quivers" "Crossbow Quivers"
+	Rarity == "Magic"
+	ItemLevel > 21
+	
+Hide #Attack Weapons "normal bases" - After ilvl 30 magic rarity items will no longer show, only higher bases will appear
+	ItemType "Hand to Hand" "Amazon Javelins" "Amazon Spears" "Amazon Bows" "Scepters" "Axes" "Clubs" "Knives" "Polearms" "Hammers" "Spears" "Maces" "Blunt Weapons" "Bows" "Crossbow" "Javelins" "Throwing Knives" "Throwing Axes"
+	Rarity == "Magic"
+	Tier == "Normal"
+	ItemLevel > 31
+
+Hide #Attack Weapons "normal bases" - After ilvl 74 rare rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Spears" "Scepters" "Clubs" "Knives" "Polearms" "Spears" "Blunt Weapons" "Crossbow" "Throwing Knives" "Throwing Axes"
+	Rarity == "Rare"
+	Tier == "Normal"
+	ItemLevel > 74
+
+Hide #Low bases "normal bases" - After ilvl 30 magic rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Axes" "Belts" "Blunt Weapons" "Body Armors" "Boots" "Bows" "Cloaks" "Clubs" "Crossbow" "Hammers" "Hand to Hand" "Helmets" "Javelins" "Knives" "Maces" "Polearms" "Scepters" "Shields" "Spears" "Swords" "Throwing Axes" "Throwing Knives"
+	Rarity == "Magic"
+	Tier == "Normal"
+	ItemLevel > 31
+
+Hide #Low bases "normal bases" - After ilvl 44 normal rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Axes" "Belts" "Blunt Weapons" "Body Armors" "Boots" "Bows" "Cloaks" "Clubs" "Crossbow" "Hammers" "Hand to Hand" "Helmets" "Javelins" "Knives" "Maces" "Polearms" "Scepters" "Shields" "Spears" "Swords" "Throwing Axes" "Throwing Knives"
+	Rarity == "Normal"
+	Tier == "Normal"
+	ItemLevel > 44
+	
+Hide #Low bases "normal bases" - After ilvl 74 rare rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Spears" "Blunt Weapons" "Body Armors" "Cloaks" "Clubs" "Crossbow" "Knives" "Maces" "Polearms" "Scepters" "Spears" "Throwing Axes" "Throwing Knives"
+	Rarity == "Rare"
+	Tier == "Normal"
+	ItemLevel > 74
+
+Hide #Attack Weapons "exceptional bases" - After ilvl 74 exceptional rare rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Spears" "Scepters" "Clubs" "Knives" "Polearms" "Hammers" "Spears" "Maces" "Blunt Weapons" "Crossbow" "Throwing Knives" "Throwing Axes"
+	Rarity <= "Rare"
+	Tier == "Normal"
+	ItemLevel > 74
+	
+Hide #All bases "exceptional bases" - After ilvl 60 exceptional magic rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Auric Shields" "Axes" "Belts" "Blunt Weapons" "Body Armors" "Boots" "Bows" "Cloaks" "Clubs" "Crossbow" "Gloves" "Hammers" "Hand to Hand" "Helmets" "Javelins" "Knives" "Maces" "One Handed Weapons" "Orbs" "Pelts" "Polearms" "Primal Helmets" "Scepters" "Shields" "Spears" "Staves" "Throwing Axes" "Throwing Knives" "Two Handed Weapons" "Voodoo Heads" "Wands"
+	Rarity == "Magic"
+	Tier <= "Exceptional"
+	ItemLevel > 61
+
+Hide #Medium bases "exceptional bases" - After ilvl 74 exceptional normal rarity items of these item types will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Axes" "Blunt Weapons" "Body Armors" "Bows" "Cloaks" "Clubs" "Crossbow" "Hammers" "Hand to Hand" "Javelins" "Knives" "Maces" "One Handed Weapons" "Pelts" "Polearms" "Scepters" "Shields" "Spears" "Throwing Axes" "Throwing Knives" "Two Handed Weapons"
+	Rarity == "Normal"
+	Tier <= "Exceptional"
+	ItemLevel > 74
+
+Hide #Medium bases "exceptional bases" - After ilvl 74 exceptional normal rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Auric Shields" "Axes" "Belts" "Blunt Weapons" "Body Armors" "Boots" "Bows" "Cloaks" "Clubs" "Crossbow" "Gloves" "Hammers" "Hand to Hand" "Helmets" "Javelins" "Knives" "Maces" "One Handed Weapons" "Orbs" "Pelts" "Polearms" "Primal Helmets" "Scepters" "Shields" "Spears" "Staves" "Throwing Axes" "Throwing Knives" "Two Handed Weapons" "Voodoo Heads" "Wands"
+	Rarity == "Normal"
+	Tier <= "Exceptional"
+	ItemLevel > 74
+
+Hide #High bases "elite bases" - After ilvl 74 exceptional magic rarity items will no longer show, only higher bases will appear
+	ItemType "Amazon Bows" "Amazon Javelins" "Amazon Spears" "Auric Shields" "Axes" "Belts" "Blunt Weapons" "Body Armors" "Boots" "Bows" "Cloaks" "Clubs" "Crossbow" "Gloves" "Hammers" "Hand to Hand" "Helmets" "Javelins" "Knives" "Maces" "One Handed Weapons" "Orbs" "Pelts" "Polearms" "Primal Helmets" "Scepters" "Shields" "Spears" "Staves" "Throwing Axes" "Throwing Knives" "Two Handed Weapons" "Voodoo Heads" "Wands"
+	Rarity == "Magic"
+	Tier <= "Elite"
+	ItemLevel > 75
+
+#===============================================================================================================
+# Item Bases - Potions
+#===============================================================================================================
+	
+#Hide #Hiding potions when you hit level 90, you should have some by now
+#	ItemType "Potions"
+#	PlayerLevel > 90
+	
+Show #Speed Potions Normal
+	ItemType "Potions"
+	ItemName "Speed Potion"
+	Rarity == "Magic"
+	PlayAlertSound 11
+	MinimapIcon 2 065 105 225
+	PlayerLevel < 75
+
+Show #Speed Potions Normal
+	ItemType "Potions"
+	ItemName "Speed Potion"
+	Rarity == "Normal"
+	PlayAlertSound 11
+	MinimapIcon 2 065 105 225
+	PlayerLevel < 75
+
+Show #Potions Normal
+	ItemType "Potions"
+	Rarity == "Magic"
+
+Show #Potions Normal
+	ItemType "Potions"
+	Rarity == "Normal"
+	
+Style #Shows all items in town no matter what.
+	AreaLevel == 0
+	SetFont "Font16"
+	
+Show #Everything else

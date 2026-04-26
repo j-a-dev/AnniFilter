@@ -1,0 +1,4324 @@
+#LeNzY's Uber Strict Filter Legacy
+#Big thanks to Likewize for doing just about all work.
+
+#All World Drop bases are highlighted in Red
+#Everything is hidden except for elite uniques, class set items, BK set, Baha set, Cow set, runes lem+, essences, charms, jewels, jewelry, perfect gems, materials and marks of course.
+#Helmets (normal)
+#Cap
+cap, low, hide
+cap, normal, hide
+cap, superior, hide
+cap, magic, hide
+cap, rare, hide
+cap, unique, hide
+cap, set, hide
+#Skull Cap
+skp, low, hide
+skp, normal, hide
+skp, superior, hide
+skp, magic, hide
+skp, rare, hide
+skp, unique, hide
+skp, set, hide
+#Helm
+hlm, low, hide
+hlm, normal, hide
+hlm, superior, hide
+hlm, magic, hide
+hlm, rare, hide
+hlm, unique, hide
+hlm, set, hide
+#Full Helm
+fhl, low, hide
+fhl, normal, hide
+fhl, superior, hide
+fhl, magic, hide
+fhl, rare, hide
+fhl, unique, hide
+fhl, set, hide
+#Great Helm
+ghm, low, hide
+ghm, normal, hide
+ghm, superior, hide
+ghm, magic, hide
+ghm, rare, hide
+ghm, unique, hide
+ghm, set, hide
+#Crown
+crn, low, hide
+crn, normal, hide
+crn, superior, hide
+crn, magic, hide
+crn, rare, hide
+crn, unique, hide
+crn, set, hide
+#Mask
+msk, low, hide
+msk, normal, hide
+msk, superior, hide
+msk, magic, hide
+msk, rare, hide
+msk, unique, hide
+msk, set, hide
+#Bone Helm
+bhm, low, hide
+bhm, normal, hide
+bhm, superior, hide
+bhm, magic, hide
+bhm, rare, hide
+bhm, unique, hide
+bhm, set, hide
+
+#Helmets (exceptional)
+#War Hat
+xap, low, hide
+xap, normal, hide
+xap, superior, hide
+xap, magic, hide
+xap, rare, hide
+xap, unique, hide
+xap, set, hide
+#Sallet
+xkp, low, hide
+xkp, normal, hide
+xkp, superior, hide
+xkp, magic, hide
+xkp, rare, hide
+xkp, unique, hide
+xkp, set, hide
+#Casque
+xlm, low, hide
+xlm, normal, hide
+xlm, superior, hide
+xlm, magic, hide
+xlm, rare, hide
+xlm, unique, hide
+xlm, set, hide
+#Basinet
+xhl, low, hide
+xhl, normal, hide
+xhl, superior, hide
+xhl, magic, hide
+xhl, rare, hide
+xhl, unique, hide
+xhl, set, hide
+#Winged Helm
+xhm, low, hide
+xhm, normal, hide
+xhm, superior, hide
+xhm, magic, hide
+xhm, rare, hide
+xhm, unique, hide
+xhm, set, hide
+#Grand Crown
+xrn, low, hide
+xrn, normal, hide
+xrn, superior, hide
+xrn, magic, hide
+xrn, rare, hide
+xrn, unique, hide
+xrn, set, hide
+#Death Mask
+xsk, low, hide
+xsk, normal, hide
+xsk, superior, hide
+xsk, magic, hide
+xsk, rare, hide
+xsk, unique, hide
+xsk, set, hide
+#Grim Helm
+xh9, low, hide
+xh9, normal, hide
+xh9, superior, hide
+xh9, magic, hide
+xh9, rare, hide
+xh9, unique, darkgold
+xh9, set, hide
+
+#Helmets (elite)
+#Shako - Cap of Jordan - World Drop - Cow Set
+uap, low, hide
+uap, normal, hide
+uap, superior, hide
+uap, magic, hide
+uap, rare, hide
+uap, unique, red
+uap, set, lightgreen
+#Hydraskull
+ukp, low, hide
+ukp, normal, hide
+ukp, superior, hide
+ukp, magic, hide
+ukp, rare, hide
+ukp, unique, darkgold
+ukp, set, hide
+#Armet
+ulm, low, hide
+ulm, normal, hide
+ulm, superior, hide
+ulm, magic, hide
+ulm, rare, hide
+ulm, unique, darkgold
+ulm, set, hide
+#Giant Conch
+uhl, low, hide
+uhl, normal, hide
+uhl, superior, hide
+uhl, magic, hide
+uhl, rare, hide
+uhl, unique, darkgold
+uhl, set, hide
+#Spired Helm
+uhm, low, hide
+uhm, normal, hide
+uhm, superior, hide
+uhm, magic, hide
+uhm, rare, hide
+uhm, unique, darkgold
+uhm, set, hide
+#Corona - Divine Retribution - World Drop - Griswold Uber
+urn, low, hide
+urn, normal, hide
+urn, superior, hide
+urn, magic, hide
+urn, rare, hide
+urn, unique, red
+urn, set, darkgreen
+#Demonhead - Tal Rasha Uber
+usk, low, hide
+usk, normal, hide
+usk, superior, hide
+usk, magic, hide
+usk, rare, hide
+usk, unique, darkgold
+usk, set, darkgreen
+#Bone Visage - Trag'Oul Uber - Natalya Uber
+uh9, low, hide
+uh9, normal, hide
+uh9, superior, hide
+uh9, magic, hide
+uh9, rare, hide
+uh9, unique, darkgold
+uh9, set, darkgreen
+
+#Barb Helmets (normal)
+#Jawbone Cap
+ba1, low, hide
+ba1, normal, hide
+ba1, superior, hide
+ba1, magic, hide
+ba1, rare, hide
+ba1, unique, hide
+ba1, set, hide
+#Fange Helm
+ba2, low, hide
+ba2, normal, hide
+ba2, superior, hide
+ba2, magic, hide
+ba2, rare, hide
+ba2, unique, hide
+ba2, set, hide
+#Horned Helm
+ba3, low, hide
+ba3, normal, hide
+ba3, superior, hide
+ba3, magic, hide
+ba3, rare, hide
+ba3, unique, hide
+ba3, set, hide
+#Assault Helmet
+ba4, low, hide
+ba4, normal, hide
+ba4, superior, hide
+ba4, magic, hide
+ba4, rare, hide
+ba4, unique, hide
+ba4, set, hide
+#Avenger Guard
+ba5, low, hide
+ba5, normal, hide
+ba5, superior, hide
+ba5, magic, hide
+ba5, rare, hide
+ba5, unique, hide
+ba5, set, hide
+
+#Barb Helmets (exceptional)
+#Jawbone Visor
+ba6, low, hide
+ba6, normal, hide
+ba6, superior, hide
+ba6, magic, hide
+ba6, rare, hide
+ba6, unique, hide
+ba6, set, hide
+#Lion Helm
+ba7, low, hide
+ba7, normal, hide
+ba7, superior, hide
+ba7, magic, hide
+ba7, rare, hide
+ba7, unique, hide
+ba7, set, hide
+#Rage Mask
+ba8, low, hide
+ba8, normal, hide
+ba8, superior, hide
+ba8, magic, hide
+ba8, rare, hide
+ba8, unique, hide
+ba8, set, hide
+#Savage Helmet
+ba9, low, hide
+ba9, normal, hide
+ba9, superior, hide
+ba9, magic, hide
+ba9, rare, hide
+ba9, unique, hide
+ba9, set, hide
+#Slayer Guard
+baa, low, hide
+baa, normal, hide
+baa, superior, hide
+baa, magic, hide
+baa, rare, hide
+baa, unique, hide
+baa, set, hide
+
+#Barb Helmets (elite)
+#Carnage Helm
+bab, low, hide
+bab, normal, hide
+bab, superior, hide
+bab, magic, hide
+bab, rare, hide
+bab, unique, darkgold
+bab, set, hide
+#Fury Visor
+bac, low, hide
+bac, normal, hide
+bac, superior, hide
+bac, magic, hide
+bac, rare, hide
+bac, unique, darkgold
+bac, set, hide
+#Destroyer Helm - Talic's Boon - World Drop
+bad, low, hide
+bad, normal, hide
+bad, superior, hide
+bad, magic, hide
+bad, rare, hide
+bad, unique, red
+bad, set, hide
+#Conqueror Crown - Korlic's Honor - World Drop
+bae, low, hide
+bae, normal, hide
+bae, superior, hide
+bae, magic, hide
+bae, rare, hide
+bae, unique, red
+bae, set, hide
+#Guardian Crown - Immortal King Uber
+baf, low, hide
+baf, normal, hide
+baf, superior, hide
+baf, magic, hide
+baf, rare, hide
+baf, unique, darkgold
+baf, set, darkgreen
+
+#Circlets
+#Circlet 
+ci0, low, hide
+ci0, normal, hide
+ci0, superior, hide
+ci0, magic, hide
+#Coronet
+ci1, low, hide
+ci1, normal, hide
+ci1, superior, hide
+ci1, magic, hide
+#Tiara
+ci2, low, hide
+ci2, normal, hide
+ci2, superior, hide
+ci2, magic, hide
+#Diadem - M'avina Uber
+ci3, low, hide
+ci3, normal, hide
+ci3, superior, hide
+ci3, magic, hide
+ci3, unique, darkgold
+ci3, set, darkgreen
+
+#Body Armor (normal)
+#Quilted Armor
+qui, low, hide
+qui, normal, hide
+qui, superior, hide
+qui, magic, hide
+qui, rare, hide
+qui, unique, hide
+qui, set, hide
+#Leather Armor
+lea, low, hide
+lea, normal, hide
+lea, superior, hide
+lea, magic, hide
+lea, rare, hide
+lea, unique, hide
+lea, set, hide
+#Hard Leather
+hla, low, hide
+hla, normal, hide
+hla, superior, hide
+hla, magic, hide
+hla, rare, hide
+hla, unique, hide
+hla, set, hide
+#Studded Leather
+stu, low, hide
+stu, normal, hide
+stu, superior, hide
+stu, magic, hide
+stu, rare, hide
+stu, unique, hide
+stu, set, hide
+#Ring Mail
+rng, low, hide
+rng, normal, hide
+rng, superior, hide
+rng, magic, hide
+rng, rare, hide
+rng, unique, hide
+rng, set, hide
+#Scale Mail
+scl, low, hide
+scl, normal, hide
+scl, superior, hide
+scl, magic, hide
+scl, rare, hide
+scl, unique, hide
+scl, set, hide
+#Chain Mail
+chn, low, hide
+chn, normal, hide
+chn, superior, hide
+chn, magic, hide
+chn, rare, hide
+chn, unique, hide
+chn, set, hide
+#Breast Plate
+brs, low, hide
+brs, normal, hide
+brs, superior, hide
+brs, magic, hide
+brs, rare, hide
+brs, unique, hide
+brs, set, hide
+#Splint Mail
+spl, low, hide
+spl, normal, hide
+spl, superior, hide
+spl, magic, hide
+spl, rare, hide
+spl, unique, hide
+spl, set, hide
+#Plate Mail
+plt, low, hide
+plt, normal, hide
+plt, superior, hide
+plt, magic, hide
+plt, rare, hide
+plt, unique, hide
+plt, set, hide
+#Field Plate
+fld, low, hide
+fld, normal, hide
+fld, superior, hide
+fld, magic, hide
+fld, rare, hide
+fld, unique, hide
+fld, set, hide
+#Gothic Plate
+gth, low, hide
+gth, normal, hide
+gth, superior, hide
+gth, magic, hide
+gth, rare, hide
+gth, unique, hide
+gth, set, hide
+#Full Plate Mail
+ful, low, hide
+ful, normal, hide
+ful, superior, hide
+ful, magic, hide
+ful, rare, hide
+ful, unique, hide
+ful, set, hide
+#Ancient Armor
+aar, low, hide
+aar, normal, hide
+aar, superior, hide
+aar, magic, hide
+aar, rare, hide
+aar, unique, hide
+aar, set, hide
+#Light Plate
+ltp, low, hide
+ltp, normal, hide
+ltp, superior, hide
+ltp, magic, hide
+ltp, rare, hide
+ltp, unique, hide
+ltp, set, hide
+
+#Body Armor (exceptional)
+#Ghost Armor
+xui, low, hide
+xui, normal, hide
+xui, superior, hide
+xui, magic, hide
+xui, rare, hide
+xui, unique, hide
+xui, set, hide
+#Serpentskin
+xea, low, hide
+xea, normal, hide
+xea, superior, hide
+xea, magic, hide
+xea, rare, hide
+xea, unique, hide
+xea, set, hide
+#Demonhide Armor
+xla, low, hide
+xla, normal, hide
+xla, superior, hide
+xla, magic, hide
+xla, rare, hide
+xla, unique, hide
+xla, set, hide
+#Trellised Armor
+xtu, low, hide
+xtu, normal, hide
+xtu, superior, hide
+xtu, magic, hide
+xtu, rare, hide
+xtu, unique, hide
+xtu, set, hide
+#Linked Mail
+xng, low, hide
+xng, normal, hide
+xng, superior, hide
+xng, magic, hide
+xng, rare, hide
+xng, unique, hide
+xng, set, hide
+#Tigulated Mail
+xcl, low, hide
+xcl, normal, hide
+xcl, superior, hide
+xcl, magic, hide
+xcl, rare, hide
+xcl, unique, hide
+xcl, set, hide
+#Mesh Armor
+xhn, low, hide
+xhn, normal, hide
+xhn, superior, hide
+xhn, magic, hide
+xhn, rare, hide
+xhn, unique, darkgold
+xhn, set, hide
+#Cuirass
+xrs, low, hide
+xrs, normal, hide
+xrs, superior, hide
+xrs, magic, hide
+xrs, rare, hide
+xrs, unique, hide
+xrs, set, hide
+#Russet Armor
+xpl, low, hide
+xpl, normal, hide
+xpl, superior, hide
+xpl, magic, hide
+xpl, rare, hide
+xpl, unique, hide
+xpl, set, hide
+#Templar Coat
+xlt, low, hide
+xlt, normal, hide
+xlt, superior, hide
+xlt, magic, hide
+xlt, rare, hide
+xlt, unique, hide
+xlt, set, hide
+#Sharktooth
+xld, low, hide
+xld, normal, hide
+xld, superior, hide
+xld, magic, hide
+xld, rare, hide
+xld, unique, hide
+xld, set, hide
+#Embossed Plate
+xth, low, hide
+xth, normal, hide
+xth, superior, hide
+xth, magic, hide
+xth, rare, hide
+xth, unique, hide
+xth, set, hide
+#Chaos Armor
+xul, low, hide
+xul, normal, hide
+xul, superior, hide
+xul, magic, hide
+xul, rare, hide
+xul, unique, hide
+xul, set, hide
+#Ornate Armor
+xar, low, hide
+xar, normal, hide
+xar, superior, hide
+xar, magic, hide
+xar, rare, hide
+xar, unique, hide
+xar, set, hide
+#Mage Plate
+xtp, low, hide
+xtp, normal, hide
+xtp, superior, hide
+xtp, magic, hide
+xtp, rare, hide
+xtp, unique, hide
+xtp, set, hide
+
+#Body Armor (elite)
+#Dusk Shroud
+uui, low, hide
+uui, normal, hide
+uui, superior, hide
+uui, magic, hide
+uui, rare, hide
+uui, unique, darkgold
+uui, set, hide
+#Wyrmhide
+uea, low, hide
+uea, normal, hide
+uea, superior, hide
+uea, magic, hide
+uea, rare, hide
+uea, unique, darkgold
+uea, set, hide
+#Scarab Husk
+ula, low, hide
+ula, normal, hide
+ula, superior, hide
+ula, magic, hide
+ula, rare, hide
+ula, unique, darkgold
+ula, set, hide
+#Wire Fleece - Cow Set
+utu, low, hide
+utu, normal, hide
+utu, superior, hide
+utu, magic, hide
+utu, rare, hide
+utu, unique, darkgold
+utu, set, lightgreen
+#Diamond Mail
+ung, low, hide
+ung, normal, hide
+ung, superior, hide
+ung, magic, hide
+ung, rare, hide
+ung, unique, darkgold
+ung, set, hide
+#Loricated Mail - Natalya Uber
+ucl, low, hide
+ucl, normal, hide
+ucl, superior, hide
+ucl, magic, hide
+ucl, rare, hide
+ucl, unique, darkgold
+ucl, set, darkgreen
+#Boneweave
+uhn, low, hide
+uhn, normal, hide
+uhn, superior, hide
+uhn, magic, hide
+uhn, rare, hide
+uhn, unique, darkgold
+uhn, set, hide
+#Great Hauberk
+urs, low, hide
+urs, normal, hide
+urs, superior, hide
+urs, magic, hide
+urs, rare, hide
+urs, unique, darkgold
+urs, set, hide
+#Balrog Skin - Arkaine's Wrath - World Drop
+upl, low, hide
+upl, normal, hide
+upl, superior, hide
+upl, magic, hide
+upl, rare, hide
+upl, unique, red
+upl, set, hide
+#Hellforge Plate
+ult, low, hide
+ult, normal, hide
+ult, superior, hide
+ult, magic, hide
+ult, rare, hide
+ult, unique, darkgold
+ult, set, hide
+#Kraken Shell - Aspect of War - World Drop - M'avina Uber
+uld, low, hide
+uld, normal, hide
+uld, superior, hide
+uld, magic, hide
+uld, rare, hide
+uld, unique, red
+uld, set, darkgreen
+#Lacquered Plate - Tal Rasha Uber
+uth, low, hide
+uth, normal, hide
+uth, superior, hide
+uth, magic, hide
+uth, rare, hide
+uth, unique, darkgold
+uth, set, darkgreen
+#Shadow Plate - Aldur Uber - Trag'Oul Uber
+uul, low, hide
+uul, normal, hide
+uul, superior, hide
+uul, magic, hide
+uul, rare, hide
+uul, unique, darkgold
+uul, set, darkgreen
+#Sacred Armor - Griswold Uber - Immortal King Uber
+uar, low, hide
+uar, normal, hide
+uar, superior, hide
+uar, magic, hide
+uar, rare, hide
+uar, unique, darkgold
+uar, set, darkgreen
+#Archon Plate
+utp, low, hide
+utp, normal, hide
+utp, superior, hide
+utp, magic, hide
+utp, rare, hide
+utp, unique, darkgold
+utp, set, hide
+
+#Belts (normal)
+#Sash
+lbl, low, hide
+lbl, normal, hide
+lbl, superior, hide
+lbl, magic, hide
+lbl, rare, hide
+lbl, unique, hide
+lbl, set, hide
+#Light Belt
+vbl, low, hide
+vbl, normal, hide
+vbl, superior, hide
+vbl, magic, hide
+vbl, rare, hide
+vbl, unique, hide
+vbl, set, hide
+#Belt
+mbl, low, hide
+mbl, normal, hide
+mbl, superior, hide
+mbl, magic, hide
+mbl, rare, hide
+mbl, unique, hide
+mbl, set, hide
+#Heavy Belt
+tbl, low, hide
+tbl, normal, hide
+tbl, superior, hide
+tbl, magic, hide
+tbl, rare, hide
+tbl, unique, hide
+tbl, set, hide
+#Plated Belt
+hbl, low, hide
+hbl, normal, hide
+hbl, superior, hide
+hbl, magic, hide
+hbl, rare, hide
+hbl, unique, hide
+hbl, set, hide
+
+#Belts (exceptional)
+#Demonhide Sash
+zlb, low, hide
+zlb, normal, hide
+zlb, superior, hide
+zlb, magic, hide
+zlb, rare, hide
+zlb, unique, darkgold
+zlb, set, hide
+#Sharkskin Belt
+zvb, low, hide
+zvb, normal, hide
+zvb, superior, hide
+zvb, magic, hide
+zvb, rare, hide
+zvb, unique, hide
+zvb, set, hide
+#Mesh Belt
+zmb, low, hide
+zmb, normal, hide
+zmb, superior, hide
+zmb, magic, hide
+zmb, rare, hide
+zmb, unique, hide
+zmb, set, hide
+#Battle Belt
+ztb, low, hide
+ztb, normal, hide
+ztb, superior, hide
+ztb, magic, hide
+ztb, rare, hide
+ztb, unique, hide
+ztb, set, hide
+#War Belt
+zhb, low, hide
+zhb, normal, hide
+zhb, superior, hide
+zhb, magic, hide
+zhb, rare, hide
+zhb, unique, hide
+zhb, set, hide
+
+#Belts (elite)
+#Spiderweb Sash
+ulc, low, hide
+ulc, normal, hide
+ulc, superior, hide
+ulc, magic, hide
+ulc, rare, hide
+ulc, unique, darkgold
+ulc, set, hide
+#Vampirefang Belt - The Beast Within - World Drop - M'avina Uber
+uvc, low, hide
+uvc, normal, hide
+uvc, superior, hide
+uvc, magic, hide
+uvc, rare, hide
+uvc, unique, red
+uvc, set, darkgreen
+#Mithril Coil - Relic of the Ancients - World Drop - Tal Rasha Uber
+umc, low, hide
+umc, normal, hide
+umc, superior, hide
+umc, magic, hide
+umc, rare, hide
+umc, unique, red
+umc, set, darkgreen
+#Troll Belt - Trag'Oul Uber
+utc, low, hide
+utc, normal, hide
+utc, superior, hide
+utc, magic, hide
+utc, rare, hide
+utc, unique, darkgold
+utc, set, darkgreen
+#Colossus Girdle - Bahamut Set - Immortal King Uber
+uhc, low, hide
+uhc, normal, hide
+uhc, superior, hide
+uhc, magic, hide
+uhc, rare, hide
+uhc, unique, darkgold
+uhc, set, darkgreen
+
+#Boots (normal)
+#Boots
+lbt, low, hide
+lbt, normal, hide
+lbt, superior, hide
+lbt, magic, hide
+lbt, rare, hide
+lbt, unique, hide
+lbt, set, hide
+#Heavy Boots
+vbt, low, hide
+vbt, normal, hide
+vbt, superior, hide
+vbt, magic, hide
+vbt, rare, hide
+vbt, unique, hide
+vbt, set, hide
+#Chain Boots
+mbt, low, hide
+mbt, normal, hide
+mbt, superior, hide
+mbt, magic, hide
+mbt, rare, hide
+mbt, unique, hide
+mbt, set, hide
+#Light Plate
+tbt, low, hide
+tbt, normal, hide
+tbt, superior, hide
+tbt, magic, hide
+tbt, rare, hide
+tbt, unique, hide
+tbt, set, hide
+#Greaves
+hbt, low, hide
+hbt, normal, hide
+hbt, superior, hide
+hbt, magic, hide
+hbt, rare, hide
+hbt, unique, hide
+hbt, set, hide
+
+#Boots (exceptional)
+#Demonhide Boots
+xlb, low, hide
+xlb, normal, hide
+xlb, superior, hide
+xlb, magic, hide
+xlb, rare, hide
+xlb, unique, hide
+xlb, set, hide
+#Sharkskin Boots
+xvb, low, hide
+xvb, normal, hide
+xvb, superior, hide
+xvb, magic, hide
+xvb, rare, hide
+xvb, unique, hide
+xvb, set, hide
+#Mesh Boots 
+xmb, low, hide
+xmb, normal, hide
+xmb, superior, hide
+xmb, magic, hide
+xmb, rare, hide
+xmb, unique, hide
+xmb, set, hide
+#Battle Boots
+xtb, low, hide
+xtb, normal, hide
+xtb, superior, hide
+xtb, magic, hide
+xtb, rare, hide
+xtb, unique, hide
+xtb, set, hide
+#War Boots
+xhb, low, hide
+xhb, normal, hide
+xhb, superior, hide
+xhb, magic, hide
+xhb, rare, hide
+xhb, unique, darkgold
+xhb, set, hide
+
+#Boots (elite)
+#Wyrmhide Boots - Bahamut Set
+ulb, low, hide
+ulb, normal, hide
+ulb, superior, hide
+ulb, magic, hide
+ulb, rare, hide
+ulb, unique, darkgold
+ulb, set, lightgreen
+#Scarabshell Boots - Meshif's Travelers - World Drop - Cow Set
+uvb, low, hide
+uvb, normal, hide
+uvb, superior, hide
+uvb, magic, hide
+uvb, rare, hide
+uvb, unique, red
+uvb, set, lightgreen
+#Boneweave Boots - Natalya Uber
+umb, low, hide
+umb, normal, hide
+umb, superior, hide
+umb, magic, hide
+umb, rare, hide
+umb, unique, darkgold
+umb, set, darkgreen
+#Mirrored Boots - Aftershock - World Drop - Aldur Uber
+utb, low, hide
+utb, normal, hide
+utb, superior, hide
+utb, magic, hide
+utb, rare, hide
+utb, unique, red
+utb, set, darkgreen
+#Myrmidon Greaves - Immortal King Uber
+uhb, low, hide
+uhb, normal, hide
+uhb, superior, hide
+uhb, magic, hide
+uhb, rare, hide
+uhb, unique, darkgold
+uhb, set, darkgreen
+
+#Druid Pelts (normal)
+#Wolf Head
+dr1, low, hide
+dr1, normal, hide
+dr1, superior, hide
+dr1, magic, hide
+dr1, rare, hide
+dr1, unique, hide
+dr1, set, hide
+#Hawk Helm
+dr2, low, hide
+dr2, normal, hide
+dr2, superior, hide
+dr2, magic, hide
+dr2, rare, hide
+dr2, unique, hide
+dr2, set, hide
+
+#Antlers
+dr3, low, hide
+dr3, normal, hide
+dr3, superior, hide
+dr3, magic, hide
+dr3, rare, hide
+dr3, unique, hide
+dr3, set, hide
+#Falcon Mask
+dr4, low, hide
+dr4, normal, hide
+dr4, superior, hide
+dr4, magic, hide
+dr4, rare, hide
+dr4, unique, hide
+dr4, set, hide
+#Spirit Mask
+dr5, low, hide
+dr5, normal, hide
+dr5, superior, hide
+dr5, magic, hide
+dr5, rare, hide
+dr5, unique, hide
+dr5, set, hide
+
+#Druid Pelts (exceptional)
+#Alpha Helm
+dr6, low, hide
+dr6, normal, hide
+dr6, superior, hide
+dr6, magic, hide
+dr6, rare, hide
+dr6, unique, hide
+dr6, set, hide
+#Griffon Headress
+dr7, low, hide
+dr7, normal, hide
+dr7, superior, hide
+dr7, magic, hide
+dr7, rare, hide
+dr7, unique, hide
+dr7, set, hide
+#Hunter's Guise
+dr8, low, hide
+dr8, normal, hide
+dr8, superior, hide
+dr8, magic, hide
+dr8, rare, hide
+dr8, unique, hide
+dr8, set, hide
+
+#Sacred Feathers
+dr9, low, hide
+dr9, normal, hide
+dr9, superior, hide
+dr9, magic, hide
+dr9, rare, hide
+dr9, unique, hide
+dr9, set, hide
+#Totemic Mask
+dra, low, hide
+dra, normal, hide
+dra, superior, hide
+dra, magic, hide
+dra, rare, hide
+dra, unique, hide
+dra, set, hide
+
+#Druid Pelts (elite)
+#Blood Spirit
+drb, low, hide
+drb, normal, hide
+drb, superior, hide
+drb, magic, hide
+drb, rare, hide
+drb, unique, darkgold
+drb, set, hide
+#Sun Spirit
+drc, low, hide
+drc, normal, hide
+drc, superior, hide
+drc, magic, hide
+drc, rare, hide
+drc, unique, darkgold
+drc, set, hide
+#Earth Spirit - Firelord's Ascendance - World Drop - Aldur Uber
+drd, low, hide
+drd, normal, hide
+drd, superior, hide
+drd, magic, hide
+drd, rare, hide
+drd, unique, red
+drd, set, darkgreen
+#Sky Spirit
+dre, low, hide
+dre, normal, hide
+dre, superior, hide
+dre, magic, hide
+dre, rare, hide
+dre, unique, darkgold
+dre, set, hide
+#Dream Spirit
+drf, low, hide
+drf, normal, hide
+drf, superior, hide
+drf, magic, hide
+drf, rare, hide
+drf, unique, darkgold
+drf, set, hide
+
+#Gloves (normal)
+#Leather Gloves
+lgl, low, hide
+lgl, normal, hide
+lgl, superior, hide
+lgl, magic, hide
+lgl, rare, hide
+lgl, unique, hide
+lgl, set, hide
+#Heavy Gloves
+vgl, low, hide
+vgl, normal, hide
+vgl, superior, hide
+vgl, magic, hide
+vgl, rare, hide
+vgl, unique, hide
+vgl, set, hide
+#Chain Gloves
+mgl, low, hide
+mgl, normal, hide
+mgl, superior, hide
+mgl, magic, hide
+mgl, rare, hide
+mgl, unique, hide
+mgl, set, hide
+#Light Gauntlets
+tgl, low, hide
+tgl, normal, hide
+tgl, superior, hide
+tgl, magic, hide
+tgl, rare, hide
+tgl, unique, hide
+tgl, set, hide
+#Gauntlets
+hgl, low, hide
+hgl, normal, hide
+hgl, superior, hide
+hgl, magic, hide
+hgl, rare, hide
+hgl, unique, hide
+hgl, set, hide
+
+#Gloves (exceptional)
+#Demonhide Gloves
+xlg, low, hide
+xlg, normal, hide
+xlg, superior, hide
+xlg, magic, hide
+xlg, rare, hide
+xlg, unique, hide
+xlg, set, hide
+#Sharkskin Gloves
+xvg, low, hide
+xvg, normal, hide
+xvg, superior, hide
+xvg, magic, hide
+xvg, rare, hide
+xvg, unique, hide
+xvg, set, hide
+#Heavy Bracers
+xmg, low, hide
+xmg, normal, hide
+xmg, superior, hide
+xmg, magic, hide
+xmg, rare, hide
+xmg, unique, hide
+xmg, set, hide
+#Battle Gauntlets
+xtg, low, hide
+xtg, normal, hide
+xtg, superior, hide
+xtg, magic, hide
+xtg, rare, hide
+xtg, unique, darkgold
+xtg, set, hide
+#War Gauntlets
+xhg, low, hide
+xhg, normal, hide
+xhg, superior, hide
+xhg, magic, hide
+xhg, rare, hide
+xhg, unique, hide
+xhg, set, hide
+
+#Gloves (elite)
+#Bramble Mitts
+ulg, low, hide
+ulg, normal, hide
+ulg, superior, hide
+ulg, magic, hide
+ulg, rare, hide
+ulg, unique, darkgold
+ulg, set, hide
+#Vampirebone Gloves - Wizard's Ire - World Drop
+uvg, low, hide
+uvg, normal, hide
+uvg, superior, hide
+uvg, magic, hide
+uvg, rare, hide
+uvg, unique, red
+uvg, set, hide
+#Vambraces - Dragon's Tempest - World Drop - Trag'Oul Uber
+umg, low, hide
+umg, normal, hide
+umg, superior, hide
+umg, magic, hide
+umg, rare, hide
+umg, unique, red
+umg, set, darkgreen
+#Crusader Gauntlets - M'avina Uber
+utg, low, hide
+utg, normal, hide
+utg, superior, hide
+utg, magic, hide
+utg, rare, hide
+utg, unique, darkgold
+utg, set, darkgreen
+#Ogre Gauntlets - Titan's Grip - World Drop - Immortal King Uber
+uhg, low, hide
+uhg, normal, hide
+uhg, superior, hide
+uhg, magic, hide
+uhg, rare, hide
+uhg, unique, red
+uhg, set, darkgreen
+
+#Necromancer Shrunken Heads (normal)
+#Preserved Head
+ne1, low, hide
+ne1, normal, hide
+ne1, superior, hide
+ne1, magic, hide
+ne1, rare, hide
+ne1, unique, hide
+ne1, set, hide
+#Zombie Head
+ne2, low, hide
+ne2, normal, hide
+ne2, superior, hide
+ne2, magic, hide
+ne2, rare, hide
+ne2, unique, hide
+ne2, set, hide
+#Unraveller Head
+ne3, low, hide
+ne3, normal, hide
+ne3, superior, hide
+ne3, magic, hide
+ne3, rare, hide
+ne3, unique, hide
+ne3, set, hide
+#Gargoyle Head
+ne4, low, hide
+ne4, normal, hide
+ne4, superior, hide
+ne4, magic, hide
+ne4, rare, hide
+ne4, unique, hide
+ne4, set, hide
+#Demon Head
+ne5, low, hide
+ne5, normal, hide
+ne5, superior, hide
+ne5, magic, hide
+ne5, rare, hide
+ne5, unique, hide
+ne5, set, hide
+
+#Necromancer Shrunken Heads (exceptional)
+#Mummified Trophy
+ne6, low, hide
+ne6, normal, hide
+ne6, superior, hide
+ne6, magic, hide
+ne6, rare, hide
+ne6, unique, hide
+ne6, set, hide
+#Fetish Trophy
+ne7, low, hide
+ne7, normal, hide
+ne7, superior, hide
+ne7, magic, hide
+ne7, rare, hide
+ne7, unique, hide
+ne7, set, hide
+#Sexton Trophy
+ne8, low, hide
+ne8, normal, hide
+ne8, superior, hide
+ne8, magic, hide
+ne8, rare, hide
+ne8, unique, hide
+ne8, set, hide
+#Cantor Trophy
+ne9, low, hide
+ne9, normal, hide
+ne9, superior, hide
+ne9, magic, hide
+ne9, rare, hide
+ne9, unique, hide
+ne9, set, hide
+#Heirophant Trphy
+nea, low, hide
+nea, normal, hide
+nea, superior, hide
+nea, magic, hide
+nea, rare, hide
+nea, unique, hide
+nea, set, hide
+
+#Necromancer Shrunken Heads (elite)
+#Minion Skull
+neb, low, hide
+neb, normal, hide
+neb, superior, hide
+neb, magic, hide
+neb, rare, hide
+neb, unique, darkgold
+neb, set, hide
+#Hellspawn Skull
+nec, low, hide
+nec, normal, hide
+nec, superior, hide
+nec, magic, hide
+nec, rare, hide
+nec, unique, darkgold
+nec, set, hide
+#Overseer Skull
+ned, low, hide
+ned, normal, hide
+ned, superior, hide
+ned, magic, hide
+ned, rare, hide
+ned, unique, darkgold
+ned, set, hide
+#Succubus Skull - Forsaken - World Drop - Trag'Oul Uber
+nee, low, hide
+nee, normal, hide
+nee, superior, hide
+nee, magic, hide
+nee, rare, hide
+nee, unique, red
+nee, set, darkgreen
+#Bloodlord Skull
+nef, low, hide
+nef, normal, hide
+nef, superior, hide
+nef, magic, hide
+nef, rare, hide
+nef, unique, darkgold
+nef, set, hide
+
+#Paladin Shields (normal)
+#Targe
+pa1, low, hide
+pa1, normal, hide
+pa1, superior, hide
+pa1, magic, hide
+pa1, rare, hide
+pa1, unique, hide
+pa1, set, hide
+#Rondache
+pa2, low, hide
+pa2, normal, hide
+pa2, superior, hide
+pa2, magic, hide
+pa2, rare, hide
+pa2, unique, hide
+pa2, set, hide
+#Heraldic Shield
+pa3, low, hide
+pa3, normal, hide
+pa3, superior, hide
+pa3, magic, hide
+pa3, rare, hide
+pa3, unique, hide
+pa3, set, hide
+#Aerin Shield
+pa4, low, hide
+pa4, normal, hide
+pa4, superior, hide
+pa4, magic, hide
+pa4, rare, hide
+pa4, unique, hide
+pa4, set, hide
+#Crown Shield
+pa5, low, hide
+pa5, normal, hide
+pa5, superior, hide
+pa5, magic, hide
+pa5, rare, hide
+pa5, unique, hide
+pa5, set, hide
+
+#Paladin Shields (exceptional)
+#Akaran Targe
+pa6, low, hide
+pa6, normal, hide
+pa6, superior, hide
+pa6, magic, hide
+pa6, rare, hide
+pa6, unique, hide
+pa6, set, hide
+#Akaran Rondache
+pa7, low, hide
+pa7, normal, hide
+pa7, superior, hide
+pa7, magic, hide
+pa7, rare, hide
+pa7, unique, hide
+pa7, set, hide
+#Protector Shld
+pa8, low, hide
+pa8, normal, hide
+pa8, superior, hide
+pa8, magic, hide
+pa8, rare, hide
+pa8, unique, hide
+pa8, set, hide
+#Guilded Shield
+pa9, low, hide
+pa9, normal, hide
+pa9, superior, hide
+pa9, magic, hide
+pa9, rare, hide
+pa9, unique, hide
+pa9, set, hide
+#Royal Shield
+paa, low, hide
+paa, normal, hide
+paa, superior, hide
+paa, magic, hide
+paa, rare, hide
+paa, unique, hide
+paa, set, hide
+
+#Paladin Shields (elite)
+#Sacred Targe
+pab, low, hide
+pab, normal, hide
+pab, superior, hide
+pab, magic, hide
+pab, rare, hide
+pab, unique, darkgold
+pab, set, hide
+#Sacred Rondache - Akarat's Legacy - World Drop
+pac, low, hide
+pac, normal, hide
+pac, superior, hide
+pac, magic, hide
+pac, rare, hide
+pac, unique, red
+pac, set, hide
+#Kurast Shield
+pad, low, hide
+pad, normal, hide
+pad, superior, hide
+pad, magic, hide
+pad, rare, hide
+pad, unique, darkgold
+pad, set, hide
+#Zakarum Shield - Divine Crusade - World Drop
+pae, low, hide
+pae, normal, hide
+pae, superior, hide
+pae, magic, hide
+pae, rare, hide
+pae, unique, red
+pae, set, hide
+#Vortex Shield - Griswold
+paf, low, hide
+paf, normal, hide
+paf, superior, hide
+paf, magic, hide
+paf, rare, hide
+paf, unique, darkgold
+paf, set, darkgreen
+
+#Shields (normal)
+#Buckler
+buc, low, hide
+buc, normal, hide
+buc, superior, hide
+buc, magic, hide
+buc, rare, hide
+buc, unique, hide
+buc, set, hide
+#Small Shield
+sml, low, hide
+sml, normal, hide
+sml, superior, hide
+sml, magic, hide
+sml, rare, hide
+sml, unique, hide
+sml, set, hide
+#Large Shield
+lrg, low, hide
+lrg, normal, hide
+lrg, superior, hide
+lrg, magic, hide
+lrg, rare, hide
+lrg, unique, hide
+lrg, set, hide
+#Kite Shield
+kit, low, hide
+kit, normal, hide
+kit, superior, hide
+kit, magic, hide
+kit, rare, hide
+kit, unique, hide
+kit, set, hide
+#Tower Shield
+tow, low, hide
+tow, normal, hide
+tow, superior, hide
+tow, magic, hide
+tow, rare, hide
+tow, unique, hide
+tow, set, hide
+#Gothic Shield
+gts, low, hide
+gts, normal, hide
+gts, superior, hide
+gts, magic, hide
+gts, rare, hide
+gts, unique, hide
+gts, set, hide
+#Bone Shield
+bsh, low, hide
+bsh, normal, hide
+bsh, superior, hide
+bsh, magic, hide
+bsh, rare, hide
+bsh, unique, hide
+bsh, set, hide
+#Spiked Shield
+spk, low, hide
+spk, normal, hide
+spk, superior, hide
+spk, magic, hide
+spk, rare, hide
+spk, unique, hide
+spk, set, hide
+
+#Shields (exceptional)
+#Defender
+xuc, low, hide
+xuc, normal, hide
+xuc, superior, hide
+xuc, magic, hide
+xuc, rare, hide
+xuc, unique, hide
+xuc, set, hide
+#Round Shield
+xml, low, hide
+xml, normal, hide
+xml, superior, hide
+xml, magic, hide
+xml, rare, hide
+xml, unique, hide
+xml, set, hide
+#Scutum
+xrg, low, hide
+xrg, normal, hide
+xrg, superior, hide
+xrg, magic, hide
+xrg, rare, hide
+xrg, unique, hide
+xrg, set, hide
+#Dragon Shield
+xit, low, hide
+xit, normal, hide
+xit, superior, hide
+xit, magic, hide
+xit, rare, hide
+xit, unique, hide
+xit, set, hide
+#Pavise
+xow, low, hide
+xow, normal, hide
+xow, superior, hide
+xow, magic, hide
+xow, rare, hide
+xow, unique, darkgold
+xow, set, hide
+#Ancient Shield
+xts, low, hide
+xts, normal, hide
+xts, superior, hide
+xts, magic, hide
+xts, rare, hide
+xts, unique, hide
+xts, set, hide
+#Grim Shield
+xsh, low, hide
+xsh, normal, hide
+xsh, superior, hide
+xsh, magic, hide
+xsh, rare, hide
+xsh, unique, hide
+xsh, set, hide
+#Barbed Shield
+xpk, low, hide
+xpk, normal, hide
+xpk, superior, hide
+xpk, magic, hide
+xpk, rare, hide
+xpk, unique, hide
+xpk, set, hide
+
+#Shields (elite)
+#Heater
+uuc, low, hide
+uuc, normal, hide
+uuc, superior, hide
+uuc, magic, hide
+uuc, rare, hide
+uuc, unique, darkgold
+uuc, set, hide
+#Luna
+uml, low, hide
+uml, normal, hide
+uml, superior, hide
+uml, magic, hide
+uml, rare, hide
+uml, unique, darkgold
+uml, set, hide
+#Hyperion
+urg, low, hide
+urg, normal, hide
+urg, superior, hide
+urg, magic, hide
+urg, rare, hide
+urg, unique, darkgold
+urg, set, hide
+#Monarch
+uit, low, hide
+uit, normal, hide
+uit, superior, hide
+uit, magic, hide
+uit, rare, hide
+uit, unique, darkgold
+uit, set, hide
+#Aegis - Perseus's Scorn - World Drop
+uow, low, hide
+uow, normal, hide
+uow, superior, hide
+uow, magic, hide
+uow, rare, hide
+uow, unique, red
+uow, set, hide
+#Ward
+uts, low, hide
+uts, normal, hide
+uts, superior, hide
+uts, magic, hide
+uts, rare, hide
+uts, unique, darkgold
+uts, set, hide
+#Troll Nest - Bane of the Underworld - World Drop
+ush, low, hide
+ush, normal, hide
+ush, superior, hide
+ush, magic, hide
+ush, rare, hide
+ush, unique, red
+ush, set, hide
+#Blade Barrier
+upk, low, hide
+upk, normal, hide
+upk, superior, hide
+upk, magic, hide
+upk, rare, hide
+upk, unique, darkgold
+upk, set, hide
+
+#Amazon Weapons (normal)
+#Stag Bow
+am1, low, hide
+am1, normal, hide
+am1, superior, hide
+am1, magic, hide
+am1, rare, hide
+am1, unique, hide
+am1, set, hide
+#Reflex Bow
+am2, low, hide
+am2, normal, hide
+am2, superior, hide
+am2, magic, hide
+am2, rare, hide
+am2, unique, hide
+am2, set, hide
+#Maiden Spear
+am3, low, hide
+am3, normal, hide
+am3, superior, hide
+am3, magic, hide
+am3, rare, hide
+am3, unique, hide
+am3, set, hide
+#Maiden Pike
+am4, low, hide
+am4, normal, hide
+am4, superior, hide
+am4, magic, hide
+am4, rare, hide
+am4, unique, hide
+am4, set, hide
+#Maiden Javelin
+am5, low, hide
+am5, normal, hide
+am5, superior, hide
+am5, magic, hide
+am5, rare, hide
+am5, unique, hide
+am5, set, hide
+
+#Amazon Weapons (exceptional)
+#Ashwood Bow
+am6, low, hide
+am6, normal, hide
+am6, superior, hide
+am6, magic, hide
+am6, rare, hide
+am6, unique, hide
+am6, set, hide
+#Ceremonial Bow
+am7, low, hide
+am7, normal, hide
+am7, superior, hide
+am7, magic, hide
+am7, rare, hide
+am7, unique, hide
+am7, set, hide
+#Ceremonial Spr
+am8, low, hide
+am8, normal, hide
+am8, superior, hide
+am8, magic, hide
+am8, rare, hide
+am8, unique, hide
+am8, set, hide
+#Ceremonial Pike
+am9, low, hide
+am9, normal, hide
+am9, superior, hide
+am9, magic, hide
+am9, rare, hide
+am9, unique, hide
+am9, set, hide
+#Ceremonial Jav
+ama, low, hide
+ama, normal, hide
+ama, superior, hide
+ama, magic, hide
+ama, rare, hide
+ama, unique, hide
+ama, set, hide
+
+#Amazon Weapons (elite)
+#Matriarchal Bow
+amb, low, hide
+amb, normal, hide
+amb, superior, hide
+amb, magic, hide
+amb, rare, hide
+amb, unique, darkgold
+amb, set, hide
+#Grand Matron Bow - M'avina
+amc, low, hide
+amc, normal, hide
+amc, superior, hide
+amc, magic, hide
+amc, rare, hide
+amc, unique, darkgold
+amc, set, lightgreen
+#Matriarchal Spear - Athulua's Favor - World Drop
+amd, low, hide
+amd, normal, hide
+amd, superior, hide
+amd, magic, hide
+amd, rare, hide
+amd, unique, red
+amd, set, hide
+#Matriarchal Pike
+ame, low, hide
+ame, normal, hide
+ame, superior, hide
+ame, magic, hide
+ame, rare, hide
+ame, unique, darkgold
+ame, set, hide
+#Matriarchal Javelin - Spear of Zeus/Plaguespreader - World Drop - M'avina uber set
+amf, low, hide
+amf, normal, hide
+amf, superior, hide
+amf, magic, hide
+amf, rare, hide
+amf, unique, red
+amf, set, darkgreen
+
+#Assassin Katars (normal)
+#Katar
+ktr, low, hide
+ktr, normal, hide
+ktr, superior, hide
+ktr, magic, hide
+ktr, rare, hide
+ktr, unique, hide
+ktr, set, hide
+#Wrist Blade
+wrb, low, hide
+wrb, normal, hide
+wrb, superior, hide
+wrb, magic, hide
+wrb, rare, hide
+wrb, unique, hide
+wrb, set, hide
+#Hatchet Hands
+axf, low, hide
+axf, normal, hide
+axf, superior, hide
+axf, magic, hide
+axf, rare, hide
+axf, unique, hide
+axf, set, hide
+#Cestus
+ces, low, hide
+ces, normal, hide
+ces, superior, hide
+ces, magic, hide
+ces, rare, hide
+ces, unique, hide
+ces, set, hide
+#Claws
+clw, low, hide
+clw, normal, hide
+clw, superior, hide
+clw, magic, hide
+clw, rare, hide
+clw, unique, hide
+clw, set, hide
+#Blade Talons
+btl, low, hide
+btl, normal, hide
+btl, superior, hide
+btl, magic, hide
+btl, rare, hide
+btl, unique, hide
+btl, set, hide
+#Scissors Katar
+skr, low, hide
+skr, normal, hide
+skr, superior, hide
+skr, magic, hide
+skr, rare, hide
+skr, unique, hide
+skr, set, hide
+
+#Assassin Katars (exceptional)
+#Quhab
+9ar, low, hide
+9ar, normal, hide
+9ar, superior, hide
+9ar, magic, hide
+9ar, rare, hide
+9ar, unique, hide
+9ar, set, hide
+#Wrist Spike
+9wb, low, hide
+9wb, normal, hide
+9wb, superior, hide
+9wb, magic, hide
+9wb, rare, hide
+9wb, unique, hide
+9wb, set, hide
+#Fascia
+9xf, low, hide
+9xf, normal, hide
+9xf, superior, hide
+9xf, magic, hide
+9xf, rare, hide
+9xf, unique, hide
+9xf, set, hide
+#Hand Scythe
+9cs, low, hide
+9cs, normal, hide
+9cs, superior, hide
+9cs, magic, hide
+9cs, rare, hide
+9cs, unique, hide
+9cs, set, hide
+#Greater Claws
+9lw, low, hide
+9lw, normal, hide
+9lw, superior, hide
+9lw, magic, hide
+9lw, rare, hide
+9lw, unique, hide
+9lw, set, hide
+#Greater Talons
+9tw, low, hide
+9tw, normal, hide
+9tw, superior, hide
+9tw, magic, hide
+9tw, rare, hide
+9tw, unique, hide
+9tw, set, hide
+#Scissors Quhab
+9qr, low, hide
+9qr, normal, hide
+9qr, superior, hide
+9qr, magic, hide
+9qr, rare, hide
+9qr, unique, hide
+9qr, set, hide
+
+#Assassin Katars (elite)
+#Suwayyah
+7ar, low, hide
+7ar, normal, hide
+7ar, superior, hide
+7ar, magic, hide
+7ar, rare, hide
+7ar, unique, darkgold
+7ar, set, hide
+#Wrist Sword
+7wb, low, hide
+7wb, normal, hide
+7wb, superior, hide
+7wb, magic, hide
+7wb, rare, hide
+7wb, unique, darkgold
+7wb, set, hide
+#War Fist
+7xf, low, hide
+7xf, normal, hide
+7xf, superior, hide
+7xf, magic, hide
+7xf, rare, hide
+7xf, unique, darkgold
+7xf, set, hide
+#Battle Cestus
+7cs, low, hide
+7cs, normal, hide
+7cs, superior, hide
+7cs, magic, hide
+7cs, rare, hide
+7cs, unique, darkgold
+7cs, set, hide
+#Feral Claws - Talon's Edge - World Drop
+7lw, low, hide
+7lw, normal, hide
+7lw, superior, hide
+7lw, magic, hide
+7lw, rare, hide
+7lw, unique, red
+7lw, set, hide
+#Runic Talons
+7tw, low, hide
+7tw, normal, hide
+7tw, superior, hide
+7tw, magic, hide
+7tw, rare, hide
+7tw, unique, darkgold
+7tw, set, hide
+#Scissors Suwayyah - Natalya Uber
+7qr, low, hide
+7qr, normal, hide
+7qr, superior, hide
+7qr, magic, hide
+7qr, rare, hide
+7qr, unique, darkgold
+7qr, set, darkgreen
+
+#Axes (normal)
+#Hand Axe
+hax, low, hide
+hax, normal, hide
+hax, superior, hide
+hax, magic, hide
+hax, rare, hide
+hax, unique, hide
+hax, set, hide
+#Axe
+axe, low, hide
+axe, normal, hide
+axe, superior, hide
+axe, magic, hide
+axe, rare, hide
+axe, unique, hide
+axe, set, hide
+#Double Axe
+2ax, low, hide
+2ax, normal, hide
+2ax, superior, hide
+2ax, magic, hide
+2ax, rare, hide
+2ax, unique, hide
+2ax, set, hide
+#Military Pick
+mpi, low, hide
+mpi, normal, hide
+mpi, superior, hide
+mpi, magic, hide
+mpi, rare, hide
+mpi, unique, hide
+mpi, set, hide
+#War Axe
+wax, low, hide
+wax, normal, hide
+wax, superior, hide
+wax, magic, hide
+wax, rare, hide
+wax, unique, hide
+wax, set, hide
+#Large Axe
+lax, low, hide
+lax, normal, hide
+lax, superior, hide
+lax, magic, hide
+lax, rare, hide
+lax, unique, hide
+lax, set, hide
+#Broad Axe
+bax, low, hide
+bax, normal, hide
+bax, superior, hide
+bax, magic, hide
+bax, rare, hide
+bax, unique, hide
+bax, set, hide
+#Battle Axe
+btx, low, hide
+btx, normal, hide
+btx, superior, hide
+btx, magic, hide
+btx, rare, hide
+btx, unique, hide
+btx, set, hide
+#Great Axe
+gax, low, hide
+gax, normal, hide
+gax, superior, hide
+gax, magic, hide
+gax, rare, hide
+gax, unique, hide
+gax, set, hide
+#Giant Axe
+gix, low, hide
+gix, normal, hide
+gix, superior, hide
+gix, magic, hide
+gix, rare, hide
+gix, unique, hide
+gix, set, hide
+
+#Axes (exceptional)
+#Hatchet
+9ha, low, hide
+9ha, normal, hide
+9ha, superior, hide
+9ha, magic, hide
+9ha, rare, hide
+9ha, unique, hide
+9ha, set, hide
+#Cleaver
+9ax, low, hide
+9ax, normal, hide
+9ax, superior, hide
+9ax, magic, hide
+9ax, rare, hide
+9ax, unique, hide
+9ax, set, hide
+#Twin Axe
+92a, low, hide
+92a, normal, hide
+92a, superior, hide
+92a, magic, hide
+92a, rare, hide
+92a, unique, hide
+92a, set, hide
+#Crowbill
+9mp, low, hide
+9mp, normal, hide
+9mp, superior, hide
+9mp, magic, hide
+9mp, rare, hide
+9mp, unique, hide
+9mp, set, hide
+#Naga
+9wa, low, hide
+9wa, normal, hide
+9wa, superior, hide
+9wa, magic, hide
+9wa, rare, hide
+9wa, unique, hide
+9wa, set, hide
+#Military Axe
+9la, low, hide
+9la, normal, hide
+9la, superior, hide
+9la, magic, hide
+9la, rare, hide
+9la, unique, hide
+9la, set, hide
+#Bearded Axe
+9ba, low, hide
+9ba, normal, hide
+9ba, superior, hide
+9ba, magic, hide
+9ba, rare, hide
+9ba, unique, hide
+9ba, set, hide
+#Tabar
+9bt, low, hide
+9bt, normal, hide
+9bt, superior, hide
+9bt, magic, hide
+9bt, rare, hide
+9bt, unique, hide
+9bt, set, hide
+#Gothic Axe
+9ga, low, hide
+9ga, normal, hide
+9ga, superior, hide
+9ga, magic, hide
+9ga, rare, hide
+9ga, unique, hide
+9ga, set, hide
+#Ancient Axe
+9gi, low, hide
+9gi, normal, hide
+9gi, superior, hide
+9gi, magic, hide
+9gi, rare, hide
+9gi, unique, hide
+9gi, set, hide
+
+#Axes (elite)
+#Tomahawk
+7ha, low, hide
+7ha, normal, hide
+7ha, superior, hide
+7ha, magic, hide
+7ha, rare, hide
+7ha, unique, darkgold
+7ha, set, hide
+#Small Crescent
+7ax, low, hide
+7ax, normal, hide
+7ax, superior, hide
+7ax, magic, hide
+7ax, rare, hide
+7ax, unique, darkgold
+7ax, set, hide
+#Ettin Axe
+72a, low, hide
+72a, normal, hide
+72a, superior, hide
+72a, magic, hide
+72a, rare, hide
+72a, unique, darkgold
+72a, set, hide
+#War Spike
+7mp, low, hide
+7mp, normal, hide
+7mp, superior, hide
+7mp, magic, hide
+7mp, rare, hide
+7mp, unique, darkgold
+7mp, set, hide
+#Berserker Axe - Khalim's Rage - World Drop
+7wa, low, hide
+7wa, normal, hide
+7wa, superior, hide
+7wa, magic, hide
+7wa, rare, hide
+7wa, unique, red
+7wa, set, hide
+#Feral Axe
+7la, low, hide
+7la, normal, hide
+7la, superior, hide
+7la, magic, hide
+7la, rare, hide
+7la, unique, darkgold
+7la, set, hide
+#Silver Edged Ax
+7ba, low, hide
+7ba, normal, hide
+7ba, superior, hide
+7ba, magic, hide
+7ba, rare, hide
+7ba, unique, darkgold
+7ba, set, hide
+#Decapitator
+7bt, low, hide
+7bt, normal, hide
+7bt, superior, hide
+7bt, magic, hide
+7bt, rare, hide
+7bt, unique, darkgold
+7bt, set, hide
+#Champion Axe
+7ga, low, hide
+7ga, normal, hide
+7ga, superior, hide
+7ga, magic, hide
+7ga, rare, hide
+7ga, unique, darkgold
+7ga, set, hide
+#Glorious Axe
+7gi, low, hide
+7gi, normal, hide
+7gi, superior, hide
+7gi, magic, hide
+7gi, rare, hide
+7gi, unique, darkgold
+7gi, set, hide
+
+#Bows (normal)
+#Short Bow
+sbw, low, hide
+sbw, normal, hide
+sbw, superior, hide
+sbw, magic, hide
+sbw, rare, hide
+sbw, unique, hide
+sbw, set, hide
+#Hunter’s Bow
+hbw, low, hide
+hbw, normal, hide
+hbw, superior, hide
+hbw, magic, hide
+hbw, rare, hide
+hbw, unique, hide
+hbw, set, hide
+#Long Bow
+lbw, low, hide
+lbw, normal, hide
+lbw, superior, hide
+lbw, magic, hide
+lbw, rare, hide
+lbw, unique, hide
+lbw, set, hide
+#Composite Bow
+cbw, low, hide
+cbw, normal, hide
+cbw, superior, hide
+cbw, magic, hide
+cbw, rare, hide
+cbw, unique, hide
+cbw, set, hide
+#Shrt Battle Bow
+sbb, low, hide
+sbb, normal, hide
+sbb, superior, hide
+sbb, magic, hide
+sbb, rare, hide
+sbb, unique, hide
+sbb, set, hide
+#Long Battle Bow
+lbb, low, hide
+lbb, normal, hide
+lbb, superior, hide
+lbb, magic, hide
+lbb, rare, hide
+lbb, unique, hide
+lbb, set, hide
+#Short War Bow
+swb, low, hide
+swb, normal, hide
+swb, superior, hide
+swb, magic, hide
+swb, rare, hide
+swb, unique, hide
+swb, set, hide
+#Long War Bow
+lwb, low, hide
+lwb, normal, hide
+lwb, superior, hide
+lwb, magic, hide
+lwb, rare, hide
+lwb, unique, hide
+lwb, set, hide
+
+#Bows (exceptional)
+#Edge Bow
+8sb, low, hide
+8sb, normal, hide
+8sb, superior, hide
+8sb, magic, hide
+8sb, rare, hide
+8sb, unique, hide
+8sb, set, hide
+#Razor Bow
+8hb, low, hide
+8hb, normal, hide
+8hb, superior, hide
+8hb, magic, hide
+8hb, rare, hide
+8hb, unique, hide
+8hb, set, hide
+#Cedar Bow
+8lb, low, hide
+8lb, normal, hide
+8lb, superior, hide
+8lb, magic, hide
+8lb, rare, hide
+8lb, unique, hide
+8lb, set, hide
+#Double Bow
+8cb, low, hide
+8cb, normal, hide
+8cb, superior, hide
+8cb, magic, hide
+8cb, rare, hide
+8cb, unique, hide
+8cb, set, hide
+#Short Siege Bow
+8s8, low, hide
+8s8, normal, hide
+8s8, superior, hide
+8s8, magic, hide
+8s8, rare, hide
+8s8, unique, hide
+8s8, set, hide
+#Long Siege Bow
+8l8, low, hide
+8l8, normal, hide
+8l8, superior, hide
+8l8, magic, hide
+8l8, rare, hide
+8l8, unique, hide
+8l8, set, hide
+#Rune Bow
+8sw, low, hide
+8sw, normal, hide
+8sw, superior, hide
+8sw, magic, hide
+8sw, rare, hide
+8sw, unique, hide
+8sw, set, hide
+#Gothic Bow
+8lw, low, hide
+8lw, normal, hide
+8lw, superior, hide
+8lw, magic, hide
+8lw, rare, hide
+8lw, unique, hide
+8lw, set, hide
+
+#Bows (elite)
+#Spider Bow
+6sb, low, hide
+6sb, normal, hide
+6sb, superior, hide
+6sb, magic, hide
+6sb, rare, hide
+6sb, unique, darkgold
+6sb, set, hide
+#Blade Bow
+6hb, low, hide
+6hb, normal, hide
+6hb, superior, hide
+6hb, magic, hide
+6hb, rare, hide
+6hb, unique, darkgold
+6hb, set, hide
+#Shadow Bow
+6lb, low, hide
+6lb, normal, hide
+6lb, superior, hide
+6lb, magic, hide
+6lb, rare, hide
+6lb, unique, darkgold
+6lb, set, hide
+#Great Bow
+6cb, low, hide
+6cb, normal, hide
+6cb, superior, hide
+6cb, magic, hide
+6cb, rare, hide
+6cb, unique, darkgold
+6cb, set, hide
+#Diamond Bow
+6s7, low, hide
+6s7, normal, hide
+6s7, superior, hide
+6s7, magic, hide
+6s7, rare, hide
+6s7, unique, darkgold
+6s7, set, hide
+#Crusader Bow
+6l7, low, hide
+6l7, normal, hide
+6l7, superior, hide
+6l7, magic, hide
+6l7, rare, hide
+6l7, unique, darkgold
+6l7, set, hide
+#Ward Bow
+6sw, low, hide
+6sw, normal, hide
+6sw, superior, hide
+6sw, magic, hide
+6sw, rare, hide
+6sw, unique, darkgold
+6sw, set, hide
+#Hydra Bow - Windforce - World Drop
+6lw, low, hide
+6lw, normal, hide
+6lw, superior, hide
+6lw, magic, hide
+6lw, rare, hide
+6lw, unique, red
+6lw, set, hide
+
+#Crossbow (normal)
+#Light Crossbow
+lxb, low, hide
+lxb, normal, hide
+lxb, superior, hide
+lxb, magic, hide
+lxb, rare, hide
+lxb, unique, hide
+lxb, set, hide
+#Crossbow
+mxb, low, hide
+mxb, normal, hide
+mxb, superior, hide
+mxb, magic, hide
+mxb, rare, hide
+mxb, unique, hide
+mxb, set, hide
+#Heavy Crossbow
+hxb, low, hide
+hxb, normal, hide
+hxb, superior, hide
+hxb, magic, hide
+hxb, rare, hide
+hxb, unique, hide
+hxb, set, hide
+#Repeating X-bow
+rxb, low, hide
+rxb, normal, hide
+rxb, superior, hide
+rxb, magic, hide
+rxb, rare, hide
+rxb, unique, hide
+rxb, set, hide
+
+#Crossbow (exceptional)
+#Arbalest
+8lx, low, hide
+8lx, normal, hide
+8lx, superior, hide
+8lx, magic, hide
+8lx, rare, hide
+8lx, unique, hide
+8lx, set, hide
+#Siege Crossbow
+8mx, low, hide
+8mx, normal, hide
+8mx, superior, hide
+8mx, magic, hide
+8mx, rare, hide
+8mx, unique, hide
+8mx, set, hide
+#Ballista
+8hx, low, hide
+8hx, normal, hide
+8hx, superior, hide
+8hx, magic, hide
+8hx, rare, hide
+8hx, unique, hide
+8hx, set, hide
+#Chu-Ko-Nu
+8rx, low, hide
+8rx, normal, hide
+8rx, superior, hide
+8rx, magic, hide
+8rx, rare, hide
+8rx, unique, hide
+8rx, set, hide
+
+#Crossbow (elite)
+#Pellet Bow
+6lx, low, hide
+6lx, normal, hide
+6lx, superior, hide
+6lx, magic, hide
+6lx, rare, hide
+6lx, unique, darkgold
+6lx, set, hide
+#Gorgon Crossbow
+6mx, low, hide
+6mx, normal, hide
+6mx, superior, hide
+6mx, magic, hide
+6mx, rare, hide
+6mx, unique, darkgold
+6mx, set, hide
+#Colossus x-bow
+6hx, low, hide
+6hx, normal, hide
+6hx, superior, hide
+6hx, magic, hide
+6hx, rare, hide
+6hx, unique, darkgold
+6hx, set, hide
+#Demon Crossbow
+6rx, low, hide
+6rx, normal, hide
+6rx, superior, hide
+6rx, magic, hide
+6rx, rare, hide
+6rx, unique, darkgold
+6rx, set, hide
+
+#Daggers (normal)
+#Dagger
+dgr, low, hide
+dgr, normal, hide
+dgr, superior, hide
+dgr, magic, hide
+dgr, rare, hide
+dgr, unique, hide
+dgr, set, hide
+#Dirk
+dir, low, hide
+dir, normal, hide
+dir, superior, hide
+dir, magic, hide
+dir, rare, hide
+dir, unique, hide
+dir, set, hide
+#Kriss
+kri, low, hide
+kri, normal, hide
+kri, superior, hide
+kri, magic, hide
+kri, rare, hide
+kri, unique, hide
+kri, set, hide
+#Blade
+bld, low, hide
+bld, normal, hide
+bld, superior, hide
+bld, magic, hide
+bld, rare, hide
+bld, unique, hide
+bld, set, hide
+
+#Daggers (exceptional)
+#Poignard
+9dg, low, hide
+9dg, normal, hide
+9dg, superior, hide
+9dg, magic, hide
+9dg, rare, hide
+9dg, unique, hide
+9dg, set, hide
+#Rondel
+9di, low, hide
+9di, normal, hide
+9di, superior, hide
+9di, magic, hide
+9di, rare, hide
+9di, unique, hide
+9di, set, hide
+#Cinquedeas
+9kr, low, hide
+9kr, normal, hide
+9kr, superior, hide
+9kr, magic, hide
+9kr, rare, hide
+9kr, unique, hide
+9kr, set, hide
+#Stilleto
+9bl, low, hide
+9bl, normal, hide
+9bl, superior, hide
+9bl, magic, hide
+9bl, rare, hide
+9bl, unique, hide
+9bl, set, hide
+
+#Daggers (elite)
+#Bone Knife
+7dg, low, hide
+7dg, normal, hide
+7dg, superior, hide
+7dg, magic, hide
+7dg, rare, hide
+7dg, unique, darkgold
+7dg, set, hide
+#Mithral Point
+7di, low, hide
+7di, normal, hide
+7di, superior, hide
+7di, magic, hide
+7di, rare, hide
+7di, unique, darkgold
+7di, set, hide
+#Fanged Knife
+7kr, low, hide
+7kr, normal, hide
+7kr, superior, hide
+7kr, magic, hide
+7kr, rare, hide
+7kr, unique, darkgold
+7kr, set, hide
+#Legend Spike
+7bl, low, hide
+7bl, normal, hide
+7bl, superior, hide
+7bl, magic, hide
+7bl, rare, hide
+7bl, unique, darkgold
+7bl, set, hide
+
+#Javelins (normal)
+#Javelin
+jav, low, hide
+jav, normal, hide
+jav, superior, hide
+jav, magic, hide
+jav, rare, hide
+jav, unique, hide
+jav, set, hide
+#Pilum
+pil, low, hide
+pil, normal, hide
+pil, superior, hide
+pil, magic, hide
+pil, rare, hide
+pil, unique, hide
+pil, set, hide
+#Short Spear
+ssp, low, hide
+ssp, normal, hide
+ssp, superior, hide
+ssp, magic, hide
+ssp, rare, hide
+ssp, unique, hide
+ssp, set, hide
+#Glaive
+glv, low, hide
+glv, normal, hide
+glv, superior, hide
+glv, magic, hide
+glv, rare, hide
+glv, unique, hide
+glv, set, hide
+#Throwing Spear
+tsp, low, hide
+tsp, normal, hide
+tsp, superior, hide
+tsp, magic, hide
+tsp, rare, hide
+tsp, unique, hide
+tsp, set, hide
+
+#Javelins (exceptional)
+#War Javelin
+9ja, low, hide
+9ja, normal, hide
+9ja, superior, hide
+9ja, magic, hide
+9ja, rare, hide
+9ja, unique, hide
+9ja, set, hide
+#Great Pilum
+9pi, low, hide
+9pi, normal, hide
+9pi, superior, hide
+9pi, magic, hide
+9pi, rare, hide
+9pi, unique, hide
+9pi, set, hide
+#Simbilan
+9s9, low, hide
+9s9, normal, hide
+9s9, superior, hide
+9s9, magic, hide
+9s9, rare, hide
+9s9, unique, hide
+9s9, set, hide
+#Spiculum
+9gl, low, hide
+9gl, normal, hide
+9gl, superior, hide
+9gl, magic, hide
+9gl, rare, hide
+9gl, unique, hide
+9gl, set, hide
+#Harpoon
+9ts, low, hide
+9ts, normal, hide
+9ts, superior, hide
+9ts, magic, hide
+9ts, rare, hide
+9ts, unique, hide
+9ts, set, hide
+
+#Javelins (elite)
+#Hyperion Javeln
+7ja, low, hide
+7ja, normal, hide
+7ja, superior, hide
+7ja, magic, hide
+7ja, rare, hide
+7ja, unique, darkgold
+7ja, set, hide
+#Stygian Pilum
+7pi, low, hide
+7pi, normal, hide
+7pi, superior, hide
+7pi, magic, hide
+7pi, rare, hide
+7pi, unique, darkgold
+7pi, set, hide
+#Balrog Spear
+7s7, low, hide
+7s7, normal, hide
+7s7, superior, hide
+7s7, magic, hide
+7s7, rare, hide
+7s7, unique, darkgold
+7s7, set, hide
+#Ghost Glaive
+7gl, low, hide
+7gl, normal, hide
+7gl, superior, hide
+7gl, magic, hide
+7gl, rare, hide
+7gl, unique, darkgold
+7gl, set, hide
+#Winged Harpoon
+7ts, low, hide
+7ts, normal, hide
+7ts, superior, hide
+7ts, magic, hide
+7ts, rare, hide
+7ts, unique, darkgold
+7ts, set, hide
+
+#Maces (normal)
+#Club
+clb, low, hide
+clb, normal, hide
+clb, superior, hide
+clb, magic, hide
+clb, rare, hide
+clb, unique, hide
+clb, set, hide
+#Spiked Club
+spc, low, hide
+spc, normal, hide
+spc, superior, hide
+spc, magic, hide
+spc, rare, hide
+spc, unique, hide
+spc, set, hide
+#Mace
+mac, low, hide
+mac, normal, hide
+mac, superior, hide
+mac, magic, hide
+mac, rare, hide
+mac, unique, hide
+mac, set, hide
+#Morning Star
+mst, low, hide
+mst, normal, hide
+mst, superior, hide
+mst, magic, hide
+mst, rare, hide
+mst, unique, hide
+mst, set, hide
+#Flail
+fla, low, hide
+fla, normal, hide
+fla, superior, hide
+fla, magic, hide
+fla, rare, hide
+fla, unique, hide
+fla, set, hide
+#War Hammer
+whm, low, hide
+whm, normal, hide
+whm, superior, hide
+whm, magic, hide
+whm, rare, hide
+whm, unique, hide
+whm, set, hide
+#Maul
+mau, low, hide
+mau, normal, hide
+mau, superior, hide
+mau, magic, hide
+mau, rare, hide
+mau, unique, hide
+mau, set, hide
+#Great Maul
+gma, low, hide
+gma, normal, hide
+gma, superior, hide
+gma, magic, hide
+gma, rare, hide
+gma, unique, hide
+gma, set, hide
+
+#Maces (exceptional)
+#Cudgel
+9cl, low, hide
+9cl, normal, hide
+9cl, superior, hide
+9cl, magic, hide
+9cl, rare, hide
+9cl, unique, hide
+9cl, set, hide
+#Barbed Club
+9sp, low, hide
+9sp, normal, hide
+9sp, superior, hide
+9sp, magic, hide
+9sp, rare, hide
+9sp, unique, hide
+9sp, set, hide
+#Flanged Mace
+9ma, low, hide
+9ma, normal, hide
+9ma, superior, hide
+9ma, magic, hide
+9ma, rare, hide
+9ma, unique, hide
+9ma, set, hide
+#Jagged Star
+9mt, low, hide
+9mt, normal, hide
+9mt, superior, hide
+9mt, magic, hide
+9mt, rare, hide
+9mt, unique, hide
+9mt, set, hide
+#Knout
+9fl, low, hide
+9fl, normal, hide
+9fl, superior, hide
+9fl, magic, hide
+9fl, rare, hide
+9fl, unique, hide
+9fl, set, hide
+#Battle Hammer
+9wh, low, hide
+9wh, normal, hide
+9wh, superior, hide
+9wh, magic, hide
+9wh, rare, hide
+9wh, unique, hide
+9wh, set, hide
+#War Club
+9m9, low, hide
+9m9, normal, hide
+9m9, superior, hide
+9m9, magic, hide
+9m9, rare, hide
+9m9, unique, hide
+9m9, set, hide
+#Martel de Fer
+9gm, low, hide
+9gm, normal, hide
+9gm, superior, hide
+9gm, magic, hide
+9gm, rare, hide
+9gm, unique, hide
+9gm, set, hide
+
+#Maces (elite)
+#Truncheon
+7cl, low, hide
+7cl, normal, hide
+7cl, superior, hide
+7cl, magic, hide
+7cl, rare, hide
+7cl, unique, darkgold
+7cl, set, hide
+#Tyrant Club
+7sp, low, hide
+7sp, normal, hide
+7sp, superior, hide
+7sp, magic, hide
+7sp, rare, hide
+7sp, unique, darkgold
+7sp, set, hide
+#Reinforced Mace
+7ma, low, hide
+7ma, normal, hide
+7ma, superior, hide
+7ma, magic, hide
+7ma, rare, hide
+7ma, unique, darkgold
+7ma, set, hide
+#Devil Star - Aldur Uber
+7mt, low, hide
+7mt, normal, hide
+7mt, superior, hide
+7mt, magic, hide
+7mt, rare, hide
+7mt, unique, darkgold
+7mt, set, darkgreen
+#Scourge - Stormlash - World Drop
+7fl, low, hide
+7fl, normal, hide
+7fl, superior, hide
+7fl, magic, hide
+7fl, rare, hide
+7fl, unique, red
+7fl, set, hide
+#Legendary Mallet - Schaefer's Hammer - World Drop - Immortal King Uber
+7wh, low, hide
+7wh, normal, hide
+7wh, superior, hide
+7wh, magic, hide
+7wh, rare, hide
+7wh, unique, red
+7wh, set, darkgreen
+#Ogre Maul
+7m7, low, hide
+7m7, normal, hide
+7m7, superior, hide
+7m7, magic, hide
+7m7, rare, hide
+7m7, unique, darkgold
+7m7, set, hide
+#Thunder Maul
+7gm, low, hide
+7gm, normal, hide
+7gm, superior, hide
+7gm, magic, hide
+7gm, rare, hide
+7gm, unique, darkgold
+7gm, set, hide
+
+#Polearms (normal)
+#Bardiche
+bar, low, hide
+bar, normal, hide
+bar, superior, hide
+bar, magic, hide
+bar, rare, hide
+bar, unique, hide
+bar, set, hide
+#Voulge
+vou, low, hide
+vou, normal, hide
+vou, superior, hide
+vou, magic, hide
+vou, rare, hide
+vou, unique, hide
+vou, set, hide
+#Scythe
+scy, low, hide
+scy, normal, hide
+scy, superior, hide
+scy, magic, hide
+scy, rare, hide
+scy, unique, hide
+scy, set, hide
+#Poleaxe
+pax, low, hide
+pax, normal, hide
+pax, superior, hide
+pax, magic, hide
+pax, rare, hide
+pax, unique, hide
+pax, set, hide
+#Halberd
+hal, low, hide
+hal, normal, hide
+hal, superior, hide
+hal, magic, hide
+hal, rare, hide
+hal, unique, hide
+hal, set, hide
+#War Scythe
+wsc, low, hide
+wsc, normal, hide
+wsc, superior, hide
+wsc, magic, hide
+wsc, rare, hide
+wsc, unique, hide
+wsc, set, hide
+
+#Polearms (exceptional)
+#Lochaber Axe
+9b7, low, hide
+9b7, normal, hide
+9b7, superior, hide
+9b7, magic, hide
+9b7, rare, hide
+9b7, unique, hide
+9b7, set, hide
+#Bill
+9vo, low, hide
+9vo, normal, hide
+9vo, superior, hide
+9vo, magic, hide
+9vo, rare, hide
+9vo, unique, hide
+9vo, set, hide
+#Battle Scythe
+9s8, low, hide
+9s8, normal, hide
+9s8, superior, hide
+9s8, magic, hide
+9s8, rare, hide
+9s8, unique, hide
+9s8, set, hide
+#Partizan
+9pa, low, hide
+9pa, normal, hide
+9pa, superior, hide
+9pa, magic, hide
+9pa, rare, hide
+9pa, unique, hide
+9pa, set, hide
+#Bec-de-Corbin
+9h9, low, hide
+9h9, normal, hide
+9h9, superior, hide
+9h9, magic, hide
+9h9, rare, hide
+9h9, unique, hide
+9h9, set, hide
+#Grim Scythe
+9wc, low, hide
+9wc, normal, hide
+9wc, superior, hide
+9wc, magic, hide
+9wc, rare, hide
+9wc, unique, hide
+9wc, set, hide
+
+#Polearms (elite)
+#Ogre Axe
+7o7, low, hide
+7o7, normal, hide
+7o7, superior, hide
+7o7, magic, hide
+7o7, rare, hide
+7o7, unique, darkgold
+7o7, set, hide
+#Colossus Voulge
+7vo, low, hide
+7vo, normal, hide
+7vo, superior, hide
+7vo, magic, hide
+7vo, rare, hide
+7vo, unique, darkgold
+7vo, set, hide
+#Thresher - Cthulhu Set
+7s8, low, hide
+7s8, normal, hide
+7s8, superior, hide
+7s8, magic, hide
+7s8, rare, hide
+7s8, unique, darkgold
+7s8, set, lightgreen
+#Cryptic Axe
+7pa, low, hide
+7pa, normal, hide
+7pa, superior, hide
+7pa, magic, hide
+7pa, rare, hide
+7pa, unique, darkgold
+7pa, set, hide
+#Great Poleaxe
+7h7, low, hide
+7h7, normal, hide
+7h7, superior, hide
+7h7, magic, hide
+7h7, rare, hide
+7h7, unique, darkgold
+7h7, set, hide
+#Giant Thresher
+7wc, low, hide
+7wc, normal, hide
+7wc, superior, hide
+7wc, magic, hide
+7wc, rare, hide
+7wc, unique, darkgold
+7wc, set, hide
+
+#Scepters (normal)
+#Sceptre
+scp, low, hide
+scp, normal, hide
+scp, superior, hide
+scp, magic, hide
+scp, rare, hide
+scp, unique, hide
+scp, set, hide
+#Grand Sceptre
+gsc, low, hide
+gsc, normal, hide
+gsc, superior, hide
+gsc, magic, hide
+gsc, rare, hide
+gsc, unique, hide
+gsc, set, hide
+#War Sceptre
+wsp, low, hide
+wsp, normal, hide
+wsp, superior, hide
+wsp, magic, hide
+wsp, rare, hide
+wsp, unique, hide
+wsp, set, hide
+
+#Scepters (exceptional)
+#Rune Sceptre
+9sc, low, hide
+9sc, normal, hide
+9sc, superior, hide
+9sc, magic, hide
+9sc, rare, hide
+9sc, unique, hide
+9sc, set, hide
+#Holy Water Spri
+9qs, low, hide
+9qs, normal, hide
+9qs, superior, hide
+9qs, magic, hide
+9qs, rare, hide
+9qs, unique, hide
+9qs, set, hide
+#Divine Sceptre
+9ws, low, hide
+9ws, normal, hide
+9ws, superior, hide
+9ws, magic, hide
+9ws, rare, hide
+9ws, unique, hide
+9ws, set, hide
+
+#Scepters (elite)
+#Mighty Sceptre
+7sc, low, hide
+7sc, normal, hide
+7sc, superior, hide
+7sc, magic, hide
+7sc, rare, hide
+7sc, unique, darkgold
+7sc, set, hide
+#Seraph Rod
+7qs, low, hide
+7qs, normal, hide
+7qs, superior, hide
+7qs, magic, hide
+7qs, rare, hide
+7qs, unique, darkgold
+7qs, set, hide
+#Caduceus - Griswold Uber
+7ws, low, hide
+7ws, normal, hide
+7ws, superior, hide
+7ws, magic, hide
+7ws, rare, hide
+7ws, unique, darkgold
+7ws, set, darkgreen
+
+#Sorceress Orbs (normal)
+#Eagle Orb
+ob1, low, hide
+ob1, normal, hide
+ob1, superior, hide
+ob1, magic, hide
+ob1, rare, hide
+ob1, unique, hide
+ob1, set, hide
+#Sacred Globe
+ob2, low, hide
+ob2, normal, hide
+ob2, superior, hide
+ob2, magic, hide
+ob2, rare, hide
+ob2, unique, hide
+ob2, set, hide
+#Smoked Sphere
+ob3, low, hide
+ob3, normal, hide
+ob3, superior, hide
+ob3, magic, hide
+ob3, rare, hide
+ob3, unique, hide
+ob3, set, hide
+#Clasped Orb
+ob4, low, hide
+ob4, normal, hide
+ob4, superior, hide
+ob4, magic, hide
+ob4, rare, hide
+ob4, unique, hide
+ob4, set, hide
+#Dragon Stone
+ob5, low, hide
+ob5, normal, hide
+ob5, superior, hide
+ob5, magic, hide
+ob5, rare, hide
+ob5, unique, hide
+ob5, set, hide
+
+#Sorceress Orbs (exceptional)
+#Glowing Orb
+ob6, low, hide
+ob6, normal, hide
+ob6, superior, hide
+ob6, magic, hide
+ob6, rare, hide
+ob6, unique, hide
+ob6, set, hide
+#Crystalline Glb
+ob7, low, hide
+ob7, normal, hide
+ob7, superior, hide
+ob7, magic, hide
+ob7, rare, hide
+ob7, unique, hide
+ob7, set, hide
+#Cloudy Sphere
+ob8, low, hide
+ob8, normal, hide
+ob8, superior, hide
+ob8, magic, hide
+ob8, rare, hide
+ob8, unique, hide
+ob8, set, hide
+#Sparkling Ball
+ob9, low, hide
+ob9, normal, hide
+ob9, superior, hide
+ob9, magic, hide
+ob9, rare, hide
+ob9, unique, hide
+ob9, set, hide
+#Swirling Crystal
+oba, low, hide
+oba, normal, hide
+oba, superior, hide
+oba, magic, hide
+oba, rare, hide
+oba, unique, hide
+oba, set, hide
+
+#Sorceress Orbs (elite)
+#Heavenly Stone
+obb, low, hide
+obb, normal, hide
+obb, superior, hide
+obb, magic, hide
+obb, rare, hide
+obb, unique, darkgold
+obb, set, hide
+#Eldritch Orb
+obc, low, hide
+obc, normal, hide
+obc, superior, hide
+obc, magic, hide
+obc, rare, hide
+obc, unique, darkgold
+obc, set, hide
+#Demon Heart
+obd, low, hide
+obd, normal, hide
+obd, superior, hide
+obd, magic, hide
+obd, rare, hide
+obd, unique, darkgold
+obd, set, hide
+#Vortex Orb
+obe, low, hide
+obe, normal, hide
+obe, superior, hide
+obe, magic, hide
+obe, rare, hide
+obe, unique, darkgold
+obe, set, hide
+#Dimensional Shard - Overcharged Conduit - World Drop - Tal Rasha Uber
+obf, low, hide
+obf, normal, hide
+obf, superior, hide
+obf, magic, hide
+obf, rare, hide
+obf, unique, red
+obf, set, darkgreen
+
+#Spears (normal)
+#Spear
+spr, low, hide
+spr, normal, hide
+spr, superior, hide
+spr, magic, hide
+spr, rare, hide
+spr, unique, hide
+spr, set, hide
+#Trident
+tri, low, hide
+tri, normal, hide
+tri, superior, hide
+tri, magic, hide
+tri, rare, hide
+tri, unique, hide
+tri, set, hide
+#Brandistock
+brn, low, hide
+brn, normal, hide
+brn, superior, hide
+brn, magic, hide
+brn, rare, hide
+brn, unique, hide
+brn, set, hide
+#Spetum
+spt, low, hide
+spt, normal, hide
+spt, superior, hide
+spt, magic, hide
+spt, rare, hide
+spt, unique, hide
+spt, set, hide
+#Pike
+pik, low, hide
+pik, normal, hide
+pik, superior, hide
+pik, magic, hide
+pik, rare, hide
+pik, unique, hide
+pik, set, hide
+
+#Spears (exceptional)
+#War Spear
+9sr, low, hide
+9sr, normal, hide
+9sr, superior, hide
+9sr, magic, hide
+9sr, rare, hide
+9sr, unique, hide
+9sr, set, hide
+#Fuscina
+9tr, low, hide
+9tr, normal, hide
+9tr, superior, hide
+9tr, magic, hide
+9tr, rare, hide
+9tr, unique, hide
+9tr, set, hide
+#War Fork
+9br, low, hide
+9br, normal, hide
+9br, superior, hide
+9br, magic, hide
+9br, rare, hide
+9br, unique, hide
+9br, set, hide
+#Yari
+9st, low, hide
+9st, normal, hide
+9st, superior, hide
+9st, magic, hide
+9st, rare, hide
+9st, unique, hide
+9st, set, hide
+#Lance
+9p9, low, hide
+9p9, normal, hide
+9p9, superior, hide
+9p9, magic, hide
+9p9, rare, hide
+9p9, unique, hide
+9p9, set, hide
+
+#Spears (elite)
+#Hyperion Spear
+7sr, low, hide
+7sr, normal, hide
+7sr, superior, hide
+7sr, magic, hide
+7sr, rare, hide
+7sr, unique, darkgold
+7sr, set, hide
+#Stygian Pike
+7tr, low, hide
+7tr, normal, hide
+7tr, superior, hide
+7tr, magic, hide
+7tr, rare, hide
+7tr, unique, darkgold
+7tr, set, hide
+#Mancatcher
+7br, low, hide
+7br, normal, hide
+7br, superior, hide
+7br, magic, hide
+7br, rare, hide
+7br, unique, darkgold
+7br, set, hide
+#Ghost Spear
+7st, low, hide
+7st, normal, hide
+7st, superior, hide
+7st, magic, hide
+7st, rare, hide
+7st, unique, darkgold
+7st, set, hide
+#War Pike - Lycander's Resolve - World Drop
+7p7, low, hide
+7p7, normal, hide
+7p7, superior, hide
+7p7, magic, hide
+7p7, rare, hide
+7p7, unique, red
+7p7, set, hide
+
+#Staves (normal)
+#Short Staff
+sst, low, hide
+sst, normal, hide
+sst, superior, hide
+sst, magic, hide
+sst, rare, hide
+sst, unique, hide
+sst, set, hide
+#Long Staff
+lst, low, hide
+lst, normal, hide
+lst, superior, hide
+lst, magic, hide
+lst, rare, hide
+lst, unique, hide
+lst, set, hide
+#Gnarled Staff
+cst, low, hide
+cst, normal, hide
+cst, superior, hide
+cst, magic, hide
+cst, rare, hide
+cst, unique, hide
+cst, set, hide
+#Battle Staff
+bst, low, hide
+bst, normal, hide
+bst, superior, hide
+bst, magic, hide
+bst, rare, hide
+bst, unique, hide
+bst, set, hide
+#War Staff
+wst, low, hide
+wst, normal, hide
+wst, superior, hide
+wst, magic, hide
+wst, rare, hide
+wst, unique, hide
+wst, set, hide
+
+#Staves (exceptional)
+#Jo Staff
+8ss, low, hide
+8ss, normal, hide
+8ss, superior, hide
+8ss, magic, hide
+8ss, rare, hide
+8ss, unique, hide
+8ss, set, hide
+#Quarterstaff
+8ls, low, hide
+8ls, normal, hide
+8ls, superior, hide
+8ls, magic, hide
+8ls, rare, hide
+8ls, unique, hide
+8ls, set, hide
+#Cedar Staff
+8cs, low, hide
+8cs, normal, hide
+8cs, superior, hide
+8cs, magic, hide
+8cs, rare, hide
+8cs, unique, hide
+8cs, set, hide
+#Gothic Staff
+8bs, low, hide
+8bs, normal, hide
+8bs, superior, hide
+8bs, magic, hide
+8bs, rare, hide
+8bs, unique, hide
+8bs, set, hide
+#Rune Staff
+8ws, low, hide
+8ws, normal, hide
+8ws, superior, hide
+8ws, magic, hide
+8ws, rare, hide
+8ws, unique, hide
+8ws, set, hide
+
+#Staves (elite)
+#Walking Stick
+6ss, low, hide
+6ss, normal, hide
+6ss, superior, hide
+6ss, magic, hide
+6ss, rare, hide
+6ss, unique, darkgold
+6ss, set, hide
+#Stalagmite
+6ls, low, hide
+6ls, normal, hide
+6ls, superior, hide
+6ls, magic, hide
+6ls, rare, hide
+6ls, unique, darkgold
+6ls, set, hide
+#Elder Staff
+6cs, low, hide
+6cs, normal, hide
+6cs, superior, hide
+6cs, magic, hide
+6cs, rare, hide
+6cs, unique, darkgold
+6cs, set, hide
+#Shillelagh
+6bs, low, hide
+6bs, normal, hide
+6bs, superior, hide
+6bs, magic, hide
+6bs, rare, hide
+6bs, unique, darkgold
+6bs, set, hide
+#Archon Staff - Cthulhu Set
+6ws, low, hide
+6ws, normal, hide
+6ws, superior, hide
+6ws, magic, hide
+6ws, rare, hide
+6ws, unique, darkgold
+6ws, set, lightgreen
+
+#Swords (normal)
+#Short Sword
+ssd, low, hide
+ssd, normal, hide
+ssd, superior, hide
+ssd, magic, hide
+ssd, rare, hide
+ssd, unique, hide
+ssd, set, hide
+#Scimitar
+scm, low, hide
+scm, normal, hide
+scm, superior, hide
+scm, magic, hide
+scm, rare, hide
+scm, unique, hide
+scm, set, hide
+#Saber
+sbr, low, hide
+sbr, normal, hide
+sbr, superior, hide
+sbr, magic, hide
+sbr, rare, hide
+sbr, unique, hide
+sbr, set, hide
+#Falchion
+flc, low, hide
+flc, normal, hide
+flc, superior, hide
+flc, magic, hide
+flc, rare, hide
+flc, unique, hide
+flc, set, hide
+#Crystal Sword
+crs, low, hide
+crs, normal, hide
+crs, superior, hide
+crs, magic, hide
+crs, rare, hide
+crs, unique, hide
+crs, set, hide
+#Broad Sword
+bsd, low, hide
+bsd, normal, hide
+bsd, superior, hide
+bsd, magic, hide
+bsd, rare, hide
+bsd, unique, hide
+bsd, set, hide
+#Long Sword
+lsd, low, hide
+lsd, normal, hide
+lsd, superior, hide
+lsd, magic, hide
+lsd, rare, hide
+lsd, unique, hide
+lsd, set, hide
+#War Sword
+wsd, low, hide
+wsd, normal, hide
+wsd, superior, hide
+wsd, magic, hide
+wsd, rare, hide
+wsd, unique, hide
+wsd, set, hide
+#Two-handed Swrd
+2hs, low, hide
+2hs, normal, hide
+2hs, superior, hide
+2hs, magic, hide
+2hs, rare, hide
+2hs, unique, hide
+2hs, set, hide
+#Claymore
+clm, low, hide
+clm, normal, hide
+clm, superior, hide
+clm, magic, hide
+clm, rare, hide
+clm, unique, hide
+clm, set, hide
+#Giant Sword
+gis, low, hide
+gis, normal, hide
+gis, superior, hide
+gis, magic, hide
+gis, rare, hide
+gis, unique, hide
+gis, set, hide
+#Bastard Sword
+bsw, low, hide
+bsw, normal, hide
+bsw, superior, hide
+bsw, magic, hide
+bsw, rare, hide
+bsw, unique, hide
+bsw, set, hide
+#Flamberge
+flb, low, hide
+flb, normal, hide
+flb, superior, hide
+flb, magic, hide
+flb, rare, hide
+flb, unique, hide
+flb, set, hide
+#Great Sword
+gsd, low, hide
+gsd, normal, hide
+gsd, superior, hide
+gsd, magic, hide
+gsd, rare, hide
+gsd, unique, hide
+gsd, set, hide
+
+#Swords (exceptional)
+#Gladius
+9ss, low, hide
+9ss, normal, hide
+9ss, superior, hide
+9ss, magic, hide
+9ss, rare, hide
+9ss, unique, hide
+9ss, set, hide
+#Cutlass
+9sm, low, hide
+9sm, normal, hide
+9sm, superior, hide
+9sm, magic, hide
+9sm, rare, hide
+9sm, unique, hide
+9sm, set, hide
+#Shamshir
+9sb, low, hide
+9sb, normal, hide
+9sb, superior, hide
+9sb, magic, hide
+9sb, rare, hide
+9sb, unique, hide
+9sb, set, hide
+#Tulwar
+9fc, low, hide
+9fc, normal, hide
+9fc, superior, hide
+9fc, magic, hide
+9fc, rare, hide
+9fc, unique, hide
+9fc, set, hide
+#Dimensional Bld
+9cr, low, hide
+9cr, normal, hide
+9cr, superior, hide
+9cr, magic, hide
+9cr, rare, hide
+9cr, unique, hide
+9cr, set, hide
+#Battle Sword
+9bs, low, hide
+9bs, normal, hide
+9bs, superior, hide
+9bs, magic, hide
+9bs, rare, hide
+9bs, unique, hide
+9bs, set, hide
+#Rune Sword
+9ls, low, hide
+9ls, normal, hide
+9ls, superior, hide
+9ls, magic, hide
+9ls, rare, hide
+9ls, unique, hide
+9ls, set, hide
+#Ancient Sword
+9wd, low, hide
+9wd, normal, hide
+9wd, superior, hide
+9wd, magic, hide
+9wd, rare, hide
+9wd, unique, hide
+9wd, set, hide
+#Espadon
+92h, low, hide
+92h, normal, hide
+92h, superior, hide
+92h, magic, hide
+92h, rare, hide
+92h, unique, hide
+92h, set, hide
+#Dacian Falx
+9cm, low, hide
+9cm, normal, hide
+9cm, superior, hide
+9cm, magic, hide
+9cm, rare, hide
+9cm, unique, hide
+9cm, set, hide
+#Tusk Sword
+9gs, low, hide
+9gs, normal, hide
+9gs, superior, hide
+9gs, magic, hide
+9gs, rare, hide
+9gs, unique, hide
+9gs, set, hide
+#Gothic Sword
+9b9, low, hide
+9b9, normal, hide
+9b9, superior, hide
+9b9, magic, hide
+9b9, rare, hide
+9b9, unique, hide
+9b9, set, hide
+#Zweihander
+9fb, low, hide
+9fb, normal, hide
+9fb, superior, hide
+9fb, magic, hide
+9fb, rare, hide
+9fb, unique, hide
+9fb, set, hide
+#Executioner Sword
+9gd, low, hide
+9gd, normal, hide
+9gd, superior, hide
+9gd, magic, hide
+9gd, rare, hide
+9gd, unique, hide
+9gd, set, hide
+
+#Swords (elite)
+#Falcata
+7ss, low, hide
+7ss, normal, hide
+7ss, superior, hide
+7ss, magic, hide
+7ss, rare, hide
+7ss, unique, darkgold
+7ss, set, hide
+#Ataghan
+7sm, low, hide
+7sm, normal, hide
+7sm, superior, hide
+7sm, magic, hide
+7sm, rare, hide
+7sm, unique, darkgold
+7sm, set, hide
+#Elegant Blade
+7sb, low, hide
+7sb, normal, hide
+7sb, superior, hide
+7sb, magic, hide
+7sb, rare, hide
+7sb, unique, darkgold
+7sb, set, hide
+#Hydra Edge
+7fc, low, hide
+7fc, normal, hide
+7fc, superior, hide
+7fc, magic, hide
+7fc, rare, hide
+7fc, unique, darkgold
+7fc, set, hide
+#Phase Blade - Azurewrath - World Drop
+7cr, low, hide
+7cr, normal, hide
+7cr, superior, hide
+7cr, magic, hide
+7cr, rare, hide
+7cr, unique, red
+7cr, set, hide
+#Conquest Sword
+7bs, low, hide
+7bs, normal, hide
+7bs, superior, hide
+7bs, magic, hide
+7bs, rare, hide
+7bs, unique, darkgold
+7bs, set, hide
+#Cryptic Sword
+7ls, low, hide
+7ls, normal, hide
+7ls, superior, hide
+7ls, magic, hide
+7ls, rare, hide
+7ls, unique, darkgold
+7ls, set, hide
+#Mythical Sword - BK Set
+7wd, low, hide
+7wd, normal, hide
+7wd, superior, hide
+7wd, magic, hide
+7wd, rare, hide
+7wd, unique, darkgold
+7wd, set, lightgreen
+#Legend Sword
+72h, low, hide
+72h, normal, hide
+72h, superior, hide
+72h, magic, hide
+72h, rare, hide
+72h, unique, darkgold
+72h, set, hide
+#Highland Blade
+7cm, low, hide
+7cm, normal, hide
+7cm, superior, hide
+7cm, magic, hide
+7cm, rare, hide
+7cm, unique, darkgold
+7cm, set, hide
+#Balrog Blade
+7gs, low, hide
+7gs, normal, hide
+7gs, superior, hide
+7gs, magic, hide
+7gs, rare, hide
+7gs, unique, darkgold
+7gs, set, hide
+#Champion Sword - Twin Excalibur
+7b7, low, hide
+7b7, normal, hide
+7b7, superior, hide
+7b7, magic, hide
+7b7, rare, hide
+7b7, unique, darkgold
+7b7, set, lightgreen
+#Colossal Sword
+7fb, low, hide
+7fb, normal, hide
+7fb, superior, hide
+7fb, magic, hide
+7fb, rare, hide
+7fb, unique, darkgold
+7fb, set, hide
+#Colossus Blade - The Grandfather/Cataclysm - World Drop - BK Set
+7gd, low, hide
+7gd, normal, hide
+7gd, superior, hide
+7gd, magic, hide
+7gd, rare, hide
+7gd, unique, red
+7gd, set, lightgreen
+
+#Throwing Weapons (normal)
+#Throwing Knife
+tkf, low, hide
+tkf, normal, hide
+tkf, superior, hide
+tkf, magic, hide
+tkf, rare, hide
+tkf, unique, hide
+tkf, set, hide
+#Throwing Axe
+tax, low, hide
+tax, normal, hide
+tax, superior, hide
+tax, magic, hide
+tax, rare, hide
+tax, unique, hide
+tax, set, hide
+#Balanced Knife
+bkf, low, hide
+bkf, normal, hide
+bkf, superior, hide
+bkf, magic, hide
+bkf, rare, hide
+bkf, unique, hide
+bkf, set, hide
+#Balanced Axe
+bal, low, hide
+bal, normal, hide
+bal, superior, hide
+bal, magic, hide
+bal, rare, hide
+bal, unique, hide
+bal, set, hide
+
+#Throwing Weapons (exceptional)
+#Battle Dart
+9tk, low, hide
+9tk, normal, hide
+9tk, superior, hide
+9tk, magic, hide
+9tk, rare, hide
+9tk, unique, hide
+9tk, set, hide
+#Francisca
+9ta, low, hide
+9ta, normal, hide
+9ta, superior, hide
+9ta, magic, hide
+9ta, rare, hide
+9ta, unique, hide
+9ta, set, hide
+#War Dart
+9bk, low, hide
+9bk, normal, hide
+9bk, superior, hide
+9bk, magic, hide
+9bk, rare, hide
+9bk, unique, hide
+9bk, set, hide
+#Hurlbat
+9b8, low, hide
+9b8, normal, hide
+9b8, superior, hide
+9b8, magic, hide
+9b8, rare, hide
+9b8, unique, hide
+9b8, set, hide
+
+#Throwing Weapons (elite)
+#Flying Knife
+7tk, low, hide
+7tk, normal, hide
+7tk, superior, hide
+7tk, magic, hide
+7tk, rare, hide
+7tk, unique, darkgold
+7tk, set, hide
+#Flying Axe
+7ta, low, hide
+7ta, normal, hide
+7ta, superior, hide
+7ta, magic, hide
+7ta, rare, hide
+7ta, unique, darkgold
+7ta, set, hide
+#Winged Knife
+7bk, low, hide
+7bk, normal, hide
+7bk, superior, hide
+7bk, magic, hide
+7bk, rare, hide
+7bk, unique, darkgold
+7bk, set, hide
+#Winged Axe
+7b8, low, hide
+7b8, normal, hide
+7b8, superior, hide
+7b8, magic, hide
+7b8, rare, hide
+7b8, unique, darkgold
+7b8, set, hide
+
+#Throwing Potions
+#Rancid Gas Potion
+gps, low, hide
+gps, normal, hide
+gps, superior, hide
+gps, magic, hide
+gps, rare, hide
+#Oil Potion
+ops, low, hide
+ops, normal, hide
+ops, superior, hide
+ops, magic, hide
+ops, rare, hide
+#Choking Gas Potion
+gpm, low, hide
+gpm, normal, hide
+gpm, superior, hide
+gpm, magic, hide
+gpm, rare, hide
+#Exploding Potion
+opm, low, hide
+opm, normal, hide
+opm, superior, hide
+opm, magic, hide
+opm, rare, hide
+#Strangling Gas
+gpl, low, hide
+gpl, normal, hide
+gpl, superior, hide
+gpl, magic, hide
+gpl, rare, hide
+#Fulminating Potion
+opl, low, hide
+opl, normal, hide
+opl, superior, hide
+opl, magic, hide
+opl, rare, hide
+
+#Wands (normal)
+#Wand
+wnd, low, hide
+wnd, normal, hide
+wnd, superior, hide
+wnd, magic, hide
+wnd, rare, hide
+wnd, unique, hide
+wnd, set, hide
+#Yew Wand
+ywn, low, hide
+ywn, normal, hide
+ywn, superior, hide
+ywn, magic, hide
+ywn, rare, hide
+ywn, unique, hide
+ywn, set, hide
+#Bone Wand
+bwn, low, hide
+bwn, normal, hide
+bwn, superior, hide
+bwn, magic, hide
+bwn, rare, hide
+bwn, unique, hide
+bwn, set, hide
+#Grim Wand
+gwn, low, hide
+gwn, normal, hide
+gwn, superior, hide
+gwn, magic, hide
+gwn, rare, hide
+gwn, unique, hide
+gwn, set, hide
+
+#Wands (exceptional)
+#Burnt Wand
+9wn, low, hide
+9wn, normal, hide
+9wn, superior, hide
+9wn, magic, hide
+9wn, rare, hide
+9wn, unique, hide
+9wn, set, hide
+#Petrified Wand
+9yw, low, hide
+9yw, normal, hide
+9yw, superior, hide
+9yw, magic, hide
+9yw, rare, hide
+9yw, unique, hide
+9yw, set, hide
+#Tomb Wand
+9bw, low, hide
+9bw, normal, hide
+9bw, superior, hide
+9bw, magic, hide
+9bw, rare, hide
+9bw, unique, hide
+9bw, set, hide
+#Grave Wand
+9gw, low, hide
+9gw, normal, hide
+9gw, superior, hide
+9gw, magic, hide
+9gw, rare, hide
+9gw, unique, hide
+9gw, set, hide
+
+#Wands (elite)
+#Polished Wand
+7wn, low, hide
+7wn, normal, hide
+7wn, superior, hide
+7wn, magic, hide
+7wn, rare, hide
+7wn, unique, darkgold
+7wn, set, hide
+#Ghost Wand
+7yw, low, hide
+7yw, normal, hide
+7yw, superior, hide
+7yw, magic, hide
+7yw, rare, hide
+7yw, unique, darkgold
+7yw, set, hide
+#Lich Wand - Mang Song's Penance - World Drop
+7bw, low, hide
+7bw, normal, hide
+7bw, superior, hide
+7bw, magic, hide
+7bw, rare, hide
+7bw, unique, red
+7bw, set, hide
+#Unearthed Wand - Death's Fervor - World Drop
+7gw, low, hide
+7gw, normal, hide
+7gw, superior, hide
+7gw, magic, hide
+7gw, rare, hide
+7gw, unique, red
+7gw, set, hide
+
+#Gems (Amethyst>Diamond>Emerald>Ruby>Sapphire>Skull>Topaz)
+#chipped
+gcv, normal, hide
+gcw, normal, hide
+gcg, normal, hide
+gcr, normal, hide
+gcb, normal, hide
+skc, normal, hide
+gcy, normal, hide
+#flawed
+gfv, normal, hide
+gfw, normal, hide
+gfg, normal, hide
+gfr, normal, hide
+gfb, normal, hide
+skf, normal, hide
+gfy, normal, hide
+#normal
+gsv, normal, hide
+gsw, normal, hide
+gsg, normal, hide
+gsr, normal, hide
+gsb, normal, hide
+sku, normal, hide
+gsy, normal, hide
+#flawless
+gzv, normal, hide
+glw, normal, hide
+glg, normal, hide
+glr, normal, hide
+glb, normal, hide
+skl, normal, hide
+gly, normal, hide
+#perfect
+gpw, normal, white
+gpv, normal, white
+gpb, normal, white
+gpy, normal, white
+gpr, normal, white
+skz, normal, white
+gpg, normal, white
+
+#Runes
+#El
+r01, normal, hide
+#Eld
+r02, normal, hide
+#Tir
+r03, normal, hide
+#Nef
+r04, normal, hide
+#Eth
+r05, normal, hide
+#Ith
+r06, normal, hide
+#Tal
+r07, normal, hide
+#Ral
+r08, normal, hide
+#Ort
+r09, normal, hide
+#Thul
+r10, normal, hide
+#Amn
+r11, normal, hide
+#Sol
+r12, normal, hide
+#Shael
+r13, normal, hide
+#Dol
+r14, normal, hide
+#Hel
+r15, normal, hide
+#Io
+r16, normal, hide
+#Lum
+r17, normal, hide
+#Ko
+r18, normal, hide
+#Fal
+r19, normal, hide
+#Lem
+r20, normal, orange
+#Pul
+r21, normal, orange
+#Um
+r22, normal, orange
+#Mal
+r23, normal, orange
+#Ist
+r24, normal, orange
+#Gul
+r25, normal, orange
+#Vex
+r26, normal, red
+#Ohm
+r27, normal, red
+#Lo
+r28, normal, red
+#Sur
+r29, normal, red
+#Ber
+r30, normal, red
+#Jah
+r31, normal, red
+#Cham
+r32, normal, red
+#Zod
+r33, normal, red
+#Tor
+r34, normal, red
+
+#Potions
+#Antidote
+yps, normal, hide
+#Stamina
+vps, normal, hide
+#Thawing
+wms, normal, hide
+#Healing
+hp1, normal, hide
+hp2, normal, hide
+hp3, normal, hide
+hp4, normal, hide
+hp5, normal, hide
+#Mana
+mp1, normal, hide
+mp2, normal, hide
+mp3, normal, hide
+mp4, normal, hide
+mp5, normal, hide
+#Rejuvenation
+rvs, normal, hide
+rvl, normal, white
+
+#Charms gold (unique), blue (magic), green (quest?), yellow (rare), lightgreen (set), white, black, orange (ripped page?), red
+cm1, magic, blue 
+cm2, magic, hide
+cm3, magic, blue 
+cm3, unique, darkgold  
+
+#Scrolls
+tsc, normal, hide
+isc, normal, hide
+#tbk, normal, white
+#ibk, normal, white
+
+#Jewellery
+amu, magic, hide
+amu, rare, yellow
+amu, unique, darkgold
+amu, set, lightgreen
+rin, magic, hide
+rin, rare, yellow
+rin, unique, darkgold
+rin, set, lightgreen
+jew, magic, hide
+jew, rare, yellow
+jew, unique, darkgold
+
+#Misc
+key, normal, hide
+mamu, magic, hide
+#aqv, normal, hide
+aqv, magic, hide
+aqv2, magic, hide
+aqv3, magic, hide
+aqv, rare, yellow
+aqv2, rare, yellow
+aqv3, rare, yellow
+#cqv, normal, hide
+cqv, magic, hide
+cqv2, magic, hide
+cqv3, magic, hide
+cqv, rare, yellow
+cqv2, rare, yellow
+cqv3, rare, yellow
+
+#luv, normal, hide
+#ear, normal, hide
+#0sc, normal, hide
+#tch, normal, hide
+#hrb, normal, hide
+#vip, normal, hide
+#hpf, normal, hide
+#mpf, normal, hide
+#elx, normal, hide

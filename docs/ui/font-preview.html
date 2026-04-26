@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AnniFilter — Font preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #0b0d10; color: #d7dadd; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; }
+  .mono { font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; }
+
+  @font-face {
+    font-family: "AvQest";
+    src: url("../../samples/AvQest.ttf") format("truetype");
+    font-display: block;
+  }
+
+  .stage {
+    background: radial-gradient(ellipse at center, #1a1c22 0%, #07080b 100%);
+    border: 1px solid #1d2128;
+    border-radius: 3px;
+    padding: 14px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    min-height: 120px;
+  }
+
+  .lbl {
+    --bg: 6, 6, 9;
+    --bg-a: 0.92;
+    --border: 255, 255, 255;
+    --border-a: 0.20;
+    position: relative;
+    padding: 3px 18px;
+    text-align: center;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(var(--bg), var(--bg-a)) 4%,
+      rgba(var(--bg), var(--bg-a)) 96%,
+      transparent 100%);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  .lbl::before, .lbl::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(var(--border), var(--border-a)) 4%,
+      rgba(var(--border), var(--border-a)) 96%,
+      transparent 100%);
+  }
+  .lbl::before { top: 0; }
+  .lbl::after  { bottom: 0; }
+
+  .ff-avqest    { font-family: "AvQest", serif; }
+  .ff-cinzel    { font-family: "Cinzel", serif; }
+  .ff-cinzel-d  { font-family: "Cinzel Decorative", serif; }
+
+  .col-head { text-align:center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #7a8090; font-weight: 600; padding: 6px 0; border-bottom: 1px solid #1d2128; margin-bottom: 8px; }
+
+  .source-img { display:block; max-width: 360px; border:1px solid #1d2128; border-radius: 3px; }
+</style>
+</head>
+<body class="p-6">
+
+<div class="max-w-[1100px] mx-auto">
+  <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Font preview · Cinzel · Cinzel Decorative · plain serif</div>
+
+  <h1 class="text-lg text-slate-200 mb-1">D2 font candidates against the screenshot</h1>
+  <p class="text-[12px] text-slate-500 mb-5 max-w-[700px]">Same labels and colors from <span class="mono">samples/lenzy's filter image.png</span>, rendered at the size we use in preview cells (~12px). Compare visually against the source on the left.</p>
+
+  <div class="grid grid-cols-[360px_1fr] gap-6 items-start">
+
+    <!-- Source image -->
+    <div>
+      <div class="col-head">Source · in-game</div>
+      <img src="../../samples/lenzy's filter image.png" alt="in-game labels" class="source-img">
+      <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">Reference: actual rendering by the Annihilus engine. The mod uses a bitmap form of <b>Emigre Exocet</b> (per <span class="mono">FontExocet8/10</span> in the spec).</p>
+    </div>
+
+    <!-- Three font stages -->
+    <div class="grid grid-cols-3 gap-3">
+
+      <!-- AvQest -->
+      <div>
+        <div class="col-head">AvQest · 1001Fonts FFC</div>
+        <div class="stage">
+          <span class="lbl ff-avqest" style="color:#ffa500; font-weight:600; font-size:13px;">1ST RUNE</span>
+          <span class="lbl ff-avqest" style="color:#e0c878; font-size:12px;">EPHEMERAL RIFT ENERGY</span>
+          <span class="lbl ff-avqest" style="color:#ff8800; font-weight:700; font-size:13px;">[T1] SPIRE OF LAZARUS</span>
+          <span class="lbl ff-avqest" style="color:#c800c8; font-weight:700; font-size:13px; --border:200,0,200; --border-a:1;">COSMIC RIFT ENERGY</span>
+          <span class="lbl ff-avqest" style="color:#7fe08a; font-weight:600; font-size:12px; --border:0,255,0; --border-a:1;">BRAMBLE MITTS</span>
+          <span class="lbl ff-avqest" style="color:#ff8800; font-weight:700; font-size:14px;">[ELITE] DARK MESSENGER (2)</span>
+          <span class="lbl ff-avqest" style="color:#ffa500; font-weight:700; font-size:15px;">OHM RUNE</span>
+        </div>
+        <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">AvQest by Graham Meade (GemFonts, 1998). Designed as a near-clone of Exocet's letterforms — the closest visual match to the source screenshot.</p>
+      </div>
+
+      <!-- Cinzel -->
+      <div>
+        <div class="col-head">Cinzel · 700</div>
+        <div class="stage">
+          <span class="lbl ff-cinzel" style="color:#ffa500; font-weight:600; font-size:13px;">1ST RUNE</span>
+          <span class="lbl ff-cinzel" style="color:#e0c878; font-size:12px;">EPHEMERAL RIFT ENERGY</span>
+          <span class="lbl ff-cinzel" style="color:#ff8800; font-weight:700; font-size:13px;">[T1] SPIRE OF LAZARUS</span>
+          <span class="lbl ff-cinzel" style="color:#c800c8; font-weight:700; font-size:13px; --border:200,0,200; --border-a:1;">COSMIC RIFT ENERGY</span>
+          <span class="lbl ff-cinzel" style="color:#7fe08a; font-weight:600; font-size:12px; --border:0,255,0; --border-a:1;">BRAMBLE MITTS</span>
+          <span class="lbl ff-cinzel" style="color:#ff8800; font-weight:700; font-size:14px;">[ELITE] DARK MESSENGER (2)</span>
+          <span class="lbl ff-cinzel" style="color:#ffa500; font-weight:700; font-size:15px;">OHM RUNE</span>
+        </div>
+        <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">Cinzel — Roman-inscriptional, all-caps display. Closest free SIL OFL match to Exocet's structure.</p>
+      </div>
+
+      <!-- Cinzel Decorative -->
+      <div>
+        <div class="col-head">Cinzel Decorative · 700</div>
+        <div class="stage">
+          <span class="lbl ff-cinzel-d" style="color:#ffa500; font-weight:700; font-size:13px;">1ST RUNE</span>
+          <span class="lbl ff-cinzel-d" style="color:#e0c878; font-weight:400; font-size:12px;">EPHEMERAL RIFT ENERGY</span>
+          <span class="lbl ff-cinzel-d" style="color:#ff8800; font-weight:700; font-size:13px;">[T1] SPIRE OF LAZARUS</span>
+          <span class="lbl ff-cinzel-d" style="color:#c800c8; font-weight:700; font-size:13px; --border:200,0,200; --border-a:1;">COSMIC RIFT ENERGY</span>
+          <span class="lbl ff-cinzel-d" style="color:#7fe08a; font-weight:700; font-size:12px; --border:0,255,0; --border-a:1;">BRAMBLE MITTS</span>
+          <span class="lbl ff-cinzel-d" style="color:#ff8800; font-weight:700; font-size:14px;">[ELITE] DARK MESSENGER (2)</span>
+          <span class="lbl ff-cinzel-d" style="color:#ffa500; font-weight:900; font-size:15px;">OHM RUNE</span>
+        </div>
+        <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">Cinzel Decorative — adds flourish to terminals (closer to Exocet's pointy serif character). More dramatic.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="text-[11px] text-slate-500 mt-6 max-w-[800px] leading-relaxed">
+    <b>Notes:</b> all three columns render the same labels at the same sizes with the same plate styling. AvQest is loaded locally via <span class="mono">@font-face</span> from <span class="mono">samples/AvQest.ttf</span>; Cinzel and Cinzel Decorative come from Google Fonts. The bundled <span class="mono">1001fonts-avqest-eula.txt</span> (FFC license) explicitly permits commercial web embedding (§2, §6) and woff2 conversion (§4) — so AvQest is cleared for the deployed editor. <b>If AvQest looks right, that's our font.</b> Cinzel stays as a fallback for browsers that fail to load the woff2.
+  </p>
+</div>
+
+</body>
+</html>
