@@ -49,8 +49,6 @@ type FilterState = {
 
   // I/O
   loadFromText: (text: string) => void
-  setRawText: (text: string) => void
-  reparseRaw: () => void
   toText: () => string
   setFilePath: (path: string | null) => void
   setDirty: (dirty: boolean) => void
@@ -119,16 +117,6 @@ export const useFilterStore = create<FilterState>()(
             dirty: false,
             selectedBlockId: null,
           })
-        },
-
-        setRawText: (text) => {
-          set({ rawText: text, dirty: true })
-        },
-
-        reparseRaw: () => {
-          const result = parse(get().rawText)
-          const issues = [...result.issues, ...validate(result.document)]
-          set({ document: result.document, issues })
         },
 
         toText: () => generate(get().document),

@@ -311,7 +311,6 @@ AnniFilter/
 ├── samples/                         # already exists
 ├── docs/                            # already exists
 ├── vite.config.ts
-├── tailwind.config.ts
 ├── tsconfig.json                    # strict mode, path alias @/* → src/*
 └── package.json
 ```
