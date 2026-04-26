@@ -1,13 +1,5 @@
-import type { Action, FilterBlock } from '@/engine/types'
-
-const PALETTE_HEX: Record<string, string> = {
-  White: '#e0e0e0', Red: '#cc2c2c', LightGreen: '#7fe08a',
-  Blue: '#3a78d4', DarkGold: '#a08036', Grey: '#7a7a7a',
-  Black: '#0a0a0a', Gold: '#d4b048', Orange: '#e08a3a',
-  Yellow: '#e8d038', DarkGreen: '#3a7a3a', Purple: '#a040a8',
-  Green: '#48a848', White2: '#e8e8e8', Black2: '#080808',
-  DarkWhite: '#b0b0b0',
-}
+import type { Action } from '@/engine/types'
+import { PALETTE_HEX, renderTemplate } from './templateRender'
 
 const FONT_SIZE_PX: Record<string, number> = {
   Font6: 9,
@@ -26,68 +18,6 @@ const FONT_SIZE_PX: Record<string, number> = {
   ReallyTheLastSucker: 18,
 }
 
-type Token =
-  | { kind: 'text'; text: string }
-  | { kind: 'color'; color: string }
-  | { kind: 'break' }
-  | { kind: 'placeholder'; name: string }
-
-const PLACEHOLDER_TEXT_TOKENS = new Set([
-  'Original',
-  'OriginalInline',
-  'ItemName',
-  'BaseItemName',
-  'ShortItemName',
-  'Runeword',
-  'ItemLevel',
-  'Sockets',
-  'ImplicitTier',
-  'RiftstoneTier',
-])
-
-/**
- * Tokenize a template string. {<ColorName>} is recognized against the wiki
- * palette; {Break} is a line break; everything else in {…} is a placeholder
- * token rendered as its substituted text (or the bracketed token verbatim
- * if unknown).
- */
-function tokenize(template: string): Token[] {
-  const tokens: Token[] = []
-  let i = 0
-  let buf = ''
-  while (i < template.length) {
-    if (template[i] === '{') {
-      const end = template.indexOf('}', i + 1)
-      if (end < 0) {
-        buf += template.slice(i)
-        i = template.length
-        break
-      }
-      if (buf) {
-        tokens.push({ kind: 'text', text: buf })
-        buf = ''
-      }
-      const name = template.slice(i + 1, end)
-      if (name === 'Break') {
-        tokens.push({ kind: 'break' })
-      } else if (name in PALETTE_HEX) {
-        tokens.push({ kind: 'color', color: name })
-      } else if (PLACEHOLDER_TEXT_TOKENS.has(name)) {
-        tokens.push({ kind: 'placeholder', name })
-      } else {
-        // Unknown — render literally
-        tokens.push({ kind: 'text', text: `{${name}}` })
-      }
-      i = end + 1
-    } else {
-      buf += template[i]
-      i++
-    }
-  }
-  if (buf) tokens.push({ kind: 'text', text: buf })
-  return tokens
-}
-
 function findFirst<K extends Action['keyword']>(
   actions: Action[],
   keyword: K,
@@ -97,39 +27,15 @@ function findFirst<K extends Action['keyword']>(
   )
 }
 
-function renderTemplate(
-  template: string,
-  defaultColorHex: string,
-  itemNameSubstitution: string,
-): React.ReactNode {
-  const tokens = tokenize(template)
-  const out: React.ReactNode[] = []
-  let currentColor = defaultColorHex
-  let key = 0
-  for (const t of tokens) {
-    if (t.kind === 'color') {
-      currentColor = PALETTE_HEX[t.color] ?? defaultColorHex
-    } else if (t.kind === 'break') {
-      out.push(<br key={key++} />)
-    } else if (t.kind === 'text') {
-      out.push(
-        <span key={key++} style={{ color: currentColor }}>
-          {t.text}
-        </span>,
-      )
-    } else if (t.kind === 'placeholder') {
-      out.push(
-        <span key={key++} style={{ color: currentColor }}>
-          {itemNameSubstitution}
-        </span>,
-      )
-    }
-  }
-  return out
-}
-
-export function ItemPreview({ block }: { block: FilterBlock }) {
-  const actions = block.actions
+export function ItemPreview({
+  actions,
+  label,
+  compact,
+}: {
+  actions: Action[]
+  label?: string
+  compact?: boolean
+}) {
   const setText = findFirst(actions, 'SetTextColor')
   const setBorder = findFirst(actions, 'SetBorderColor')
   const setBg = findFirst(actions, 'SetBackgroundColor')
@@ -142,12 +48,14 @@ export function ItemPreview({ block }: { block: FilterBlock }) {
     ? (PALETTE_HEX[setText.color] ?? '#e0e0e0')
     : '#e0e0e0'
 
-  const sampleName =
-    block.label && block.label.length > 0 ? block.label : 'Sample Item'
+  const sampleName = label && label.length > 0 ? label : 'Sample Item'
+
+  const rawFontSize = setFont ? (FONT_SIZE_PX[setFont.font] ?? 12) : 12
+  const fontSize = compact ? Math.min(rawFontSize, 12) : rawFontSize
 
   const style: Record<string, string | number> = {
     color: defaultColor,
-    fontSize: setFont ? (FONT_SIZE_PX[setFont.font] ?? 12) : 12,
+    fontSize,
   }
 
   if (setBorder) {
@@ -166,7 +74,10 @@ export function ItemPreview({ block }: { block: FilterBlock }) {
     : sampleName
 
   return (
-    <span className="pv-label" style={style as React.CSSProperties}>
+    <span
+      className={`pv-label ${compact ? 'pv-label-compact' : ''}`}
+      style={style as React.CSSProperties}
+    >
       {prepend
         ? renderTemplate(prepend.template, defaultColor, sampleName)
         : null}

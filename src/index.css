@@ -49,3 +49,34 @@
 }
 .pv-label::before { top: 0; }
 .pv-label::after { bottom: 0; }
+
+.pv-label-compact {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Custom scrollbar matching dark theme — Webkit + Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d32 transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2d32;
+  border-radius: 5px;
+  border: 2px solid #0a0a0f;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a4050;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

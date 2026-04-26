@@ -1,10 +1,14 @@
+import { useMemo } from 'react'
+import { useFilterStore } from '@/store/filterStore'
 import { useSelectedBlock } from '@/store/selectors'
+import { previewActionsForBlock } from '@/engine/preview'
 import { RuleDetailHeader } from './RuleDetailHeader'
 import { ConditionRow } from './ConditionRow'
 import { ConditionAddButton } from './ConditionAddButton'
 import { ActionRow } from './ActionRow'
 import { SoundActionList } from './SoundActionList'
 import { ItemPreview } from './ItemPreview'
+import { ChatMessagePreview } from './ChatMessagePreview'
 import {
   DISPLAY_ACTION_KEYWORDS,
   TEXT_ACTION_KEYWORDS,
@@ -12,6 +16,12 @@ import {
 
 export function RuleDetail() {
   const block = useSelectedBlock()
+  const document = useFilterStore((s) => s.document)
+
+  const cascadedActions = useMemo(
+    () => (block ? previewActionsForBlock(document, block.id) : []),
+    [document, block?.id],
+  )
 
   if (!block) {
     return (
@@ -64,11 +74,40 @@ export function RuleDetail() {
         </Column>
       </div>
 
-      <div className="px-4 py-3 border-t border-[#1d2128] flex items-center gap-4">
-        <span className="text-[10px] uppercase tracking-wider text-slate-500">
-          Preview
-        </span>
-        <ItemPreview block={block} />
+      <div className="px-4 py-3 border-t border-[#1d2128] flex flex-col gap-2">
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] uppercase tracking-wider text-slate-500 w-24">
+            Preview (cascaded)
+          </span>
+          <ItemPreview actions={cascadedActions} label={block.label} />
+        </div>
+        <div className="flex items-center gap-4 opacity-60">
+          <span
+            className="text-[10px] uppercase tracking-wider text-slate-500 w-24"
+            title="Just this rule's own actions, ignoring earlier matching Style decorators"
+          >
+            Rule alone
+          </span>
+          <ItemPreview actions={block.actions} label={block.label} />
+        </div>
+        {(() => {
+          const cascadedChat = cascadedActions.find(
+            (a) => a.keyword === 'ChatNotification',
+          )
+          if (!cascadedChat || cascadedChat.keyword !== 'ChatNotification')
+            return null
+          return (
+            <div className="flex items-center gap-4 pt-1 mt-1 border-t border-[#1a1d22]">
+              <span className="text-[10px] uppercase tracking-wider text-slate-500 w-24">
+                Chat
+              </span>
+              <ChatMessagePreview
+                template={cascadedChat.template}
+                label={block.label}
+              />
+            </div>
+          )
+        })()}
       </div>
     </div>
   )

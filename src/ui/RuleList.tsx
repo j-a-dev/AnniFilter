@@ -14,7 +14,6 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual'
 import type { BlockKind } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
-import { useUIStore } from '@/store/uiStore'
 import { RuleListRow } from './RuleListRow'
 import { summarizeConditions, KIND_COLOR } from './ruleListUtils'
 
@@ -23,8 +22,6 @@ const ROW_HEIGHT = 44
 const ALL_KINDS: BlockKind[] = ['Show', 'Hide', 'Style']
 
 export function RuleList() {
-  const collapsed = useUIStore((s) => s.sidebarCollapsed)
-  const toggle = useUIStore((s) => s.toggleSidebar)
   const blocks = useFilterStore((s) => s.document.blocks)
   const selectedId = useFilterStore((s) => s.selectedBlockId)
   const moveBlock = useFilterStore((s) => s.moveBlock)
@@ -71,28 +68,14 @@ export function RuleList() {
   }
 
   return (
-    <aside
-      className="border-r border-[#1d2128] bg-[#0e1014] shrink-0 overflow-hidden flex flex-col transition-all duration-150"
-      style={{ width: collapsed ? 32 : 360 }}
-    >
-      <div className="flex items-center justify-between px-3 h-9 border-b border-[#1d2128] shrink-0">
-        <span
-          className={`text-[10px] uppercase tracking-wider text-slate-500 ${collapsed ? 'hidden' : ''}`}
-        >
+    <aside className="w-[560px] border-r border-[#1d2128] bg-[#0e1014] shrink-0 overflow-hidden flex flex-col">
+      <div className="flex items-center px-3 h-9 border-b border-[#1d2128] shrink-0">
+        <span className="text-[10px] uppercase tracking-wider text-slate-500">
           Rules · {blocks.length}
         </span>
-        <button
-          onClick={toggle}
-          className="text-slate-500 hover:text-slate-200 text-xs"
-          title={collapsed ? 'Expand' : 'Collapse'}
-        >
-          {collapsed ? '▶' : '◀'}
-        </button>
       </div>
 
-      {!collapsed && (
-        <>
-          <div className="px-3 py-2 border-b border-[#1d2128] shrink-0 space-y-2">
+      <div className="px-3 py-2 border-b border-[#1d2128] shrink-0 space-y-2">
             <input
               type="text"
               value={search}
@@ -185,8 +168,6 @@ export function RuleList() {
               </DndContext>
             )}
           </div>
-        </>
-      )}
     </aside>
   )
 }
