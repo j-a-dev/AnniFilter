@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -25,6 +25,13 @@ export function RuleList() {
   const blocks = useFilterStore((s) => s.document.blocks)
   const selectedId = useFilterStore((s) => s.selectedBlockId)
   const moveBlock = useFilterStore((s) => s.moveBlock)
+  const addBlock = useFilterStore((s) => s.addBlock)
+  const selectBlock = useFilterStore((s) => s.selectBlock)
+
+  const handleAdd = () => {
+    const newId = addBlock('Show', selectedId ?? undefined)
+    selectBlock(newId)
+  }
 
   const [search, setSearch] = useState('')
   const [kindFilter, setKindFilter] = useState<Set<BlockKind>>(new Set())
@@ -45,6 +52,18 @@ export function RuleList() {
     estimateSize: () => ROW_HEIGHT,
     overscan: 8,
   })
+
+  // Scroll the selected block into view whenever selection changes.
+  useEffect(() => {
+    if (!selectedId) return
+    const idx = visible.findIndex((b) => b.id === selectedId)
+    if (idx >= 0) {
+      virtualizer.scrollToIndex(idx, { align: 'center' })
+    }
+    // virtualizer is recreated on visible-length change; only re-run on
+    // selection change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId])
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -69,10 +88,21 @@ export function RuleList() {
 
   return (
     <aside className="w-[560px] border-r border-[#1d2128] bg-[#0e1014] shrink-0 overflow-hidden flex flex-col">
-      <div className="flex items-center px-3 h-9 border-b border-[#1d2128] shrink-0">
+      <div className="flex items-center justify-between px-3 h-9 border-b border-[#1d2128] shrink-0">
         <span className="text-[10px] uppercase tracking-wider text-slate-500">
           Rules · {blocks.length}
         </span>
+        <button
+          onClick={handleAdd}
+          title={
+            selectedId
+              ? 'Add a new Show rule after the selected one'
+              : 'Add a new Show rule at the end'
+          }
+          className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#2a2d32] text-slate-400 hover:text-amber-300 hover:border-amber-500/40 transition-colors"
+        >
+          + Add rule
+        </button>
       </div>
 
       <div className="px-3 py-2 border-b border-[#1d2128] shrink-0 space-y-2">
@@ -119,7 +149,7 @@ export function RuleList() {
             {visible.length === 0 ? (
               <div className="p-6 text-xs text-slate-500 italic">
                 {blocks.length === 0
-                  ? 'No rules. Open a .filter or add one.'
+                  ? 'No rules. Open a .filter or click "+ Add rule".'
                   : 'No rules match the current filter.'}
               </div>
             ) : (

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import type { BlockKind, FilterBlock } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
 import { KIND_COLOR } from './ruleListUtils'
@@ -9,8 +10,16 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
   const updateBlockKind = useFilterStore((s) => s.updateBlockKind)
   const updateBlockLabel = useFilterStore((s) => s.updateBlockLabel)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
+  const removeBlock = useFilterStore((s) => s.removeBlock)
 
   const index = blocks.findIndex((b) => b.id === block.id)
+
+  // Two-step inline confirmation for delete: first click arms; second click
+  // within the same selection commits. Switching to another rule auto-disarms.
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  useEffect(() => {
+    setConfirmingDelete(false)
+  }, [block.id])
 
   return (
     <div className="flex items-center gap-3 px-4 py-3 border-b border-[#1d2128]">
@@ -49,6 +58,31 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
         placeholder="Click to add a rule label…"
         className="flex-1 bg-[#0a0a0f] text-[13px] text-slate-100 px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 focus:bg-[#12161a] outline-none"
       />
+      {confirmingDelete ? (
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setConfirmingDelete(false)}
+            className="px-2 py-1 text-[11px] text-slate-400 hover:text-slate-200 rounded border border-[#2a2d32] hover:border-[#3a4050] transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => removeBlock(block.id)}
+            autoFocus
+            className="px-2 py-1 text-[11px] text-rose-200 bg-rose-500/15 hover:bg-rose-500/25 rounded border border-rose-500/40 transition-colors"
+          >
+            Confirm delete
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={() => setConfirmingDelete(true)}
+          title="Delete rule"
+          className="px-2 py-1 text-[11px] text-slate-500 hover:text-rose-300 hover:bg-rose-500/10 rounded border border-transparent hover:border-rose-500/30 transition-colors"
+        >
+          Delete
+        </button>
+      )}
     </div>
   )
 }

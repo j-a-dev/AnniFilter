@@ -3,6 +3,7 @@ import { TopBar } from './TopBar'
 import { RuleList } from './RuleList'
 import { RuleDetail } from './RuleDetail'
 import { RawEditor } from './RawEditor'
+import { JumpToIndexOverlay } from './JumpToIndexOverlay'
 
 export function AppShell() {
   const activeTab = useUIStore((s) => s.activeTab)
@@ -23,6 +24,8 @@ export function AppShell() {
       <footer className="text-[10px] text-slate-600 px-4 py-1.5 border-t border-[#1d2128] bg-[#0e1014]">
         Item label font: AvQest by Graham Meade / GemFonts. 1001Fonts FFC license.
       </footer>
+
+      <JumpToIndexOverlay />
     </div>
   )
 }
