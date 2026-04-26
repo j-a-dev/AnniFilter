@@ -37,4 +37,18 @@ describe('parser: shipped filters smoke test', () => {
       expect(knownWarningCodes.has(c), `unexpected issue code: ${c}`).toBe(true)
     }
   })
+
+  it('preserves all 4 PlayAlertSound entries on the Show #High Runes block', () => {
+    const text = readFileSync(REGULAR, 'utf8')
+    const { document } = parse(text)
+    const showHighRunes = document.blocks.find(
+      (b) => b.kind === 'Show' && b.label === 'High Runes',
+    )
+    expect(showHighRunes).toBeDefined()
+    const sounds = showHighRunes?.actions.filter(
+      (a) => a.keyword === 'PlayAlertSound',
+    )
+    expect(sounds).toHaveLength(4)
+    expect(sounds?.map((s) => (s.keyword === 'PlayAlertSound' ? s.soundId : -1))).toEqual([16, 17, 18, 19])
+  })
 })

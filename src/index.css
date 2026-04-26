@@ -9,3 +9,43 @@
 @theme {
   --font-avqest: "AvQest", serif;
 }
+
+/* In-game item label preview — top + bottom horizontal lines that fade out
+   at the edges over a dark background that also fades to transparent.
+   CSS variables let callers override the bg / border colors per rule. */
+.pv-label {
+  --bg: 6, 6, 9;
+  --bg-a: 0.92;
+  --border: 255, 255, 255;
+  --border-a: 0.20;
+  position: relative;
+  display: inline-block;
+  padding: 3px 18px;
+  font-family: "AvQest", serif;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(var(--bg), var(--bg-a)) 4%,
+    rgba(var(--bg), var(--bg-a)) 96%,
+    transparent 100%
+  );
+}
+.pv-label::before,
+.pv-label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(var(--border), var(--border-a)) 4%,
+    rgba(var(--border), var(--border-a)) 96%,
+    transparent 100%
+  );
+}
+.pv-label::before { top: 0; }
+.pv-label::after { bottom: 0; }
