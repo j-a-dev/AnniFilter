@@ -74,7 +74,7 @@ export function TopBar() {
       <div className="w-px h-5 bg-[#1d2128]" />
 
       <div className="flex gap-0.5 bg-[#0a0a0f] p-0.5 rounded">
-        {(['visual', 'raw', 'simulator'] as const).map((tab) => (
+        {(['visual', 'raw'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}

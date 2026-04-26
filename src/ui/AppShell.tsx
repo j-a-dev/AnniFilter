@@ -2,7 +2,6 @@ import { useUIStore } from '@/store/uiStore'
 import { TopBar } from './TopBar'
 import { RuleList } from './RuleList'
 import { RuleDetail } from './RuleDetail'
-import { Simulator } from './Simulator'
 import { RawEditor } from './RawEditor'
 
 export function AppShell() {
@@ -18,14 +17,7 @@ export function AppShell() {
         <main className="flex-1 overflow-y-auto bg-[#0b0d10]">
           {activeTab === 'visual' && <RuleDetail />}
           {activeTab === 'raw' && <RawEditor />}
-          {activeTab === 'simulator' && (
-            <div className="p-6 text-xs text-slate-500 italic">
-              Simulator (full-screen) — Phase 2.5
-            </div>
-          )}
         </main>
-
-        <Simulator />
       </div>
 
       <footer className="text-[10px] text-slate-600 px-4 py-1.5 border-t border-[#1d2128] bg-[#0e1014]">
