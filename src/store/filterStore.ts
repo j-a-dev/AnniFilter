@@ -17,7 +17,7 @@ type FilterState = {
   reparseRaw: () => void
   toText: () => string
   setFilePath: (path: string | null) => void
-  markClean: () => void
+  setDirty: (dirty: boolean) => void
   selectBlock: (id: string | null) => void
 }
 
@@ -61,7 +61,7 @@ export const useFilterStore = create<FilterState>()(
 
       setFilePath: (path) => set({ filePath: path }),
 
-      markClean: () => set({ dirty: false }),
+      setDirty: (dirty) => set({ dirty }),
 
       selectBlock: (id) => set({ selectedBlockId: id }),
     }),
