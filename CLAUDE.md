@@ -34,3 +34,9 @@ Annihilus diverges from vanilla D2/LoD and D2R. The mod wiki explicitly states: 
 ## Stack
 
 React 19 + TypeScript 5.9 (strict) + Vite 7 + Zustand 5 + Zundo + Tailwind 4 + Vitest/jsdom + Testing Library. Path alias `@/*` → `src/*`. Scaffolded against `E:\dev\projects\git\FilterEditor\`'s proven setup; see `docs/CONCEPT.md` Phase 0 detail for the file layout.
+
+## Dev server lifecycle
+
+The user runs `npm run dev` in their own terminal and refreshes after changes. **Don't start the dev server via `run_in_background`** — on Windows, Vite spawns child node processes that get orphaned when the agent kills the parent (TaskStop / shell exit doesn't propagate to the process tree the way it does on Linux). Result: stale node processes accumulate across sessions.
+
+Verify changes via `npm run build` (catches type errors + bundles) and `npm test` (engine + store coverage). For UI changes that need eyeballing, ask the user to refresh and describe what they see — same pattern as the global CLAUDE.md note about UI verification.
