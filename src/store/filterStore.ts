@@ -3,6 +3,7 @@ import { temporal } from 'zundo'
 import type { FilterDocument, ValidationIssue } from '@/engine/types'
 import { parse } from '@/engine/parser'
 import { generate } from '@/engine/generator'
+import { validate } from '@/engine/validator'
 
 type FilterState = {
   document: FilterDocument
@@ -40,10 +41,11 @@ export const useFilterStore = create<FilterState>()(
 
       loadFromText: (text) => {
         const result = parse(text)
+        const issues = [...result.issues, ...validate(result.document)]
         set({
           document: result.document,
           rawText: text,
-          issues: result.issues,
+          issues,
           dirty: false,
           selectedBlockId: null,
         })
@@ -55,7 +57,8 @@ export const useFilterStore = create<FilterState>()(
 
       reparseRaw: () => {
         const result = parse(get().rawText)
-        set({ document: result.document, issues: result.issues })
+        const issues = [...result.issues, ...validate(result.document)]
+        set({ document: result.document, issues })
       },
 
       toText: () => generate(get().document),
