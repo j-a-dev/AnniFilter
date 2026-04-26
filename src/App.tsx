@@ -13,14 +13,7 @@ export function App() {
         </div>
       </main>
       <footer className="text-[10px] text-slate-600 px-6 py-3 border-t border-slate-900">
-        Item label font:{' '}
-        <a
-          href="https://www.1001fonts.com/avqest-font.html"
-          className="hover:text-slate-400"
-        >
-          AvQest
-        </a>{' '}
-        by Graham Meade / 1001Fonts.
+        Item label font: AvQest by Graham Meade / GemFonts. 1001Fonts FFC license.
       </footer>
     </div>
   )
