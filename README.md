@@ -45,7 +45,7 @@ React 19 · TypeScript 5.9 strict · Vite 7 · Zustand 5 · Zundo · Tailwind 4 
 - **Wiki is 403-walled.** `WebFetch` cannot read `annihilus.net` — re-extraction requires the user saving HTML and an agent processing it. See [`docs/CONCEPT.md`](./docs/CONCEPT.md) "Critical retrieval trap".
 - **Round-trip identity is the engine's load-bearing invariant.** Both shipped filters parse → generate → parse to deep-equal AST. See `src/engine/__tests__/roundtrip.shipped.test.ts`. Any parser/generator change must preserve this.
 - **Wiki + extensions = canonical.** `docs/wiki/Item_Filter.md` is what the wiki says; `docs/wiki/extensions_observed.md` adds features used in shipped community filters but undocumented (e.g. `ChatNotification`, `AffixCount`, the extended Runeword Pattern Rarity values). Their union is the spec.
-- **AvQest font** is bundled under the 1001Fonts FFC license. Credit goes to **GemFonts** (Graham Meade's foundry, 1998); 1001Fonts is the distributor. Do not add a "download font" link in the UI (license §6).
+- **AvQest font** is bundled under GemFonts' freeware distribution ([Fontspace listing](https://www.fontspace.com/avqest-font-f4004)). Credit goes to **GemFonts** (Graham Meade's foundry, 1998). Don't add a "download font" link in the UI — even under freeware terms, redirecting users to download the font from inside the editor isn't appropriate.
 
 ## Contributing
 

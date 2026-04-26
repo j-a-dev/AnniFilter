@@ -278,7 +278,7 @@ AnniFilter/
 ├── public/
 │   └── fonts/
 │       ├── AvQest.woff2
-│       └── LICENSE.txt              # 1001fonts FFC EULA, copied from samples/
+│       └── (EULA file removed 2026-04-26 — see Phase 0 detail callout)
 ├── src/
 │   ├── engine/
 │   │   ├── types.ts                 # AST shapes (stubbed in P0; full in P1)
@@ -317,7 +317,7 @@ AnniFilter/
 
 ### Tasks
 1. Scaffold Vite + React 19 + TS 5.9 strict + Tailwind 4 + Zustand 5 + Zundo + Vitest. Path alias `@/*` → `src/*`.
-2. Vendor AvQest: convert `samples/AvQest.ttf` → `public/fonts/AvQest.woff2` (preserve glyphs, no rename — license §3). Copy `samples/1001fonts-avqest-eula.txt` → `public/fonts/LICENSE.txt`. Add Graham Meade / 1001Fonts credit to footer.
+2. Vendor AvQest: copy `samples/AvQest.ttf` → `public/fonts/AvQest.ttf`. Add Graham Meade / GemFonts credit to footer. (Originally also bundled the 1001Fonts FFC EULA as LICENSE.txt; removed 2026-04-26 once GemFonts' Fontspace freeware distribution was confirmed as a parallel, sufficient license source — see "Status: completed" callout.)
 3. Port `AppShell` + panel scaffolding from `E:\dev\Projects\git\FilterEditor\`.
 4. Port `useFileOperations` (open `.filter`, save-as, dirty tracking).
 5. `filterStore`: Zustand state holding `rawText: string`, `parsed: FilterDocument | null`, `dirty: boolean`, with Zundo middleware. Raw-text mirror updates eagerly on edit; parse runs in microtask.
