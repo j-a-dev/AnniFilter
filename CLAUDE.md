@@ -33,4 +33,4 @@ Annihilus diverges from vanilla D2/LoD and D2R. The mod wiki explicitly states: 
 
 ## Stack
 
-Greenfield personal web project — defaults from global CLAUDE.md apply (React 19 + TS 5.9 strict + Vite + Zustand/Zundo + Tailwind 4 + Vitest/jsdom/RTL, `@/*` → `src/*`).
+React 19 + TypeScript 5.9 (strict) + Vite 7 + Zustand 5 + Zundo + Tailwind 4 + Vitest/jsdom + Testing Library. Path alias `@/*` → `src/*`. Scaffolded against `E:\dev\projects\git\FilterEditor\`'s proven setup; see `docs/CONCEPT.md` Phase 0 detail for the file layout.
