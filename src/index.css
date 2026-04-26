@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "AvQest";
+  src: url("/fonts/AvQest.ttf") format("truetype");
+  font-display: block;
+}
+
+@theme {
+  --font-avqest: "AvQest", serif;
+}
