@@ -22,7 +22,7 @@ export function AppShell() {
       </div>
 
       <footer className="text-[10px] text-slate-600 px-4 py-1.5 border-t border-[#1d2128] bg-[#0e1014]">
-        Item label font: AvQest by Graham Meade / GemFonts.
+        Item label font: AvQest by Graham Meade / GemFonts (1998). See README for licensing notes.
       </footer>
 
       <JumpToIndexOverlay />

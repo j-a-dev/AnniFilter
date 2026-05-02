@@ -323,7 +323,7 @@ AnniFilter/
 5. `filterStore`: Zustand state holding `rawText: string`, `parsed: FilterDocument | null`, `dirty: boolean`, with Zundo middleware. Raw-text mirror updates eagerly on edit; parse runs in microtask.
 6. Stub Monaco lazy-load. Raw editor renders a textarea in P0; Monaco wires up in P2 when there's a real reason for syntax highlighting.
 7. Engine stub: types declared as empty interfaces, `parse()` returns `{ blocks: [], unknownDirectives: [] }`, `generate()` returns `''`. Just enough to type-check the store.
-8. GH Actions workflow: build on push to main → deploy to `tandoran.github.io/AnniFilter`. Vite `base: '/AnniFilter/'`.
+8. GH Actions workflow: build on push to main → deploy to `j-a-dev.github.io/AnniFilter`. Vite `base: '/AnniFilter/'`.
 
 ### Exit gate
 - `npm run dev` shows app shell with three panels and a top bar.
