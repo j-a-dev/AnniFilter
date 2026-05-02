@@ -24,7 +24,7 @@ export function AppShell() {
       <footer className="text-[10px] text-slate-600 px-4 py-1.5 border-t border-[#1d2128] bg-[#0e1014]">
         Item label font: AvQest by Graham Meade / GemFonts (1998).{' '}
         <a
-          href="https://github.com/j-a-dev/AnniFilter#license"
+          href="https://github.com/j-a-dev/AnniFilter/blob/main/README.md#license"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-slate-400"
