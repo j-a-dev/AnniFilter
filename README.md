@@ -28,7 +28,7 @@ Once running, click **Open** in the app and pick `samples/lenzy's filter_regular
 | `src/engine/` | Parser, generator, validator, matcher, categorizer, AST types, spec data. |
 | `src/store/` | Zustand state (`filterStore`, `uiStore`) + memoized selectors. |
 | `src/ui/` | React components. |
-| `samples/` | Community filter fixtures (lenzy regular + strict, plus legacy-format `lenzys_*.txt` for reference). |
+| `samples/` | Community filter fixtures (lenzy regular + strict). |
 | `docs/wiki/` | Annihilus filter spec extracts ([`item-filter.md`](./docs/wiki/item-filter.md) + [`extensions-observed.md`](./docs/wiki/extensions-observed.md)) — usable as reference for any other Annihilus tooling. |
 
 ## Stack

@@ -375,26 +375,6 @@ The following observations are not part of the wiki source — they flag gaps, a
 - **Drop sound 2 and 5 are both labelled "thump"** — preserved verbatim; may be intentional or a wiki error.
 - **Text color names that look like duplicates:** `White`, `White2`, `DarkWhite`, `Black`, `Black2`. No explanation of how they differ visually.
 
-### Discrepancy between this spec and the in-repo sample filters
-
-The two sample filters at `E:/dev/projects/git/AnniFilter/samples/lenzys_strict_itemfilter.txt` and `.../lenzys_uberstrict_itemfilter.txt` **do not use the syntax documented on this page.** They are written in a comma-separated, legacy-style format:
-
-```text
-cap, low, hide
-cap, unique, darkgold
-r20, normal, orange
-```
-
-i.e. `<3-letter item code>, <quality>, <action-or-color>`. This is an entirely different grammar from the `Show` / `Hide` / `Style` block system described on the wiki page. Observations:
-
-- The sample filters' own header says *"LeNzY's Strict Filter Legacy"*, suggesting this is a deprecated legacy format (consistent with the wiki's separate `/Legacy/` namespace noted in `CLAUDE.md`).
-- Quality tokens in the samples (`low`, `normal`, `superior`, `magic`, `rare`, `unique`, `set`) partially overlap with the spec's `Rarity` values (`Normal`, `Magic`, `Rare`, `Set`, `Unique`) but add `low` and `superior`, which the spec page does not mention.
-- Color tokens used as actions (`darkgold`, `lightgreen`, `orange`, `red`, `blue`, `yellow`, `white`) match names from the List of Text Colors — so the legacy format appears to implicitly combine "show" + "set text color" into one shorthand.
-- None of the Opcodes documented here (`ItemType`, `ItemName`, `Rarity`, `SetBorderColor`, `MinimapIcon`, etc.) appear anywhere in the samples.
-- The 3-letter codes (`cap`, `skp`, `hlm`, `fhl`, `r20`, `hp1`) are D2 internal item codes. The current `Item_Filter` spec does not document whether these codes are accepted by `ItemType` or `ItemName` in the modern syntax — [UNCLEAR: interop between legacy filter format and the `Item_Filter` format].
-
-**Implication for the editor:** the two in-repo samples are not representative examples of the current `Item_Filter` spec. If the editor targets the current format, it will need independent example filters (the wiki points to Discord as the distribution channel for community filters in this format).
-
 ### Items the spec defers without providing a link
 
 None. Every list the spec references ("accepted ItemType strings are shown below", "Accepted text colors are shown below", etc.) is included on this same page — there are no "see other page" forward references.
