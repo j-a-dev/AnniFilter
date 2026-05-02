@@ -28,3 +28,7 @@ dist-ssr
 
 # Local-only working files (kept on disk for reference, not redistributed)
 AnniWiki/
+docs/CONCEPT.md
+docs/next-up.md
+docs/open-questions.md
+docs/ui/

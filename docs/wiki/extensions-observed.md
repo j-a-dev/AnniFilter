@@ -4,11 +4,11 @@
 > - Source: the two current-format filters at `samples/lenzy's filter_regular.filter` (1,729 lines) and `samples/lenzy's filter_strict.filter` (1,860 lines).
 > - Filter header: `LeNzY's Annihilus Filter`, version `0.5.4-beta`, patch 2025-12-25, TYPE `Regular` / `Strict`.
 > - Extracted on 2026-04-24.
-> - Companion document to [`Item_Filter.md`](./Item_Filter.md).
+> - Companion document to [`item-filter.md`](./item-filter.md).
 
 ## Why this document exists
 
-The wiki spec at [`Item_Filter.md`](./Item_Filter.md) is incomplete. These shipped filters are known-working against the Annihilus game engine (they ship with the mod's launcher-distributed community filters) and exercise features the wiki never documents. For our editor, "what the game accepts" is the union of (wiki spec) + (features demonstrably used by shipped filters).
+The wiki spec at [`item-filter.md`](./item-filter.md) is incomplete. These shipped filters are known-working against the Annihilus game engine (they ship with the mod's launcher-distributed community filters) and exercise features the wiki never documents. For our editor, "what the game accepts" is the union of (wiki spec) + (features demonstrably used by shipped filters).
 
 The project stance per `docs/CONCEPT.md` was previously "wiki is canonical." This document extends that stance: **wiki + shipped filters are canonical.** Anything in either source is a real feature. Anything in neither is treated as nonexistent until new evidence arrives.
 

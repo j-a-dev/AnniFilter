@@ -1,6 +1,6 @@
 /**
- * Authoritative enumerated values from `docs/wiki/Item_Filter.md` and
- * `docs/wiki/extensions_observed.md`. Per CONCEPT.md operating principle:
+ * Authoritative enumerated values from `docs/wiki/item-filter.md` and
+ * `docs/wiki/extensions-observed.md`. Per CONCEPT.md operating principle:
  * the union of those two documents IS the spec.
  */
 

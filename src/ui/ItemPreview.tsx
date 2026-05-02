@@ -2,20 +2,20 @@ import type { Action } from '@/engine/types'
 import { PALETTE_HEX, renderTemplate } from './templateRender'
 
 const FONT_SIZE_PX: Record<string, number> = {
-  Font6: 9,
-  Font8: 11,
-  Font16: 12,
-  Font24: 14,
-  Font30: 16,
-  Font42: 19,
-  FontFormal10: 12,
-  FontFormal11: 12,
-  FontFormal12: 13,
-  FontExocet8: 11,
-  FontExocet10: 12,
-  FontInGameChat: 11,
-  FontRidiculous: 22,
-  ReallyTheLastSucker: 18,
+  Font6: 12,
+  Font8: 14,
+  Font16: 15,
+  Font24: 17,
+  Font30: 19,
+  Font42: 22,
+  FontFormal10: 15,
+  FontFormal11: 15,
+  FontFormal12: 16,
+  FontExocet8: 14,
+  FontExocet10: 15,
+  FontInGameChat: 14,
+  FontRidiculous: 25,
+  ReallyTheLastSucker: 21,
 }
 
 function findFirst<K extends Action['keyword']>(
@@ -50,8 +50,8 @@ export function ItemPreview({
 
   const sampleName = label && label.length > 0 ? label : 'Sample Item'
 
-  const rawFontSize = setFont ? (FONT_SIZE_PX[setFont.font] ?? 12) : 12
-  const fontSize = compact ? Math.min(rawFontSize, 12) : rawFontSize
+  const rawFontSize = setFont ? (FONT_SIZE_PX[setFont.font] ?? 15) : 15
+  const fontSize = compact ? Math.min(rawFontSize, 16) : rawFontSize
 
   const style: Record<string, string | number> = {
     color: defaultColor,
