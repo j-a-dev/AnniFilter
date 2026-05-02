@@ -9,9 +9,8 @@ Annihilus diverges from vanilla D2/LoD and D2R. The mod wiki explicitly states: 
 ## Sources
 
 - **Wiki** — `annihilus.net/wiki/index.php`
-  - `/Item_Filter` — filter syntax spec (the only one that exists).
-  - `/Uniques`, `/Runewords`, `/Runes` — current item data (sub-pages enumerate by category).
-  - `/Legacy/...` — legacy namespace, separate from current.
+  - `/Item_Filter` — filter syntax spec.
+  - `/Uniques`, `/Runewords`, `/Runes` — item data (sub-pages enumerate by category).
 - **Discord** — `discord.com/invite/annihilus`. Wiki states community filters are distributed here; join required for deep links.
 
 ## Critical retrieval trap
