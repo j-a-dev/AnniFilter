@@ -15,6 +15,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import type { BlockKind } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
 import { RuleListRow } from './RuleListRow'
+import { FilenameInput } from './FilenameInput'
 import { summarizeConditions, KIND_COLOR } from './ruleListUtils'
 
 const ROW_HEIGHT = 44
@@ -88,6 +89,9 @@ export function RuleList() {
 
   return (
     <aside className="w-[560px] border-r border-[#1d2128] bg-[#0e1014] shrink-0 overflow-hidden flex flex-col">
+      <div className="px-3 py-2 border-b border-[#1d2128] shrink-0">
+        <FilenameInput />
+      </div>
       <div className="flex items-center justify-between px-3 h-9 border-b border-[#1d2128] shrink-0">
         <span className="text-[10px] uppercase tracking-wider text-slate-500">
           Rules · {blocks.length}

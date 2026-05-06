@@ -7,25 +7,58 @@ import type {
   StylePreset,
 } from './types'
 
+export type BlockRange = { charStart: number; charEnd: number }
+
 /** Generate the canonical `.filter` text for a document. Deterministic. */
 export function generate(document: FilterDocument): string {
+  return generateWithRanges(document).text
+}
+
+/**
+ * Generate canonical `.filter` text plus per-block character offsets into
+ * that text. Used by the raw view to map block selection ↔ rendered segments.
+ * Offsets are inclusive-start, exclusive-end (substring-friendly), and do not
+ * include the blank separator line that precedes the block in the joined text.
+ */
+export function generateWithRanges(document: FilterDocument): {
+  text: string
+  blockRanges: Map<string, BlockRange>
+} {
   const out: string[] = []
   const presetById = new Map(document.presets.map((p) => [p.id, p]))
+  const blockRanges = new Map<string, BlockRange>()
 
-  // 1) Preamble (free-form comments). Emitted as-is.
-  for (const line of document.preamble) {
-    out.push(`# ${line}`)
-  }
-  if (document.preamble.length > 0) out.push('')
-
-  // 2) Preset definitions in the preamble area. One block per preset.
-  for (const preset of document.presets) {
-    out.push(`# @preset-def ${preset.name}`)
-    for (const action of preset.actions) {
-      out.push(`#   ${formatAction(action)}`)
+  // Tracks character offset that the *next* line in `out` will start at,
+  // accounting for the '\n' joiners.
+  let charCursor = 0
+  const advance = (lines: string[]) => {
+    for (const line of lines) {
+      // Each pushed line contributes its length plus the '\n' separator that
+      // joins it to the next line (or the final newline appended at the end).
+      charCursor += line.length + 1
     }
-    out.push(`# @preset-def-end`)
-    out.push('')
+  }
+
+  // 1) Preamble.
+  const preambleLines: string[] = []
+  for (const line of document.preamble) {
+    preambleLines.push(`# ${line}`)
+  }
+  if (document.preamble.length > 0) preambleLines.push('')
+  out.push(...preambleLines)
+  advance(preambleLines)
+
+  // 2) Preset definitions.
+  for (const preset of document.presets) {
+    const lines: string[] = []
+    lines.push(`# @preset-def ${preset.name}`)
+    for (const action of preset.actions) {
+      lines.push(`#   ${formatAction(action)}`)
+    }
+    lines.push(`# @preset-def-end`)
+    lines.push('')
+    out.push(...lines)
+    advance(lines)
   }
 
   // 3) Blocks.
@@ -33,21 +66,34 @@ export function generate(document: FilterDocument): string {
     const block = document.blocks[bi]
     if (!block) continue
 
-    if (bi > 0) out.push('')
+    if (bi > 0) {
+      out.push('')
+      advance([''])
+    }
 
-    emitBlock(block, presetById, out)
+    const blockLines: string[] = []
+    emitBlock(block, presetById, blockLines)
+    const start = charCursor
+    out.push(...blockLines)
+    advance(blockLines)
+    // charCursor now points to the position just past the trailing '\n' of
+    // this block's last line — i.e. start of the next block's separator.
+    // Use charCursor - 1 as exclusive end so we don't include that final '\n'.
+    blockRanges.set(block.id, { charStart: start, charEnd: charCursor - 1 })
   }
 
   // 4) Trailing comments.
   if (document.trailingComments.length > 0) {
-    out.push('')
+    const lines: string[] = ['']
     for (const line of document.trailingComments) {
-      out.push(`# ${line}`)
+      lines.push(`# ${line}`)
     }
+    out.push(...lines)
+    advance(lines)
   }
 
-  // Final newline.
-  return out.join('\n') + '\n'
+  const text = out.join('\n') + '\n'
+  return { text, blockRanges }
 }
 
 function emitBlock(

@@ -9,7 +9,7 @@ import type {
   ValidationIssue,
 } from '@/engine/types'
 import { parse } from '@/engine/parser'
-import { generate } from '@/engine/generator'
+import { generate, generateWithRanges, type BlockRange } from '@/engine/generator'
 import { validate } from '@/engine/validator'
 
 let mutCounter = 0
@@ -42,6 +42,7 @@ function updateBlockInPlace(
 type FilterState = {
   document: FilterDocument
   rawText: string
+  blockRanges: Map<string, BlockRange>
   filePath: string | null
   dirty: boolean
   issues: ValidationIssue[]
@@ -90,9 +91,11 @@ export const useFilterStore = create<FilterState>()(
         transform: (doc: FilterDocument) => FilterDocument,
       ): void => {
         const document = transform(get().document)
+        const { text, blockRanges } = generateWithRanges(document)
         set({
           document,
-          rawText: generate(document),
+          rawText: text,
+          blockRanges,
           issues: validate(document),
           dirty: true,
         })
@@ -101,6 +104,7 @@ export const useFilterStore = create<FilterState>()(
       return {
         document: emptyDocument,
         rawText: '',
+        blockRanges: new Map(),
         filePath: null,
         dirty: false,
         issues: [],
@@ -109,10 +113,18 @@ export const useFilterStore = create<FilterState>()(
         // ─── I/O ──────────────────────────────────────────────
         loadFromText: (text) => {
           const result = parse(text)
+          // Use the regenerated text so rawText and blockRanges agree on
+          // offsets. Comments-in-block position isn't preserved by the
+          // round-trip anyway, so showing the canonical form on load is
+          // consistent with what edits would produce.
+          const { text: rawText, blockRanges } = generateWithRanges(
+            result.document,
+          )
           const issues = [...result.issues, ...validate(result.document)]
           set({
             document: result.document,
-            rawText: text,
+            rawText,
+            blockRanges,
             issues,
             dirty: false,
             selectedBlockId: null,
@@ -285,6 +297,7 @@ export const useFilterStore = create<FilterState>()(
       partialize: (state) => ({
         document: state.document,
         rawText: state.rawText,
+        blockRanges: state.blockRanges,
       }),
     },
   ),

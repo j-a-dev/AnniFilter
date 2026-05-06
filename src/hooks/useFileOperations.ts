@@ -8,14 +8,21 @@ const hasFileSystemAccess =
 
 let currentFileHandle: FileSystemFileHandle | null = null
 
+// Custom MIME avoids Chrome auto-adding .txt/.text to the dialog's accept set,
+// which it does for `text/plain`.
 const FILTER_FILE_PICKER_OPTS = {
   types: [
     {
       description: 'Annihilus Filter Files',
-      accept: { 'text/plain': ['.filter'] },
+      accept: { 'application/x-annihilus-filter': ['.filter'] },
     },
   ],
 }
+
+const FILTER_EXT = '.filter'
+
+const stripExt = (name: string) =>
+  name.endsWith(FILTER_EXT) ? name.slice(0, -FILTER_EXT.length) : name
 
 type FilePickerWindow = Window & {
   showOpenFilePicker: (opts: unknown) => Promise<FileSystemFileHandle[]>
@@ -64,7 +71,7 @@ export function useFileOperations() {
         const handle = await (
           window as unknown as FilePickerWindow
         ).showSaveFilePicker({
-          suggestedName: filePath ?? 'my-filter.filter',
+          suggestedName: stripExt(filePath ?? 'my-filter'),
           ...FILTER_FILE_PICKER_OPTS,
         })
         const writable = await handle.createWritable()
@@ -81,15 +88,21 @@ export function useFileOperations() {
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = filePath ?? 'my-filter.filter'
+      const downloadName = filePath ?? 'my-filter.filter'
+      a.download = downloadName
       a.click()
       URL.revokeObjectURL(url)
       setDirty(false)
+      setFilePath(downloadName)
     }
   }, [toText, filePath, setDirty, setFilePath])
 
   const saveFile = useCallback(async () => {
-    if (currentFileHandle && hasFileSystemAccess) {
+    // If the user renamed via the filename input, the handle's name no longer
+    // matches the intended path — fall through to Save As so they get a dialog.
+    const handleMatchesPath =
+      currentFileHandle && currentFileHandle.name === filePath
+    if (handleMatchesPath && currentFileHandle && hasFileSystemAccess) {
       try {
         const text = toText()
         const writable = await currentFileHandle.createWritable()
@@ -102,7 +115,7 @@ export function useFileOperations() {
       }
     }
     await saveFileAs()
-  }, [toText, setDirty, saveFileAs])
+  }, [toText, filePath, setDirty, saveFileAs])
 
   const clearFileHandle = useCallback(() => {
     currentFileHandle = null

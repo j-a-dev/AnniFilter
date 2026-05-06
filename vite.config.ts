@@ -11,4 +11,12 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  server: {
+    watch: {
+      // Saving from inside the app can land in the project tree (e.g.
+      // samples/), which would otherwise trigger a Vite full reload mid-save
+      // and abort the in-flight FileSystemFileHandle work before setFilePath.
+      ignored: ['**/*.filter'],
+    },
+  },
 })

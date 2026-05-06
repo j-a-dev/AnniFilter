@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import type {
   ComparisonOp,
   Condition,
@@ -148,20 +149,10 @@ function ConditionValueEditor({
     case 'ItemName':
     case 'HasAffix':
       return (
-        <input
-          type="text"
-          value={condition.values.join(', ')}
-          onChange={(e) =>
-            onChange({
-              ...condition,
-              values: e.target.value
-                .split(',')
-                .map((v) => v.trim())
-                .filter((v) => v.length > 0),
-            })
-          }
+        <MultiValueTextInput
+          values={condition.values}
+          onChange={(values) => onChange({ ...condition, values })}
           placeholder='comma-separated, e.g. "Runes", "Riftstone"'
-          className="flex-1 bg-[#0a0a0f] text-slate-200 text-[11px] px-2 py-0.5 rounded border border-[#1d2128] focus:border-amber-500/50 outline-none"
         />
       )
     case 'Unknown':
@@ -216,4 +207,47 @@ function ConditionValueEditor({
       )
     }
   }
+}
+
+const parseValues = (s: string) =>
+  s
+    .split(',')
+    .map((v) => v.trim())
+    .filter((v) => v.length > 0)
+
+function MultiValueTextInput({
+  values,
+  onChange,
+  placeholder,
+}: {
+  values: string[]
+  onChange: (values: string[]) => void
+  placeholder?: string
+}) {
+  const [text, setText] = useState(() => values.join(', '))
+
+  // Sync from props only when parent values diverge from what our text parses to
+  // (e.g. undo/redo or programmatic change). Otherwise keep the user's raw text
+  // so trailing commas, in-progress whitespace, etc. survive keystrokes.
+  useEffect(() => {
+    const parsed = parseValues(text)
+    const same =
+      parsed.length === values.length &&
+      parsed.every((v, i) => v === values[i])
+    if (!same) setText(values.join(', '))
+  }, [values])
+
+  return (
+    <input
+      type="text"
+      value={text}
+      onChange={(e) => {
+        setText(e.target.value)
+        onChange(parseValues(e.target.value))
+      }}
+      onBlur={() => setText(values.join(', '))}
+      placeholder={placeholder}
+      className="flex-1 bg-[#0a0a0f] text-slate-200 text-[11px] px-2 py-0.5 rounded border border-[#1d2128] focus:border-amber-500/50 outline-none"
+    />
+  )
 }

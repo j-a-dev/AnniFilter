@@ -5,8 +5,8 @@ import { useFileOperations } from '@/hooks/useFileOperations'
 
 export function TopBar() {
   const dirty = useFilterStore((s) => s.dirty)
-  const filePath = useFilterStore((s) => s.filePath)
   const loadFromText = useFilterStore((s) => s.loadFromText)
+  const setFilePath = useFilterStore((s) => s.setFilePath)
   const activeTab = useUIStore((s) => s.activeTab)
   const setActiveTab = useUIStore((s) => s.setActiveTab)
 
@@ -24,7 +24,8 @@ export function TopBar() {
     if (!confirmUnsaved()) return
     clearFileHandle()
     loadFromText('')
-  }, [confirmUnsaved, clearFileHandle, loadFromText])
+    setFilePath(null)
+  }, [confirmUnsaved, clearFileHandle, loadFromText, setFilePath])
 
   const handleOpen = useCallback(async () => {
     if (!confirmUnsaved()) return
@@ -33,36 +34,20 @@ export function TopBar() {
 
   return (
     <header className="h-12 flex items-center px-4 border-b border-[#1d2128] bg-[#0e1014] shrink-0 gap-3">
-      <h1 className="text-sm font-semibold text-[#c8a94e] tracking-wide">
+      <h1 className="text-sm font-semibold text-[#c8a94e] tracking-wide shrink-0">
         AnniFilter
       </h1>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 shrink-0">
         <ToolButton onClick={handleNew} label="New" />
         <ToolButton onClick={handleOpen} label="Open" />
         <ToolButton onClick={saveFile} label="Save" title="Ctrl+S" />
         <ToolButton onClick={saveFileAs} label="Save As" />
       </div>
 
-      <div className="w-px h-5 bg-[#1d2128]" />
+      <div className="ml-auto" />
 
-      <div className="flex items-center gap-1.5 min-w-0">
-        <span
-          className={`text-xs truncate ${filePath ? 'text-slate-300' : 'text-slate-500 italic'}`}
-        >
-          {filePath ?? 'Untitled'}
-        </span>
-        {dirty && (
-          <span
-            className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"
-            title="Unsaved changes"
-          />
-        )}
-      </div>
-
-      <div className="w-px h-5 bg-[#1d2128]" />
-
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 shrink-0">
         <ToolButton onClick={() => undo()} label="Undo" title="Ctrl+Z" />
         <ToolButton
           onClick={() => redo()}
@@ -71,9 +56,9 @@ export function TopBar() {
         />
       </div>
 
-      <div className="w-px h-5 bg-[#1d2128]" />
+      <div className="w-px h-5 bg-[#1d2128] shrink-0" />
 
-      <div className="flex gap-0.5 bg-[#0a0a0f] p-0.5 rounded">
+      <div className="flex gap-0.5 bg-[#0a0a0f] p-0.5 rounded shrink-0">
         {(['visual', 'raw'] as const).map((tab) => (
           <button
             key={tab}
@@ -88,8 +73,6 @@ export function TopBar() {
           </button>
         ))}
       </div>
-
-      <div className="ml-auto" />
     </header>
   )
 }
