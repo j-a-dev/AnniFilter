@@ -6,11 +6,15 @@ import type {
   Condition,
   FilterBlock,
   FilterDocument,
+  FilterMetadata,
+  FilterOption,
+  OptionCategory,
   ValidationIssue,
 } from '@/engine/types'
 import { parse } from '@/engine/parser'
 import { generate, generateWithRanges, type BlockRange } from '@/engine/generator'
 import { validate } from '@/engine/validator'
+import { useUIStore } from './uiStore'
 
 let mutCounter = 0
 function nextMutId(): string {
@@ -47,6 +51,8 @@ type FilterState = {
   dirty: boolean
   issues: ValidationIssue[]
   selectedBlockId: string | null
+  /** Set when a load was refused due to a fatal structural error; null when the last load succeeded. */
+  loadError: string | null
 
   // I/O
   loadFromText: (text: string) => void
@@ -74,6 +80,18 @@ type FilterState = {
   updateAction: (blockId: string, index: number, action: Action) => void
   removeAction: (blockId: string, index: number) => void
   setBlockActions: (blockId: string, actions: Action[]) => void
+
+  // Option-set mutations
+  updateMetadata: (patch: Partial<FilterMetadata>) => void
+  setOptions: (options: FilterOption[]) => void
+  setOptionCategories: (categories: OptionCategory[]) => void
+  setBlockOptionId: (blockId: string, optionId: string | undefined) => void
+  /** Remove an option and clear it from any blocks that referenced it. */
+  removeOption: (id: string) => void
+  /** Rename a category, updating member options that point at it. */
+  renameCategory: (oldName: string, newName: string) => void
+  /** Remove a category and un-group its member options. */
+  removeCategory: (name: string) => void
 }
 
 const emptyDocument: FilterDocument = {
@@ -81,6 +99,10 @@ const emptyDocument: FilterDocument = {
   presets: [],
   preamble: [],
   trailingComments: [],
+  metadata: { descriptions: [] },
+  options: [],
+  optionCategories: [],
+  unknownDirectives: [],
 }
 
 export const useFilterStore = create<FilterState>()(
@@ -109,10 +131,19 @@ export const useFilterStore = create<FilterState>()(
         dirty: false,
         issues: [],
         selectedBlockId: null,
+        loadError: null,
 
         // ─── I/O ──────────────────────────────────────────────
         loadFromText: (text) => {
           const result = parse(text)
+          // A fatal structural error refuses the load: keep the current
+          // document untouched and surface the located message instead.
+          if (result.fatalError) {
+            set({
+              loadError: `Line ${result.fatalError.line}: ${result.fatalError.message}`,
+            })
+            return
+          }
           // Use the regenerated text so rawText and blockRanges agree on
           // offsets. Comments-in-block position isn't preserved by the
           // round-trip anyway, so showing the canonical form on load is
@@ -128,7 +159,11 @@ export const useFilterStore = create<FilterState>()(
             issues,
             dirty: false,
             selectedBlockId: null,
+            loadError: null,
           })
+          // Simulation toggles are transient and filter-specific — clear them
+          // so a freshly loaded filter starts from its declared option defaults.
+          useUIStore.getState().resetOptionStates()
         },
 
         toText: () => generate(get().document),
@@ -290,6 +325,69 @@ export const useFilterStore = create<FilterState>()(
           applyDocPatch((doc) =>
             updateBlockInPlace(doc, blockId, (b) => ({ ...b, actions })),
           )
+        },
+
+        // ─── Option-set mutations ─────────────────────────────
+        updateMetadata: (patch) => {
+          applyDocPatch((doc) => ({
+            ...doc,
+            metadata: { ...doc.metadata, ...patch },
+          }))
+        },
+
+        setOptions: (options) => {
+          applyDocPatch((doc) => ({ ...doc, options }))
+        },
+
+        setOptionCategories: (categories) => {
+          applyDocPatch((doc) => ({ ...doc, optionCategories: categories }))
+        },
+
+        setBlockOptionId: (blockId, optionId) => {
+          applyDocPatch((doc) =>
+            updateBlockInPlace(doc, blockId, (b) => {
+              const next = { ...b }
+              if (optionId === undefined) delete next.optionId
+              else next.optionId = optionId
+              return next
+            }),
+          )
+        },
+
+        removeOption: (id) => {
+          applyDocPatch((doc) => ({
+            ...doc,
+            options: doc.options.filter((o) => o.id !== id),
+            blocks: doc.blocks.map((b) => {
+              if (b.optionId !== id) return b
+              const { optionId: _drop, ...rest } = b
+              return rest
+            }),
+          }))
+        },
+
+        renameCategory: (oldName, newName) => {
+          applyDocPatch((doc) => ({
+            ...doc,
+            optionCategories: doc.optionCategories.map((c) =>
+              c.name === oldName ? { name: newName } : c,
+            ),
+            options: doc.options.map((o) =>
+              o.categoryName === oldName ? { ...o, categoryName: newName } : o,
+            ),
+          }))
+        },
+
+        removeCategory: (name) => {
+          applyDocPatch((doc) => ({
+            ...doc,
+            optionCategories: doc.optionCategories.filter((c) => c.name !== name),
+            options: doc.options.map((o) => {
+              if (o.categoryName !== name) return o
+              const { categoryName: _drop, ...rest } = o
+              return rest
+            }),
+          }))
         },
       }
     },

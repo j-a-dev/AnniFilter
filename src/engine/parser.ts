@@ -9,11 +9,39 @@ import type {
   NumericConditionKeyword,
   BooleanConditionKeyword,
   StringListConditionKeyword,
+  FilterOption,
+  OptionCategory,
+  FilterMetadata,
 } from './types'
+
+export type ParseFatalError = {
+  /** 1-based line number where the violation was detected. */
+  line: number
+  code: string
+  message: string
+}
 
 export type ParseResult = {
   document: FilterDocument
   issues: ValidationIssue[]
+  /**
+   * Non-null when the filter breaks a clear structural rule: unbalanced/nested
+   * `@Option` regions, `@OptionBegin` referencing an undeclared option, or a
+   * duplicate `@Option` id. The `document` is still returned (best-effort
+   * partial) for diagnostics, but callers MUST refuse to load it.
+   * See docs/requirements/option-sets.md §5.
+   */
+  fatalError: ParseFatalError | null
+}
+
+/** Mutable accumulator for intro-section directives, threaded through the parse. */
+type IntroAccumulator = {
+  metadata: FilterMetadata
+  options: FilterOption[]
+  optionCategories: OptionCategory[]
+  unknownDirectives: string[]
+  declaredOptionIds: Set<string>
+  currentCategory: string | undefined
 }
 
 const NUMERIC_CONDITIONS: ReadonlySet<NumericConditionKeyword> = new Set([
@@ -53,6 +81,9 @@ const COMPARISON_OPS: ComparisonOp[] = ['==', '!=', '>=', '<=', '>', '<']
 const BLOCK_HEADER_RE = /^\s*(Show|Hide|Style)\b\s*(?:#(.*))?$/
 const DISABLED_HEADER_RE = /^\s*#\s*(Show|Hide|Style)\b\s*(?:#(.*))?$/
 const COMMENT_LINE_RE = /^\s*#(.*)$/
+const OPTION_BEGIN_RE = /^\s*@OptionBegin\b\s*(.*)$/
+const OPTION_END_RE = /^\s*@OptionEnd\b\s*(.*)$/
+const DIRECTIVE_RE = /^@(\w+)\b\s*(.*)$/
 
 export function parse(text: string): ParseResult {
   const issues: ValidationIssue[] = []
@@ -61,24 +92,108 @@ export function parse(text: string): ParseResult {
   const preamble: string[] = []
   const trailingComments: string[] = []
 
+  const intro: IntroAccumulator = {
+    metadata: { descriptions: [] },
+    options: [],
+    optionCategories: [],
+    unknownDirectives: [],
+    declaredOptionIds: new Set<string>(),
+    currentCategory: undefined,
+  }
+
   let i = 0
   let blockIndex = 0
+  let gateDepth = 0
+  let currentGateId: string | null = null
 
-  // 1) Preamble: comment/blank lines until first block header (or disabled block start).
+  const buildDocument = (): FilterDocument => ({
+    blocks,
+    presets: [],
+    preamble,
+    trailingComments,
+    metadata: intro.metadata,
+    options: intro.options,
+    optionCategories: intro.optionCategories,
+    unknownDirectives: intro.unknownDirectives,
+  })
+  const fatal = (line: number, code: string, message: string): ParseResult => ({
+    document: buildDocument(),
+    issues,
+    fatalError: { line, code, message },
+  })
+
+  // 1) Intro: metadata/option/category directives + comments, until the first
+  //    block header or `@Option` region marker.
   while (i < lines.length) {
     const line = lines[i] ?? ''
-    if (isBlockStart(line) || isDisabledBlockStart(line)) break
-    if (line.trim().length > 0) {
-      const cm = line.match(COMMENT_LINE_RE)
-      if (cm) preamble.push((cm[1] ?? '').trim())
+    if (isBlockStart(line) || isDisabledBlockStart(line) || isOptionMarker(line)) {
+      break
+    }
+    const trimmed = line.trim()
+    if (trimmed.length > 0) {
+      if (trimmed.startsWith('@')) {
+        const err = consumeIntroDirective(trimmed, i + 1, intro, issues)
+        if (err) return fatal(err.line, err.code, err.message)
+      } else {
+        const cm = line.match(COMMENT_LINE_RE)
+        if (cm) preamble.push((cm[1] ?? '').trim())
+      }
     }
     i++
   }
 
-  // 2) Blocks
+  // 2) Blocks + `@Option` regions
   while (i < lines.length) {
     const line = lines[i] ?? ''
-    if (line.trim().length === 0) {
+    const trimmed = line.trim()
+    if (trimmed.length === 0) {
+      i++
+      continue
+    }
+
+    // `@OptionBegin "id"` — open a gated region (regions never nest).
+    const beginMatch = line.match(OPTION_BEGIN_RE)
+    if (beginMatch) {
+      if (gateDepth >= 1) {
+        return fatal(
+          i + 1,
+          'option-region-nested',
+          '@OptionBegin cannot nest inside an already-open region',
+        )
+      }
+      const id = stripQuotes(tokenizeArgList(beginMatch[1] ?? '')[0] ?? '')
+      if (!id) {
+        return fatal(i + 1, 'option-begin-missing-id', '@OptionBegin is missing an option id')
+      }
+      if (!intro.declaredOptionIds.has(id)) {
+        return fatal(
+          i + 1,
+          'option-undeclared',
+          `@OptionBegin references undeclared option "${id}"`,
+        )
+      }
+      gateDepth = 1
+      currentGateId = id
+      i++
+      continue
+    }
+
+    // `@OptionEnd` (bare) — close the open region.
+    const endMatch = line.match(OPTION_END_RE)
+    if (endMatch) {
+      if (gateDepth === 0) {
+        return fatal(i + 1, 'option-end-unmatched', '@OptionEnd with no open region')
+      }
+      const extra = (endMatch[1] ?? '').trim()
+      if (extra.length > 0) {
+        issues.push({
+          level: 'warning',
+          code: 'option-end-extra-arg',
+          message: `@OptionEnd ignores trailing text: ${extra}`,
+        })
+      }
+      gateDepth = 0
+      currentGateId = null
       i++
       continue
     }
@@ -96,6 +211,7 @@ export function parse(text: string): ParseResult {
         actions: [],
         intraBlockComments: [],
       }
+      if (currentGateId) block.optionId = currentGateId
       i = parseBlockBody(lines, i + 1, block, false, issues)
       blocks.push(block)
       continue
@@ -111,8 +227,22 @@ export function parse(text: string): ParseResult {
         actions: [],
         intraBlockComments: [],
       }
+      if (currentGateId) block.optionId = currentGateId
       i = parseBlockBody(lines, i + 1, block, true, issues)
       blocks.push(block)
+      continue
+    }
+
+    // Stray `@`-directive in the rule region — preserved verbatim (relocated to
+    // the intro on regenerate) and warned. Not one of the fatal structural rules.
+    if (trimmed.startsWith('@')) {
+      intro.unknownDirectives.push(trimmed)
+      issues.push({
+        level: 'warning',
+        code: 'directive-out-of-place',
+        message: `Directive outside the intro is preserved but moves to the top on save: ${trimmed}`,
+      })
+      i++
       continue
     }
 
@@ -123,14 +253,101 @@ export function parse(text: string): ParseResult {
     i++
   }
 
+  // Unclosed region at EOF.
+  if (gateDepth !== 0) {
+    return fatal(
+      lines.length,
+      'option-region-unclosed',
+      `@OptionBegin "${currentGateId}" was never closed with @OptionEnd`,
+    )
+  }
+
+  return { document: buildDocument(), issues, fatalError: null }
+}
+
+/**
+ * Parse one intro-section `@`-directive into the accumulator. Returns a fatal
+ * error only for a duplicate `@Option` id (a clear structural rule); all other
+ * malformed input is preserved/warned and returns null.
+ */
+function consumeIntroDirective(
+  line: string,
+  lineNo: number,
+  intro: IntroAccumulator,
+  issues: ValidationIssue[],
+): ParseFatalError | null {
+  const m = line.match(DIRECTIVE_RE)
+  if (!m) {
+    // e.g. a bare `@` — preserve verbatim.
+    intro.unknownDirectives.push(line)
+    return null
+  }
+  const directive = m[1] ?? ''
+  const rest = (m[2] ?? '').trim()
+
+  switch (directive) {
+    case 'Name':
+      if (intro.metadata.name !== undefined) issues.push(duplicateMetadata('Name'))
+      intro.metadata.name = stripQuotes(rest)
+      return null
+    case 'Author':
+      if (intro.metadata.author !== undefined) issues.push(duplicateMetadata('Author'))
+      intro.metadata.author = stripQuotes(rest)
+      return null
+    case 'Version':
+      if (intro.metadata.version !== undefined) issues.push(duplicateMetadata('Version'))
+      intro.metadata.version = stripQuotes(rest)
+      return null
+    case 'Description':
+      intro.metadata.descriptions.push(stripQuotes(rest))
+      return null
+    case 'Category': {
+      const name = stripQuotes(rest)
+      intro.optionCategories.push({ name })
+      intro.currentCategory = name
+      return null
+    }
+    case 'Option': {
+      const args = tokenizeArgList(rest)
+      const id = args[0] ?? ''
+      const label = args[1] ?? ''
+      const defaultOn = (args[2] ?? '').toLowerCase() === 'true'
+      if (!id) {
+        issues.push({
+          level: 'warning',
+          code: 'option-missing-id',
+          message: '@Option is missing an id',
+        })
+      } else if (intro.declaredOptionIds.has(id)) {
+        return {
+          line: lineNo,
+          code: 'duplicate-option-id',
+          message: `Duplicate @Option id "${id}"`,
+        }
+      } else {
+        intro.declaredOptionIds.add(id)
+      }
+      const option: FilterOption = { id, label, defaultOn }
+      if (intro.currentCategory !== undefined) option.categoryName = intro.currentCategory
+      intro.options.push(option)
+      return null
+    }
+    default:
+      intro.unknownDirectives.push(line)
+      issues.push({
+        level: 'warning',
+        code: 'unknown-directive',
+        message: `Unknown directive: @${directive}`,
+      })
+      return null
+  }
+}
+
+function duplicateMetadata(name: string): ValidationIssue {
   return {
-    document: {
-      blocks,
-      presets: [],
-      preamble,
-      trailingComments,
-    },
-    issues,
+    level: 'warning',
+    code: 'duplicate-metadata',
+    message: `Duplicate @${name}; last value wins`,
   }
 }
 
@@ -140,6 +357,10 @@ function isBlockStart(line: string): boolean {
 
 function isDisabledBlockStart(line: string): boolean {
   return DISABLED_HEADER_RE.test(line)
+}
+
+function isOptionMarker(line: string): boolean {
+  return OPTION_BEGIN_RE.test(line) || OPTION_END_RE.test(line)
 }
 
 function cleanLabel(raw: string | undefined): string | undefined {
@@ -187,7 +408,7 @@ function parseBlockBody(
       return skipBlanks(lines, i)
     }
 
-    if (isBlockStart(line) || isDisabledBlockStart(line)) {
+    if (isBlockStart(line) || isDisabledBlockStart(line) || isOptionMarker(line)) {
       return i
     }
 

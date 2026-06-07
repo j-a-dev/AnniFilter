@@ -28,7 +28,47 @@ export function validate(document: FilterDocument): ValidationIssue[] {
     validateBlock(block, issues)
   }
 
+  validateOptions(document, issues)
+
   return issues
+}
+
+/**
+ * Post-load checks on the option layer. Structural rules (balance/nesting,
+ * undeclared references, duplicate ids) are already enforced fatally by the
+ * parser; these are non-fatal hygiene warnings on an otherwise-valid document.
+ */
+function validateOptions(
+  document: FilterDocument,
+  issues: ValidationIssue[],
+): void {
+  const referencedOptions = new Set<string>()
+  for (const block of document.blocks) {
+    if (block.optionId !== undefined) referencedOptions.add(block.optionId)
+  }
+  for (const opt of document.options) {
+    if (!referencedOptions.has(opt.id)) {
+      issues.push({
+        level: 'warning',
+        code: 'option-declared-unused',
+        message: `Option "${opt.id}" is declared but gates no rules`,
+      })
+    }
+  }
+
+  const usedCategories = new Set<string>()
+  for (const opt of document.options) {
+    if (opt.categoryName !== undefined) usedCategories.add(opt.categoryName)
+  }
+  for (const cat of document.optionCategories) {
+    if (!usedCategories.has(cat.name)) {
+      issues.push({
+        level: 'warning',
+        code: 'category-empty',
+        message: `Category "${cat.name}" contains no options`,
+      })
+    }
+  }
 }
 
 function validateBlock(block: FilterBlock, issues: ValidationIssue[]): void {

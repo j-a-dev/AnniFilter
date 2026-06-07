@@ -101,6 +101,12 @@ export type FilterBlock = {
    * Keywords absent from this map use the preset's value.
    */
   presetOverrides?: Partial<Record<ActionKeyword, Action | null>>
+  /**
+   * Id of the option whose `@OptionBegin`/`@OptionEnd` region encloses this
+   * block (an `@Option` declared in the intro). Absent = ungated. A block is
+   * gated by at most one option — regions never nest.
+   */
+  optionId?: string
 }
 
 export type StylePreset = {
@@ -110,11 +116,43 @@ export type StylePreset = {
   createdAt: number
 }
 
+/**
+ * An author-defined in-game toggle (`@Option "<id>" "<label>" <bool>`).
+ * `id` is the stable key referenced by `@OptionBegin` and by `FilterBlock.optionId`.
+ * NOTE: unrelated to `CategoryLabel` below — that is the auto-categorizer.
+ */
+export type FilterOption = {
+  id: string
+  label: string
+  defaultOn: boolean
+  /** The `@Category` this option falls under, if any (undefined = uncategorized). */
+  categoryName?: string
+}
+
+/** A grouping header for options in the in-game menu (`@Category "<name>"`). Never gates a rule. */
+export type OptionCategory = {
+  name: string
+}
+
+/** Filter-level metadata directives (`@Name`/`@Author`/`@Version`/`@Description`). */
+export type FilterMetadata = {
+  name?: string
+  author?: string
+  version?: string
+  /** One entry per `@Description`, in declaration order. */
+  descriptions: string[]
+}
+
 export type FilterDocument = {
   blocks: FilterBlock[]
   presets: StylePreset[]
   preamble: string[]
   trailingComments: string[]
+  metadata: FilterMetadata
+  options: FilterOption[]
+  optionCategories: OptionCategory[]
+  /** Unrecognized `@`-directives in the intro, preserved verbatim for lossless round-trip. */
+  unknownDirectives: string[]
 }
 
 export type ValidationIssue = {

@@ -27,6 +27,10 @@ describe('generator', () => {
         presets: [],
         preamble: [],
         trailingComments: [],
+        metadata: { descriptions: [] },
+        options: [],
+        optionCategories: [],
+        unknownDirectives: [],
       }
       const text = generate(doc)
       expect(text).toContain('Show')
@@ -51,6 +55,10 @@ describe('generator', () => {
         presets: [],
         preamble: [],
         trailingComments: [],
+        metadata: { descriptions: [] },
+        options: [],
+        optionCategories: [],
+        unknownDirectives: [],
       }
       expect(generate(doc)).toContain('Style #rare item border')
     })
@@ -70,6 +78,10 @@ describe('generator', () => {
         presets: [],
         preamble: [],
         trailingComments: [],
+        metadata: { descriptions: [] },
+        options: [],
+        optionCategories: [],
+        unknownDirectives: [],
       }
       const text = generate(doc)
       expect(text).toContain('# Show')
@@ -92,6 +104,10 @@ describe('generator', () => {
         presets: [],
         preamble: [],
         trailingComments: [],
+        metadata: { descriptions: [] },
+        options: [],
+        optionCategories: [],
+        unknownDirectives: [],
       }
       expect(generate(doc)).toContain('\tItemType "Runes"')
     })

@@ -8,15 +8,20 @@ import type {
 } from './types'
 import { matchesBlock } from './matchesBlock'
 import { layerBlockActions } from './cascade'
+import { isBlockOptionOn, type OptionStates } from './optionGate'
 
 /**
  * Walk the filter top-down. Style blocks that match are accumulated in styleStack
  * (do not terminate). The first matching Show or Hide terminates the walk.
  * Style actions stack last-write-wins per keyword in effectiveActions.
+ *
+ * `optionStates` simulates in-game toggles: a block gated by an off option is
+ * skipped entirely (as if absent), AND-ed with the block's own `enabled` flag.
  */
 export function match(
   document: FilterDocument,
   item: ItemDescription,
+  optionStates?: OptionStates,
 ): MatchResult {
   const styleStack: FilterBlock[] = []
   let terminator: FilterBlock | null = null
@@ -24,6 +29,7 @@ export function match(
 
   for (const block of document.blocks) {
     if (!block.enabled) continue
+    if (!isBlockOptionOn(block, document.options, optionStates)) continue
     if (!matchesBlock(block, item)) continue
 
     if (block.kind === 'Style') {

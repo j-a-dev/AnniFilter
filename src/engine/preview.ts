@@ -2,6 +2,7 @@ import type { Action, ActionKeyword, FilterDocument } from './types'
 import { synthesizeItem } from './synthesizeItem'
 import { matchesBlock } from './matchesBlock'
 import { layerBlockActions } from './cascade'
+import { isBlockOptionOn, type OptionStates } from './optionGate'
 
 /**
  * Compute the cascaded "in-game appearance" actions for a target block.
@@ -21,6 +22,7 @@ import { layerBlockActions } from './cascade'
 export function previewActionsForBlock(
   document: FilterDocument,
   targetId: string,
+  optionStates?: OptionStates,
 ): Action[] {
   const targetIdx = document.blocks.findIndex((b) => b.id === targetId)
   if (targetIdx < 0) return []
@@ -35,6 +37,7 @@ export function previewActionsForBlock(
   for (let i = 0; i <= targetIdx; i++) {
     const block = document.blocks[i]
     if (!block || !block.enabled) continue
+    if (!isBlockOptionOn(block, document.options, optionStates)) continue
     if (!matchesBlock(block, item)) continue
     layerBlockActions(block, presetById, map, multiSounds)
   }
