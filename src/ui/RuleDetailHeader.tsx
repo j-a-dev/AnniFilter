@@ -73,14 +73,17 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
             onChange={(e) =>
               setBlockOptionId(block.id, e.target.value || undefined)
             }
-            className="bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none max-w-[140px]"
+            className="bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none max-w-[200px]"
           >
             <option value="">Always on</option>
-            {options.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.label || o.id}
-              </option>
-            ))}
+            {options.map((o) => {
+              const name = o.label || o.id
+              return (
+                <option key={o.id} value={o.id}>
+                  {o.categoryName ? `${o.categoryName} › ${name}` : name}
+                </option>
+              )
+            })}
           </select>
         </label>
       )}
