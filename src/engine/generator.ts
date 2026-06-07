@@ -6,6 +6,7 @@ import type {
   FilterDocument,
   StylePreset,
 } from './types'
+import { resolveEffectiveActions } from './cascade'
 
 export type BlockRange = { charStart: number; charEnd: number }
 
@@ -144,41 +145,6 @@ function emitBlock(
       out.push(line.length > 0 ? `# ${line}` : '#')
     }
   }
-}
-
-/**
- * Compute the effective inline actions for a block given its (optional) preset.
- * Order of precedence per keyword: presetOverrides > preset.actions > block.actions.
- * - Preset action with `presetOverrides[k]` === Action: use override
- * - Preset action with `presetOverrides[k]` === null: suppressed
- * - Preset action with no override: emit as-is
- * - Block.actions[]: appended after preset actions, regardless of keyword (extras)
- */
-function resolveEffectiveActions(
-  block: FilterBlock,
-  preset: StylePreset | undefined,
-): Action[] {
-  if (!preset) return block.actions
-  const out: Action[] = []
-  const overrides = block.presetOverrides ?? {}
-  for (const action of preset.actions) {
-    const k = action.keyword as ActionKeyword
-    if (k in overrides) {
-      const override = overrides[k]
-      if (override === null) continue
-      if (override !== undefined) {
-        out.push(override)
-        continue
-      }
-    }
-    out.push(action)
-  }
-  // Append block's own actions (don't dedupe; preset+actions for same keyword
-  // requires explicit overrides, not silent merging).
-  for (const a of block.actions) {
-    out.push(a)
-  }
-  return out
 }
 
 function formatCondition(cond: Condition): string {

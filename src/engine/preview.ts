@@ -1,12 +1,7 @@
-import type {
-  Action,
-  ActionKeyword,
-  FilterBlock,
-  FilterDocument,
-  StylePreset,
-} from './types'
+import type { Action, ActionKeyword, FilterDocument } from './types'
 import { synthesizeItem } from './synthesizeItem'
 import { matchesBlock } from './matchesBlock'
+import { layerBlockActions } from './cascade'
 
 /**
  * Compute the cascaded "in-game appearance" actions for a target block.
@@ -45,44 +40,4 @@ export function previewActionsForBlock(
   }
 
   return [...multiSounds, ...map.values()]
-}
-
-function layerBlockActions(
-  block: FilterBlock,
-  presetById: Map<string, StylePreset>,
-  map: Map<ActionKeyword | 'Unknown', Action>,
-  multiSounds: Action[],
-): void {
-  const preset = block.presetId ? presetById.get(block.presetId) : undefined
-  const actions = resolveEffectiveActions(block, preset)
-  for (const a of actions) {
-    if (a.keyword === 'PlayAlertSound') {
-      multiSounds.push(a)
-    } else {
-      map.set(a.keyword, a)
-    }
-  }
-}
-
-function resolveEffectiveActions(
-  block: FilterBlock,
-  preset: StylePreset | undefined,
-): Action[] {
-  if (!preset) return block.actions
-  const out: Action[] = []
-  const overrides = block.presetOverrides ?? {}
-  for (const action of preset.actions) {
-    const k = action.keyword as ActionKeyword
-    if (k in overrides) {
-      const override = overrides[k]
-      if (override === null) continue
-      if (override !== undefined) {
-        out.push(override)
-        continue
-      }
-    }
-    out.push(action)
-  }
-  for (const a of block.actions) out.push(a)
-  return out
 }
