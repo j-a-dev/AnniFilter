@@ -40,43 +40,6 @@ function uniqueText(existing: ReadonlySet<string>, base: string): string {
   return `${base} ${n}`
 }
 
-/**
- * Enforce unique category names and option labels (duplicates can break or
- * confuse the in-game menu). Returns adjusted arrays if anything changed, else
- * null. Option ids are intentionally left alone — renaming one would orphan the
- * blocks that gate by it, and they're already auto-unique.
- */
-function enforceUnique(
-  options: FilterOption[],
-  categories: OptionCategory[],
-): { options: FilterOption[]; categories: OptionCategory[] } | null {
-  let changed = false
-
-  const seenCat = new Set<string>()
-  const newCategories = categories.map((c) => {
-    let name = c.name
-    if (name === '' || seenCat.has(name)) {
-      name = uniqueText(seenCat, name || 'Category')
-      changed = true
-    }
-    seenCat.add(name)
-    return name === c.name ? c : { name }
-  })
-
-  const seenLabel = new Set<string>()
-  const newOptions = options.map((o) => {
-    let label = o.label
-    if (label === '' || seenLabel.has(label)) {
-      label = uniqueText(seenLabel, label || 'Option')
-      changed = true
-    }
-    seenLabel.add(label)
-    return label === o.label ? o : { ...o, label }
-  })
-
-  return changed ? { options: newOptions, categories: newCategories } : null
-}
-
 type FlatItem =
   | { key: string; kind: 'category'; cat: OptionCategory }
   | { key: string; kind: 'option'; opt: FilterOption }
@@ -126,15 +89,14 @@ export function OptionManager() {
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   )
 
-  // On leaving the filter-info panel, dedupe any duplicate category names /
-  // option labels that were typed in, so they can't break the in-game menu.
-  useEffect(() => {
-    return () => {
-      const st = useFilterStore.getState()
-      const fixed = enforceUnique(st.document.options, st.document.optionCategories)
-      if (fixed) st.setOptionLayout(fixed.options, fixed.categories)
-    }
-  }, [])
+  // Flag duplicate option labels so the user can rename them, rather than
+  // silently mutating their text. (Category names can't collide — renaming to
+  // an existing name is rejected, and add gives a unique default.)
+  const labelCounts = new Map<string, number>()
+  for (const o of options) labelCounts.set(o.label, (labelCounts.get(o.label) ?? 0) + 1)
+  const dupLabels = new Set(
+    [...labelCounts].filter(([label, n]) => label !== '' && n > 1).map(([label]) => label),
+  )
 
   const flat = flatten(options, categories)
   const ids = new Set(options.map((o) => o.id))
@@ -259,6 +221,7 @@ export function OptionManager() {
                       id={item.key}
                       opt={item.opt}
                       indented={item.opt.categoryName !== undefined}
+                      duplicate={dupLabels.has(item.opt.label)}
                       onPatch={patchOption}
                       onRemove={removeOption}
                     />
@@ -277,12 +240,14 @@ function SortableOptionRow({
   id,
   opt,
   indented,
+  duplicate,
   onPatch,
   onRemove,
 }: {
   id: string
   opt: FilterOption
   indented: boolean
+  duplicate: boolean
   onPatch: (id: string, patch: Partial<FilterOption>) => void
   onRemove: (id: string) => void
 }) {
@@ -309,8 +274,18 @@ function SortableOptionRow({
         onChange={(e) => onPatch(opt.id, { label: e.target.value })}
         placeholder="Option name"
         spellCheck={false}
-        className={textClass}
+        title={duplicate ? 'Duplicate option name — rename to keep options distinct' : undefined}
+        className={
+          duplicate
+            ? `${textClass} border-rose-500/60 hover:border-rose-500/80 focus:border-rose-500`
+            : textClass
+        }
       />
+      {duplicate && (
+        <span className="shrink-0 text-rose-400 text-xs" title="Duplicate name" aria-hidden>
+          ⚠
+        </span>
+      )}
       <label
         className="flex items-center gap-1 text-[10px] text-slate-500 shrink-0"
         title="On by default?"
