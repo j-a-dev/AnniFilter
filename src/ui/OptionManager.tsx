@@ -32,6 +32,51 @@ function uniqueId(existing: ReadonlySet<string>, base: string): string {
   return `${base}${n}`
 }
 
+/** Return `base` if free, else `base 2`, `base 3`, … — for human-facing text. */
+function uniqueText(existing: ReadonlySet<string>, base: string): string {
+  if (!existing.has(base)) return base
+  let n = 2
+  while (existing.has(`${base} ${n}`)) n++
+  return `${base} ${n}`
+}
+
+/**
+ * Enforce unique category names and option labels (duplicates can break or
+ * confuse the in-game menu). Returns adjusted arrays if anything changed, else
+ * null. Option ids are intentionally left alone — renaming one would orphan the
+ * blocks that gate by it, and they're already auto-unique.
+ */
+function enforceUnique(
+  options: FilterOption[],
+  categories: OptionCategory[],
+): { options: FilterOption[]; categories: OptionCategory[] } | null {
+  let changed = false
+
+  const seenCat = new Set<string>()
+  const newCategories = categories.map((c) => {
+    let name = c.name
+    if (name === '' || seenCat.has(name)) {
+      name = uniqueText(seenCat, name || 'Category')
+      changed = true
+    }
+    seenCat.add(name)
+    return name === c.name ? c : { name }
+  })
+
+  const seenLabel = new Set<string>()
+  const newOptions = options.map((o) => {
+    let label = o.label
+    if (label === '' || seenLabel.has(label)) {
+      label = uniqueText(seenLabel, label || 'Option')
+      changed = true
+    }
+    seenLabel.add(label)
+    return label === o.label ? o : { ...o, label }
+  })
+
+  return changed ? { options: newOptions, categories: newCategories } : null
+}
+
 type FlatItem =
   | { key: string; kind: 'category'; cat: OptionCategory }
   | { key: string; kind: 'option'; opt: FilterOption }
@@ -81,6 +126,16 @@ export function OptionManager() {
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   )
 
+  // On leaving the filter-info panel, dedupe any duplicate category names /
+  // option labels that were typed in, so they can't break the in-game menu.
+  useEffect(() => {
+    return () => {
+      const st = useFilterStore.getState()
+      const fixed = enforceUnique(st.document.options, st.document.optionCategories)
+      if (fixed) st.setOptionLayout(fixed.options, fixed.categories)
+    }
+  }, [])
+
   const flat = flatten(options, categories)
   const ids = new Set(options.map((o) => o.id))
   const categoryNames = new Set(categories.map((c) => c.name))
@@ -91,7 +146,11 @@ export function OptionManager() {
   const addOption = () =>
     setOptions([
       ...options,
-      { id: uniqueId(ids, 'option-'), label: 'New option', defaultOn: true },
+      {
+        id: uniqueId(ids, 'option-'),
+        label: uniqueText(new Set(options.map((o) => o.label)), 'New option'),
+        defaultOn: true,
+      },
     ])
 
   const addCategory = () =>
