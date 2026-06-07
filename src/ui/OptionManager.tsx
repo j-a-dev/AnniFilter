@@ -199,6 +199,7 @@ export function OptionManager() {
                       key={item.key}
                       id={item.key}
                       opt={item.opt}
+                      indented={item.opt.categoryName !== undefined}
                       onPatch={patchOption}
                       onRemove={removeOption}
                     />
@@ -216,11 +217,13 @@ export function OptionManager() {
 function SortableOptionRow({
   id,
   opt,
+  indented,
   onPatch,
   onRemove,
 }: {
   id: string
   opt: FilterOption
+  indented: boolean
   onPatch: (id: string, patch: Partial<FilterOption>) => void
   onRemove: (id: string) => void
 }) {
@@ -233,7 +236,11 @@ function SortableOptionRow({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="flex items-center gap-1 ml-5">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`flex items-center gap-1 ${indented ? 'ml-5' : ''}`}
+    >
       <button {...attributes} {...listeners} className={handleClass} aria-label="Drag to reorder">
         ⋮⋮
       </button>
