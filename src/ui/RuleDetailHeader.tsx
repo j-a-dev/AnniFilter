@@ -8,6 +8,7 @@ const KINDS: BlockKind[] = ['Hide', 'Show', 'Style']
 export function RuleDetailHeader({ block }: { block: FilterBlock }) {
   const blocks = useFilterStore((s) => s.document.blocks)
   const options = useFilterStore((s) => s.document.options)
+  const categories = useFilterStore((s) => s.document.optionCategories)
   const updateBlockKind = useFilterStore((s) => s.updateBlockKind)
   const updateBlockLabel = useFilterStore((s) => s.updateBlockLabel)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
@@ -15,6 +16,12 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
   const setBlockOptionId = useFilterStore((s) => s.setBlockOptionId)
 
   const index = blocks.findIndex((b) => b.id === block.id)
+
+  // Order to match the Filter info tree: uncategorized first, then by category.
+  const orderedOptions = [
+    ...options.filter((o) => o.categoryName === undefined),
+    ...categories.flatMap((c) => options.filter((o) => o.categoryName === c.name)),
+  ]
 
   // Two-step inline confirmation for delete: first click arms; second click
   // within the same selection commits. Switching to another rule auto-disarms.
@@ -75,8 +82,8 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
             }
             className="bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none max-w-[200px]"
           >
-            <option value="">Always on</option>
-            {options.map((o) => {
+            <option value="">Always on (default)</option>
+            {orderedOptions.map((o) => {
               const name = o.label || o.id
               return (
                 <option key={o.id} value={o.id}>
