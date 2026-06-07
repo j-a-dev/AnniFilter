@@ -14,6 +14,7 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual'
 import type { BlockKind } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
+import { useUIStore } from '@/store/uiStore'
 import { RuleListRow } from './RuleListRow'
 import { FilenameInput } from './FilenameInput'
 import { OptionSimulator } from './OptionSimulator'
@@ -29,6 +30,14 @@ export function RuleList() {
   const moveBlock = useFilterStore((s) => s.moveBlock)
   const addBlock = useFilterStore((s) => s.addBlock)
   const selectBlock = useFilterStore((s) => s.selectBlock)
+  const activeTab = useUIStore((s) => s.activeTab)
+  const setActiveTab = useUIStore((s) => s.setActiveTab)
+
+  const showingFilterInfo = !selectedId && activeTab === 'visual'
+  const openFilterInfo = () => {
+    selectBlock(null)
+    setActiveTab('visual')
+  }
 
   const handleAdd = () => {
     const newId = addBlock('Show', selectedId ?? undefined)
@@ -97,17 +106,30 @@ export function RuleList() {
         <span className="text-[10px] uppercase tracking-wider text-slate-500">
           Rules · {blocks.length}
         </span>
-        <button
-          onClick={handleAdd}
-          title={
-            selectedId
-              ? 'Add a new Show rule after the selected one'
-              : 'Add a new Show rule at the end'
-          }
-          className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#2a2d32] text-slate-400 hover:text-amber-300 hover:border-amber-500/40 transition-colors"
-        >
-          + Add rule
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={openFilterInfo}
+            title="Edit filter info and options"
+            className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border transition-colors ${
+              showingFilterInfo
+                ? 'border-amber-500/40 text-amber-300 bg-[#1a1d22]'
+                : 'border-[#2a2d32] text-slate-400 hover:text-amber-300 hover:border-amber-500/40'
+            }`}
+          >
+            Filter info
+          </button>
+          <button
+            onClick={handleAdd}
+            title={
+              selectedId
+                ? 'Add a new Show rule after the selected one'
+                : 'Add a new Show rule at the end'
+            }
+            className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-[#2a2d32] text-slate-400 hover:text-amber-300 hover:border-amber-500/40 transition-colors"
+          >
+            + Add rule
+          </button>
+        </div>
       </div>
 
       <div className="px-3 py-2 border-b border-[#1d2128] shrink-0 space-y-2">
