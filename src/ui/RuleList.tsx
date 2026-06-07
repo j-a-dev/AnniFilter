@@ -16,6 +16,7 @@ import type { BlockKind } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
 import { RuleListRow } from './RuleListRow'
 import { FilenameInput } from './FilenameInput'
+import { OptionSimulator } from './OptionSimulator'
 import { summarizeConditions, KIND_COLOR } from './ruleListUtils'
 
 const ROW_HEIGHT = 44
@@ -202,6 +203,8 @@ export function RuleList() {
               </DndContext>
             )}
           </div>
+
+          <OptionSimulator />
     </aside>
   )
 }

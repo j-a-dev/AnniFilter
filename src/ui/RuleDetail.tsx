@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useFilterStore } from '@/store/filterStore'
+import { useUIStore } from '@/store/uiStore'
 import { useSelectedBlock } from '@/store/selectors'
 import { previewActionsForBlock } from '@/engine/preview'
 import { RuleDetailHeader } from './RuleDetailHeader'
@@ -9,6 +10,8 @@ import { ActionRow } from './ActionRow'
 import { SoundActionList } from './SoundActionList'
 import { ItemPreview } from './ItemPreview'
 import { ChatMessagePreview } from './ChatMessagePreview'
+import { MetadataPanel } from './MetadataPanel'
+import { OptionManager } from './OptionManager'
 import {
   DISPLAY_ACTION_KEYWORDS,
   TEXT_ACTION_KEYWORDS,
@@ -17,16 +20,18 @@ import {
 export function RuleDetail() {
   const block = useSelectedBlock()
   const document = useFilterStore((s) => s.document)
+  const optionStates = useUIStore((s) => s.optionStates)
 
   const cascadedActions = useMemo(
-    () => (block ? previewActionsForBlock(document, block.id) : []),
-    [document, block?.id],
+    () => (block ? previewActionsForBlock(document, block.id, optionStates) : []),
+    [document, block?.id, optionStates],
   )
 
   if (!block) {
     return (
-      <div className="p-6 text-xs text-slate-500 italic">
-        Select a rule from the list to edit it.
+      <div className="flex flex-col">
+        <MetadataPanel />
+        <OptionManager />
       </div>
     )
   }

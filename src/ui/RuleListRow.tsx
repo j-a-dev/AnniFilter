@@ -3,6 +3,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import type { FilterBlock } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
+import { useUIStore } from '@/store/uiStore'
 import { previewActionsForBlock } from '@/engine/preview'
 import { KIND_COLOR, summarizeConditions } from './ruleListUtils'
 import { ItemPreview } from './ItemPreview'
@@ -18,11 +19,16 @@ export function RuleListRow({ block, index, selected }: Props) {
   const selectBlock = useFilterStore((s) => s.selectBlock)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
   const document = useFilterStore((s) => s.document)
+  const optionStates = useUIStore((s) => s.optionStates)
 
   const previewActions = useMemo(
-    () => previewActionsForBlock(document, block.id),
-    [document, block.id],
+    () => previewActionsForBlock(document, block.id, optionStates),
+    [document, block.id, optionStates],
   )
+
+  const gatingOption = block.optionId
+    ? document.options.find((o) => o.id === block.optionId)
+    : undefined
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: block.id })
@@ -78,9 +84,19 @@ export function RuleListRow({ block, index, selected }: Props) {
 
       <div className="flex-1 min-w-0">
         <div
-          className={`text-[12px] truncate leading-tight ${selected ? 'text-amber-200' : 'text-slate-100'}`}
+          className={`text-[12px] truncate leading-tight flex items-center gap-1.5 ${selected ? 'text-amber-200' : 'text-slate-100'}`}
         >
-          {block.label ?? <span className="italic text-slate-500">(unnamed)</span>}
+          {gatingOption && (
+            <span
+              className="shrink-0 text-[9px] uppercase tracking-wider px-1 py-px rounded bg-purple-500/15 text-purple-300 border border-purple-500/30"
+              title={`Gated by option: ${gatingOption.label || gatingOption.id}`}
+            >
+              ⚑ {gatingOption.label || gatingOption.id}
+            </span>
+          )}
+          <span className="truncate">
+            {block.label ?? <span className="italic text-slate-500">(unnamed)</span>}
+          </span>
         </div>
         <div className="text-[10px] text-slate-500 truncate leading-tight">
           {summarizeConditions(block)}

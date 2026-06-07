@@ -7,10 +7,12 @@ const KINDS: BlockKind[] = ['Hide', 'Show', 'Style']
 
 export function RuleDetailHeader({ block }: { block: FilterBlock }) {
   const blocks = useFilterStore((s) => s.document.blocks)
+  const options = useFilterStore((s) => s.document.options)
   const updateBlockKind = useFilterStore((s) => s.updateBlockKind)
   const updateBlockLabel = useFilterStore((s) => s.updateBlockLabel)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
   const removeBlock = useFilterStore((s) => s.removeBlock)
+  const setBlockOptionId = useFilterStore((s) => s.setBlockOptionId)
 
   const index = blocks.findIndex((b) => b.id === block.id)
 
@@ -58,6 +60,30 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
         placeholder="Click to add a rule label…"
         className="flex-1 bg-[#0a0a0f] text-[13px] text-slate-100 px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 focus:bg-[#12161a] outline-none"
       />
+      {options.length > 0 && (
+        <label
+          className="flex items-center gap-1.5 shrink-0"
+          title="Gate this rule behind an in-game option toggle"
+        >
+          <span className="text-[10px] uppercase tracking-wider text-slate-500">
+            Option
+          </span>
+          <select
+            value={block.optionId ?? ''}
+            onChange={(e) =>
+              setBlockOptionId(block.id, e.target.value || undefined)
+            }
+            className="bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none max-w-[140px]"
+          >
+            <option value="">Always on</option>
+            {options.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label || o.id}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       {confirmingDelete ? (
         <div className="flex items-center gap-1">
           <button
