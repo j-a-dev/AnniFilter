@@ -1,9 +1,30 @@
 import { useEffect, useState } from 'react'
-import type { FilterOption } from '@/engine/types'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import type { FilterOption, OptionCategory } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
 
-const inputClass =
-  'bg-[#0a0a0f] text-xs text-slate-300 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a2f38] focus:border-amber-500/50 outline-none'
+const textClass =
+  'flex-1 min-w-0 bg-transparent text-xs text-slate-200 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-transparent hover:border-[#2a2f38] focus:border-amber-500/50 focus:bg-[#0a0a0f] outline-none'
+
+const handleClass =
+  'shrink-0 px-1 text-slate-600 hover:text-slate-300 cursor-grab active:cursor-grabbing select-none'
+
+const removeClass =
+  'shrink-0 px-1.5 py-1 text-[11px] text-slate-600 hover:text-rose-300 hover:bg-rose-500/10 rounded border border-transparent hover:border-rose-500/30 transition-colors'
 
 function uniqueId(existing: ReadonlySet<string>, base: string): string {
   let n = existing.size + 1
@@ -12,10 +33,11 @@ function uniqueId(existing: ReadonlySet<string>, base: string): string {
 }
 
 /**
- * Document-level option + category editor, shown in the detail pane when no
- * rule is selected. Option ids are auto-generated stable keys (edit the raw
- * file for custom ids); label/default/category are edited here. Deleting an
- * option or category keeps block/option references consistent via the store.
+ * Document-level option + category editor (shown in the detail pane via the
+ * "Filter info" button). Both lists are drag-to-reorder with inline-editable
+ * text; "+ Add" appends a default-named item you edit in place. Option ids are
+ * auto-generated stable keys (edit raw for custom ids); deletes keep block /
+ * option references consistent via the store.
  */
 export function OptionManager() {
   const options = useFilterStore((s) => s.document.options)
@@ -25,6 +47,10 @@ export function OptionManager() {
   const removeOption = useFilterStore((s) => s.removeOption)
   const renameCategory = useFilterStore((s) => s.renameCategory)
   const removeCategory = useFilterStore((s) => s.removeCategory)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+  )
 
   const ids = new Set(options.map((o) => o.id))
   const categoryNames = new Set(categories.map((c) => c.name))
@@ -46,7 +72,7 @@ export function OptionManager() {
   const addOption = () =>
     setOptions([
       ...options,
-      { id: uniqueId(ids, 'option-'), label: '', defaultOn: true },
+      { id: uniqueId(ids, 'option-'), label: 'New option', defaultOn: true },
     ])
 
   const addCategory = () =>
@@ -55,126 +81,229 @@ export function OptionManager() {
       { name: uniqueId(categoryNames, 'Category ') },
     ])
 
+  const onOptionDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e
+    if (!over || active.id === over.id) return
+    const from = options.findIndex((o) => o.id === active.id)
+    const to = options.findIndex((o) => o.id === over.id)
+    if (from < 0 || to < 0) return
+    setOptions(arrayMove(options, from, to))
+  }
+
+  const onCategoryDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e
+    if (!over || active.id === over.id) return
+    const from = categories.findIndex((c) => c.name === active.id)
+    const to = categories.findIndex((c) => c.name === over.id)
+    if (from < 0 || to < 0) return
+    setOptionCategories(arrayMove(categories, from, to))
+  }
+
   return (
     <div className="px-4 py-3 border-t border-[#1d2128]">
-      <div className="flex items-center justify-between mb-3 max-w-xl">
-        <span className="text-[10px] uppercase tracking-wider text-slate-500">
-          Options
-        </span>
-        <button
-          onClick={addOption}
-          className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
-        >
-          + Add option
-        </button>
-      </div>
-
-      <div className="space-y-1.5 max-w-xl">
-        {options.length === 0 && (
-          <p className="text-[11px] text-slate-600 italic">
-            No options. Add one, then gate a rule by it from the rule's header.
-          </p>
+      <SectionHeader title="Options" onAdd={addOption} addLabel="+ Add option" />
+      <div className="max-w-xl">
+        {options.length === 0 ? (
+          <Empty>Add an option, then gate a rule by it from the rule's header.</Empty>
+        ) : (
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={onOptionDragEnd}
+          >
+            <SortableContext
+              items={options.map((o) => o.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="space-y-1">
+                {options.map((opt) => (
+                  <SortableOptionRow
+                    key={opt.id}
+                    opt={opt}
+                    categories={categories}
+                    onPatch={patchOption}
+                    onSetCategory={setOptionCategory}
+                    onRemove={removeOption}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
         )}
-        {options.map((opt) => (
-          <div key={opt.id} className="flex items-center gap-2">
-            <code
-              className="text-[10px] text-slate-500 w-24 shrink-0 truncate"
-              title={opt.id}
-            >
-              {opt.id}
-            </code>
-            <input
-              type="text"
-              value={opt.label}
-              onChange={(e) => patchOption(opt.id, { label: e.target.value })}
-              placeholder="In-game label"
-              spellCheck={false}
-              className={`flex-1 min-w-0 ${inputClass}`}
-            />
-            <select
-              value={opt.categoryName ?? ''}
-              onChange={(e) =>
-                setOptionCategory(opt.id, e.target.value || undefined)
-              }
-              title="Category"
-              className={`${inputClass} w-28 shrink-0`}
-            >
-              <option value="">No category</option>
-              {categories.map((c) => (
-                <option key={c.name} value={c.name}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-            <label
-              className="flex items-center gap-1 text-[10px] text-slate-500 shrink-0"
-              title="Default on?"
-            >
-              <input
-                type="checkbox"
-                checked={opt.defaultOn}
-                onChange={(e) => patchOption(opt.id, { defaultOn: e.target.checked })}
-                className="w-3.5 h-3.5"
-              />
-              on
-            </label>
-            <button
-              onClick={() => removeOption(opt.id)}
-              title="Remove option"
-              className="px-1.5 py-1 text-[11px] text-slate-500 hover:text-rose-300 hover:bg-rose-500/10 rounded border border-transparent hover:border-rose-500/30 transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-        ))}
       </div>
 
-      <div className="flex items-center justify-between mt-4 mb-2 max-w-xl">
-        <span className="text-[10px] uppercase tracking-wider text-slate-500">
-          Categories
-        </span>
-        <button
-          onClick={addCategory}
-          className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
-        >
-          + Add category
-        </button>
-      </div>
-
-      <div className="space-y-1.5 max-w-xl">
-        {categories.length === 0 && (
-          <p className="text-[11px] text-slate-600 italic">
-            Categories group options in the in-game menu (optional).
-          </p>
-        )}
-        {categories.map((cat) => (
-          <div key={cat.name} className="flex items-center gap-2">
-            <CommitInput
-              value={cat.name}
-              onCommit={(next) => {
-                if (next && next !== cat.name && !categoryNames.has(next)) {
-                  renameCategory(cat.name, next)
-                }
-              }}
-              placeholder="Category name"
-              className={`flex-1 min-w-0 ${inputClass}`}
-            />
-            <button
-              onClick={() => removeCategory(cat.name)}
-              title="Remove category (ungroups its options)"
-              className="px-1.5 py-1 text-[11px] text-slate-500 hover:text-rose-300 hover:bg-rose-500/10 rounded border border-transparent hover:border-rose-500/30 transition-colors"
+      <div className="mt-4">
+        <SectionHeader
+          title="Categories"
+          onAdd={addCategory}
+          addLabel="+ Add category"
+        />
+        <div className="max-w-xl">
+          {categories.length === 0 ? (
+            <Empty>Categories group options in the in-game menu (optional).</Empty>
+          ) : (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={onCategoryDragEnd}
             >
-              ✕
-            </button>
-          </div>
-        ))}
+              <SortableContext
+                items={categories.map((c) => c.name)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="space-y-1">
+                  {categories.map((cat) => (
+                    <SortableCategoryRow
+                      key={cat.name}
+                      cat={cat}
+                      taken={categoryNames}
+                      onRename={renameCategory}
+                      onRemove={removeCategory}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
-/** Text input that only commits its value on blur / Enter (so a key field
- * isn't rewritten on every keystroke). */
+function SortableOptionRow({
+  opt,
+  categories,
+  onPatch,
+  onSetCategory,
+  onRemove,
+}: {
+  opt: FilterOption
+  categories: OptionCategory[]
+  onPatch: (id: string, patch: Partial<FilterOption>) => void
+  onSetCategory: (id: string, categoryName: string | undefined) => void
+  onRemove: (id: string) => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: opt.id })
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  }
+
+  return (
+    <div ref={setNodeRef} style={style} className="flex items-center gap-1">
+      <button {...attributes} {...listeners} className={handleClass} aria-label="Drag to reorder">
+        ⋮⋮
+      </button>
+      <input
+        type="text"
+        value={opt.label}
+        onChange={(e) => onPatch(opt.id, { label: e.target.value })}
+        placeholder="Option name"
+        spellCheck={false}
+        className={textClass}
+      />
+      <select
+        value={opt.categoryName ?? ''}
+        onChange={(e) => onSetCategory(opt.id, e.target.value || undefined)}
+        title="Category"
+        className="shrink-0 w-28 bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none"
+      >
+        <option value="">No category</option>
+        {categories.map((c) => (
+          <option key={c.name} value={c.name}>
+            {c.name}
+          </option>
+        ))}
+      </select>
+      <label
+        className="flex items-center gap-1 text-[10px] text-slate-500 shrink-0"
+        title="On by default?"
+      >
+        <input
+          type="checkbox"
+          checked={opt.defaultOn}
+          onChange={(e) => onPatch(opt.id, { defaultOn: e.target.checked })}
+          className="w-3.5 h-3.5"
+        />
+        on
+      </label>
+      <button onClick={() => onRemove(opt.id)} title="Remove option" className={removeClass}>
+        ✕
+      </button>
+    </div>
+  )
+}
+
+function SortableCategoryRow({
+  cat,
+  taken,
+  onRename,
+  onRemove,
+}: {
+  cat: OptionCategory
+  taken: ReadonlySet<string>
+  onRename: (oldName: string, newName: string) => void
+  onRemove: (name: string) => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: cat.name })
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  }
+
+  return (
+    <div ref={setNodeRef} style={style} className="flex items-center gap-1">
+      <button {...attributes} {...listeners} className={handleClass} aria-label="Drag to reorder">
+        ⋮⋮
+      </button>
+      <CommitInput
+        value={cat.name}
+        onCommit={(next) => {
+          if (next && next !== cat.name && !taken.has(next)) onRename(cat.name, next)
+        }}
+        placeholder="Category name"
+        className={textClass}
+      />
+      <button onClick={() => onRemove(cat.name)} title="Remove category" className={removeClass}>
+        ✕
+      </button>
+    </div>
+  )
+}
+
+function SectionHeader({
+  title,
+  onAdd,
+  addLabel,
+}: {
+  title: string
+  onAdd: () => void
+  addLabel: string
+}) {
+  return (
+    <div className="flex items-center justify-between mb-2 max-w-xl">
+      <span className="text-[10px] uppercase tracking-wider text-slate-500">{title}</span>
+      <button
+        onClick={onAdd}
+        className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
+      >
+        {addLabel}
+      </button>
+    </div>
+  )
+}
+
+function Empty({ children }: { children: React.ReactNode }) {
+  return <p className="text-[11px] text-slate-600 italic">{children}</p>
+}
+
+/** Text input that commits only on blur / Enter, so a key field isn't rewritten
+ * on every keystroke. */
 function CommitInput({
   value,
   onCommit,
