@@ -85,6 +85,8 @@ type FilterState = {
   updateMetadata: (patch: Partial<FilterMetadata>) => void
   setOptions: (options: FilterOption[]) => void
   setOptionCategories: (categories: OptionCategory[]) => void
+  /** Replace options and categories together in one step (drag-to-reorder/regroup). */
+  setOptionLayout: (options: FilterOption[], categories: OptionCategory[]) => void
   setBlockOptionId: (blockId: string, optionId: string | undefined) => void
   /** Remove an option and clear it from any blocks that referenced it. */
   removeOption: (id: string) => void
@@ -341,6 +343,14 @@ export const useFilterStore = create<FilterState>()(
 
         setOptionCategories: (categories) => {
           applyDocPatch((doc) => ({ ...doc, optionCategories: categories }))
+        },
+
+        setOptionLayout: (options, categories) => {
+          applyDocPatch((doc) => ({
+            ...doc,
+            options,
+            optionCategories: categories,
+          }))
         },
 
         setBlockOptionId: (blockId, optionId) => {

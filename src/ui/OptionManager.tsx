@@ -32,18 +32,47 @@ function uniqueId(existing: ReadonlySet<string>, base: string): string {
   return `${base}${n}`
 }
 
+type FlatItem =
+  | { key: string; kind: 'category'; cat: OptionCategory }
+  | { key: string; kind: 'option'; opt: FilterOption }
+
+const optKey = (id: string) => `opt:${id}`
+const catKey = (name: string) => `cat:${name}`
+
+/** Linearize the model the way the filter file is laid out: uncategorized
+ * options first (the implicit root), then each category header followed by its
+ * member options. */
+function flatten(
+  options: FilterOption[],
+  categories: OptionCategory[],
+): FlatItem[] {
+  const flat: FlatItem[] = []
+  for (const opt of options)
+    if (opt.categoryName === undefined)
+      flat.push({ key: optKey(opt.id), kind: 'option', opt })
+  for (const cat of categories) {
+    flat.push({ key: catKey(cat.name), kind: 'category', cat })
+    for (const opt of options)
+      if (opt.categoryName === cat.name)
+        flat.push({ key: optKey(opt.id), kind: 'option', opt })
+  }
+  return flat
+}
+
 /**
- * Document-level option + category editor (shown in the detail pane via the
- * "Filter info" button). Both lists are drag-to-reorder with inline-editable
- * text; "+ Add" appends a default-named item you edit in place. Option ids are
- * auto-generated stable keys (edit raw for custom ids); deletes keep block /
- * option references consistent via the store.
+ * Document-level option + category editor (shown via "Filter info"). A single
+ * drag-and-drop tree: uncategorized options sit under an implicit root at top;
+ * each category is a container. Dropping an option below a category header puts
+ * it in that category; dropping it above all headers makes it uncategorized.
+ * Dragging a category reorders the categories. Option ids are auto-generated
+ * stable keys (edit raw for custom ids).
  */
 export function OptionManager() {
   const options = useFilterStore((s) => s.document.options)
   const categories = useFilterStore((s) => s.document.optionCategories)
   const setOptions = useFilterStore((s) => s.setOptions)
   const setOptionCategories = useFilterStore((s) => s.setOptionCategories)
+  const setOptionLayout = useFilterStore((s) => s.setOptionLayout)
   const removeOption = useFilterStore((s) => s.removeOption)
   const renameCategory = useFilterStore((s) => s.renameCategory)
   const removeCategory = useFilterStore((s) => s.removeCategory)
@@ -52,22 +81,12 @@ export function OptionManager() {
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   )
 
+  const flat = flatten(options, categories)
   const ids = new Set(options.map((o) => o.id))
   const categoryNames = new Set(categories.map((c) => c.name))
 
   const patchOption = (id: string, patch: Partial<FilterOption>) =>
     setOptions(options.map((o) => (o.id === id ? { ...o, ...patch } : o)))
-
-  const setOptionCategory = (id: string, categoryName: string | undefined) =>
-    setOptions(
-      options.map((o) => {
-        if (o.id !== id) return o
-        const next = { ...o }
-        if (categoryName === undefined) delete next.categoryName
-        else next.categoryName = categoryName
-        return next
-      }),
-    )
 
   const addOption = () =>
     setOptions([
@@ -81,111 +100,132 @@ export function OptionManager() {
       { name: uniqueId(categoryNames, 'Category ') },
     ])
 
-  const onOptionDragEnd = (e: DragEndEvent) => {
+  const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e
     if (!over || active.id === over.id) return
-    const from = options.findIndex((o) => o.id === active.id)
-    const to = options.findIndex((o) => o.id === over.id)
-    if (from < 0 || to < 0) return
-    setOptions(arrayMove(options, from, to))
-  }
+    const oldIndex = flat.findIndex((i) => i.key === active.id)
+    const overIndex = flat.findIndex((i) => i.key === over.id)
+    if (oldIndex < 0 || overIndex < 0) return
+    const activeItem = flat[oldIndex]
+    if (!activeItem) return
 
-  const onCategoryDragEnd = (e: DragEndEvent) => {
-    const { active, over } = e
-    if (!over || active.id === over.id) return
-    const from = categories.findIndex((c) => c.name === active.id)
-    const to = categories.findIndex((c) => c.name === over.id)
-    if (from < 0 || to < 0) return
-    setOptionCategories(arrayMove(categories, from, to))
+    if (activeItem.kind === 'option') {
+      // Reorder in the flat list; the option's new category is the nearest
+      // category header above its landing spot (or root if none).
+      const newFlat = arrayMove(flat, oldIndex, overIndex)
+      const pos = newFlat.findIndex((i) => i.key === active.id)
+      let cat: string | undefined
+      for (let j = pos - 1; j >= 0; j--) {
+        const it = newFlat[j]
+        if (it && it.kind === 'category') {
+          cat = it.cat.name
+          break
+        }
+      }
+      const newOptions = newFlat
+        .filter((i): i is Extract<FlatItem, { kind: 'option' }> => i.kind === 'option')
+        .map((i) => {
+          if (i.opt.id !== activeItem.opt.id) return i.opt
+          const o = { ...i.opt }
+          if (cat === undefined) delete o.categoryName
+          else o.categoryName = cat
+          return o
+        })
+      setOptionLayout(newOptions, categories)
+    } else {
+      // Category drag: reorder the categories (root stays at top regardless).
+      const overItem = flat[overIndex]
+      const toName =
+        overItem?.kind === 'category' ? overItem.cat.name : overItem?.opt.categoryName
+      const from = categories.findIndex((c) => c.name === activeItem.cat.name)
+      let to = toName === undefined ? 0 : categories.findIndex((c) => c.name === toName)
+      if (to < 0) to = 0
+      if (from < 0 || from === to) return
+      setOptionCategories(arrayMove(categories, from, to))
+    }
   }
 
   return (
     <div className="px-4 py-3 border-t border-[#1d2128]">
-      <SectionHeader title="Options" onAdd={addOption} addLabel="+ Add option" />
+      <div className="flex items-center justify-between mb-2 max-w-xl">
+        <span className="text-[10px] uppercase tracking-wider text-slate-500">
+          Options &amp; categories
+        </span>
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={addOption}
+            className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
+          >
+            + Add option
+          </button>
+          <button
+            onClick={addCategory}
+            className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
+          >
+            + Add category
+          </button>
+        </div>
+      </div>
+
       <div className="max-w-xl">
-        {options.length === 0 ? (
-          <Empty>Add an option, then gate a rule by it from the rule's header.</Empty>
+        {flat.length === 0 ? (
+          <p className="text-[11px] text-slate-600 italic">
+            Add an option (gate a rule by it from the rule's header), and group
+            options under categories by dragging them below a category.
+          </p>
         ) : (
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
-            onDragEnd={onOptionDragEnd}
+            onDragEnd={onDragEnd}
           >
             <SortableContext
-              items={options.map((o) => o.id)}
+              items={flat.map((i) => i.key)}
               strategy={verticalListSortingStrategy}
             >
               <div className="space-y-1">
-                {options.map((opt) => (
-                  <SortableOptionRow
-                    key={opt.id}
-                    opt={opt}
-                    categories={categories}
-                    onPatch={patchOption}
-                    onSetCategory={setOptionCategory}
-                    onRemove={removeOption}
-                  />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
-        )}
-      </div>
-
-      <div className="mt-4">
-        <SectionHeader
-          title="Categories"
-          onAdd={addCategory}
-          addLabel="+ Add category"
-        />
-        <div className="max-w-xl">
-          {categories.length === 0 ? (
-            <Empty>Categories group options in the in-game menu (optional).</Empty>
-          ) : (
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={onCategoryDragEnd}
-            >
-              <SortableContext
-                items={categories.map((c) => c.name)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="space-y-1">
-                  {categories.map((cat) => (
+                {flat.map((item) =>
+                  item.kind === 'category' ? (
                     <SortableCategoryRow
-                      key={cat.name}
-                      cat={cat}
+                      key={item.key}
+                      id={item.key}
+                      cat={item.cat}
                       taken={categoryNames}
                       onRename={renameCategory}
                       onRemove={removeCategory}
                     />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          )}
-        </div>
+                  ) : (
+                    <SortableOptionRow
+                      key={item.key}
+                      id={item.key}
+                      opt={item.opt}
+                      onPatch={patchOption}
+                      onRemove={removeOption}
+                    />
+                  ),
+                )}
+              </div>
+            </SortableContext>
+          </DndContext>
+        )}
       </div>
     </div>
   )
 }
 
 function SortableOptionRow({
+  id,
   opt,
-  categories,
   onPatch,
-  onSetCategory,
   onRemove,
 }: {
+  id: string
   opt: FilterOption
-  categories: OptionCategory[]
   onPatch: (id: string, patch: Partial<FilterOption>) => void
-  onSetCategory: (id: string, categoryName: string | undefined) => void
   onRemove: (id: string) => void
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: opt.id })
+    useSortable({ id })
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -193,7 +233,7 @@ function SortableOptionRow({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="flex items-center gap-1">
+    <div ref={setNodeRef} style={style} className="flex items-center gap-1 ml-5">
       <button {...attributes} {...listeners} className={handleClass} aria-label="Drag to reorder">
         ⋮⋮
       </button>
@@ -205,19 +245,6 @@ function SortableOptionRow({
         spellCheck={false}
         className={textClass}
       />
-      <select
-        value={opt.categoryName ?? ''}
-        onChange={(e) => onSetCategory(opt.id, e.target.value || undefined)}
-        title="Category"
-        className="shrink-0 w-28 bg-[#0a0a0f] text-[11px] text-slate-300 px-1.5 py-1 rounded border border-[#1d2128] hover:border-[#2a3144] focus:border-amber-500/50 outline-none"
-      >
-        <option value="">No category</option>
-        {categories.map((c) => (
-          <option key={c.name} value={c.name}>
-            {c.name}
-          </option>
-        ))}
-      </select>
       <label
         className="flex items-center gap-1 text-[10px] text-slate-500 shrink-0"
         title="On by default?"
@@ -238,18 +265,20 @@ function SortableOptionRow({
 }
 
 function SortableCategoryRow({
+  id,
   cat,
   taken,
   onRename,
   onRemove,
 }: {
+  id: string
   cat: OptionCategory
   taken: ReadonlySet<string>
   onRename: (oldName: string, newName: string) => void
   onRemove: (name: string) => void
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: cat.name })
+    useSortable({ id })
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -257,49 +286,30 @@ function SortableCategoryRow({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="flex items-center gap-1">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center gap-1 mt-1.5 border-t border-[#161a1f] pt-1.5"
+    >
       <button {...attributes} {...listeners} className={handleClass} aria-label="Drag to reorder">
         ⋮⋮
       </button>
+      <span className="text-slate-500" aria-hidden>
+        ▸
+      </span>
       <CommitInput
         value={cat.name}
         onCommit={(next) => {
           if (next && next !== cat.name && !taken.has(next)) onRename(cat.name, next)
         }}
         placeholder="Category name"
-        className={textClass}
+        className={`${textClass} font-semibold uppercase tracking-wider text-[11px] text-slate-300`}
       />
       <button onClick={() => onRemove(cat.name)} title="Remove category" className={removeClass}>
         ✕
       </button>
     </div>
   )
-}
-
-function SectionHeader({
-  title,
-  onAdd,
-  addLabel,
-}: {
-  title: string
-  onAdd: () => void
-  addLabel: string
-}) {
-  return (
-    <div className="flex items-center justify-between mb-2 max-w-xl">
-      <span className="text-[10px] uppercase tracking-wider text-slate-500">{title}</span>
-      <button
-        onClick={onAdd}
-        className="text-[11px] text-slate-400 hover:text-amber-300 px-2 py-0.5 rounded border border-[#2a2d32] hover:border-amber-500/40 transition-colors"
-      >
-        {addLabel}
-      </button>
-    </div>
-  )
-}
-
-function Empty({ children }: { children: React.ReactNode }) {
-  return <p className="text-[11px] text-slate-600 italic">{children}</p>
 }
 
 /** Text input that commits only on blur / Enter, so a key field isn't rewritten
