@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useFilterStore } from '@/store/filterStore'
 import { useUndoGroup } from '@/hooks/useUndoGroup'
+import { notesToDisplay, notesFromDisplay } from './notesText'
 
 const inputClass =
   'flex-1 min-w-0 bg-[#0a0a0f] text-xs text-slate-300 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a2f38] focus:border-amber-500/50 outline-none'
-
-// Notes edit the leading comment block verbatim (full `#…` lines), so tab-aligned
-// tables line up exactly as in Raw view and the exact prefix (`#`, `# `, `###`,
-// `#====`) is preserved. The only adjustment: a non-empty line the user types
-// without a leading `#` is turned into a comment, keeping the block valid.
-export const notesToDisplay = (lines: string[]): string => lines.join('\n')
-export const notesFromDisplay = (text: string): string[] =>
-  text === ''
-    ? []
-    : text.split('\n').map((l) => (l === '' || /^\s*#/.test(l) ? l : `# ${l}`))
 
 /**
  * Document-level filter metadata (`@Name`/`@Author`/`@Version`/`@Description`),

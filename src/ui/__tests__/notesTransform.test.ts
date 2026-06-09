@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { notesToDisplay, notesFromDisplay } from '@/ui/MetadataPanel'
+import { notesToDisplay, notesFromDisplay } from '@/ui/notesText'
 
 describe('Notes comment-block transform', () => {
   it('shows the stored comment lines verbatim (so tab tables align like Raw)', () => {
