@@ -13,6 +13,8 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
   const updateBlockLabel = useFilterStore((s) => s.updateBlockLabel)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
   const removeBlock = useFilterStore((s) => s.removeBlock)
+  const duplicateBlock = useFilterStore((s) => s.duplicateBlock)
+  const selectBlock = useFilterStore((s) => s.selectBlock)
   const setBlockOptionId = useFilterStore((s) => s.setBlockOptionId)
 
   const index = blocks.findIndex((b) => b.id === block.id)
@@ -94,6 +96,16 @@ export function RuleDetailHeader({ block }: { block: FilterBlock }) {
           </select>
         </label>
       )}
+      <button
+        onClick={() => {
+          const newId = duplicateBlock(block.id)
+          if (newId) selectBlock(newId)
+        }}
+        title="Duplicate rule (inserts a copy below)"
+        className="px-2 py-1 text-[11px] text-slate-500 hover:text-slate-200 hover:bg-[#1a1d22] rounded border border-transparent hover:border-[#3a4050] transition-colors"
+      >
+        Duplicate
+      </button>
       {confirmingDelete ? (
         <div className="flex items-center gap-1">
           <button
