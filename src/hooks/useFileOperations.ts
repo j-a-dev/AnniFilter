@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useFilterStore } from '@/store/filterStore'
+import { saveSession } from '@/lib/sessionStore'
 
 const hasFileSystemAccess =
   typeof window !== 'undefined' &&
@@ -80,6 +81,7 @@ export function useFileOperations() {
         setDirty(false)
         setFilePath(handle.name)
         currentFileHandle = handle
+        saveSession({ rawText: text, filePath: handle.name })
       } catch {
         // user cancelled
       }
@@ -94,6 +96,7 @@ export function useFileOperations() {
       URL.revokeObjectURL(url)
       setDirty(false)
       setFilePath(downloadName)
+      saveSession({ rawText: text, filePath: downloadName })
     }
   }, [toText, filePath, setDirty, setFilePath])
 
@@ -109,6 +112,7 @@ export function useFileOperations() {
         await writable.write(text)
         await writable.close()
         setDirty(false)
+        saveSession({ rawText: text, filePath: currentFileHandle.name })
         return
       } catch {
         currentFileHandle = null
@@ -131,5 +135,30 @@ export function useFileOperations() {
     [loadFromText, setFilePath],
   )
 
-  return { openFile, saveFile, saveFileAs, clearFileHandle, loadFromDrop }
+  const loadSample = useCallback(
+    async (name: 'regular' | 'strict') => {
+      // Bundled via lazy ?raw import rather than fetched from public/: the dev
+      // server is configured to not serve *.filter (vite.config server.watch),
+      // and dynamic import keeps the sample text in its own lazy chunk.
+      const mod =
+        name === 'regular'
+          ? await import('../samples/regular.filter?raw')
+          : await import('../samples/strict.filter?raw')
+      loadFromText(mod.default)
+      // Leave filePath unset so Save prompts for a name and never overwrites
+      // the bundled sample.
+      setFilePath(null)
+      currentFileHandle = null
+    },
+    [loadFromText, setFilePath],
+  )
+
+  return {
+    openFile,
+    saveFile,
+    saveFileAs,
+    clearFileHandle,
+    loadFromDrop,
+    loadSample,
+  }
 }

@@ -5,6 +5,7 @@ import { useFileOperations } from '@/hooks/useFileOperations'
 
 export function TopBar() {
   const dirty = useFilterStore((s) => s.dirty)
+  const isEmpty = useFilterStore((s) => s.document.blocks.length === 0)
   const loadFromText = useFilterStore((s) => s.loadFromText)
   const setFilePath = useFilterStore((s) => s.setFilePath)
   const activeTab = useUIStore((s) => s.activeTab)
@@ -41,8 +42,17 @@ export function TopBar() {
       <div className="flex items-center gap-1 shrink-0">
         <ToolButton onClick={handleNew} label="New" />
         <ToolButton onClick={handleOpen} label="Open" />
-        <ToolButton onClick={saveFile} label="Save" title="Ctrl+S" />
-        <ToolButton onClick={saveFileAs} label="Save As" />
+        <ToolButton
+          onClick={saveFile}
+          label="Save"
+          title={isEmpty ? 'Nothing to save' : 'Ctrl+S'}
+          disabled={isEmpty}
+        />
+        <ToolButton
+          onClick={saveFileAs}
+          label="Save As"
+          disabled={isEmpty}
+        />
       </div>
 
       <div className="ml-auto" />
@@ -81,16 +91,19 @@ function ToolButton({
   onClick,
   label,
   title,
+  disabled,
 }: {
   onClick: () => void
   label: string
   title?: string
+  disabled?: boolean
 }) {
   return (
     <button
       onClick={onClick}
       title={title}
-      className="px-2.5 py-1 text-[11px] bg-[#1a1d22] text-slate-300 rounded border border-[#2a2d32] hover:bg-[#252830] hover:border-[#3a3f48] transition-colors"
+      disabled={disabled}
+      className="px-2.5 py-1 text-[11px] bg-[#1a1d22] text-slate-300 rounded border border-[#2a2d32] hover:bg-[#252830] hover:border-[#3a3f48] transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#1a1d22] disabled:hover:border-[#2a2d32]"
     >
       {label}
     </button>
