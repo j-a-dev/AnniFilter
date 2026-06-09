@@ -10,6 +10,18 @@
   --font-avqest: "AvQest", serif;
 }
 
+/* Tailwind v4's reset sets buttons to cursor:default (v3 used pointer).
+   Restore the pointer on enabled clickable controls so they read as
+   interactive, matching the hand cursor on clickable rules. Disabled
+   controls keep their own cursor (e.g. disabled:cursor-not-allowed). */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  label:has(> input[type="checkbox"]:not(:disabled)) {
+    cursor: pointer;
+  }
+}
+
 /* In-game item label preview — top + bottom horizontal lines that fade out
    at the edges over a dark background that also fades to transparent.
    CSS variables let callers override the bg / border colors per rule. */
