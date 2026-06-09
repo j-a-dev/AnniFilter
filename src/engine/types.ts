@@ -146,8 +146,8 @@ export type FilterMetadata = {
 export type FilterDocument = {
   blocks: FilterBlock[]
   presets: StylePreset[]
+  /** The leading comment block before the first directive/rule. Editable as "Notes" in Filter info; emitted as `#` lines at the very top. */
   preamble: string[]
-  trailingComments: string[]
   metadata: FilterMetadata
   options: FilterOption[]
   optionCategories: OptionCategory[]

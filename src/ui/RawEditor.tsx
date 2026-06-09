@@ -12,6 +12,7 @@ export function RawEditor() {
   const rawText = useFilterStore((s) => s.rawText)
   const blockRanges = useFilterStore((s) => s.blockRanges)
   const blocks = useFilterStore((s) => s.document.blocks)
+  const options = useFilterStore((s) => s.document.options)
   const selectedBlockId = useFilterStore((s) => s.selectedBlockId)
   const selectBlock = useFilterStore((s) => s.selectBlock)
 
@@ -38,6 +39,8 @@ export function RawEditor() {
           label: string
           blockKind: 'Show' | 'Hide' | 'Style'
           index: number
+          /** "Category › Option" gate label, mirroring the rule editor's dropdown; '' when ungated. */
+          gate: string
         }
     const list: Segment[] = []
 
@@ -45,6 +48,8 @@ export function RawEditor() {
       if (rawText.length > 0) list.push({ kind: 'static', text: rawText })
       return list
     }
+
+    const optionById = new Map(options.map((o) => [o.id, o]))
 
     const firstRange = blockRanges.get(blocks[0]!.id)
     if (firstRange && firstRange.charStart > 0) {
@@ -55,6 +60,12 @@ export function RawEditor() {
       const block = blocks[i]!
       const range = blockRanges.get(block.id)
       if (!range) continue
+      const opt = block.optionId ? optionById.get(block.optionId) : undefined
+      const gate = opt
+        ? opt.categoryName
+          ? `${opt.categoryName} › ${opt.label || opt.id}`
+          : opt.label || opt.id
+        : ''
       list.push({
         kind: 'block',
         id: block.id,
@@ -62,6 +73,7 @@ export function RawEditor() {
         label: block.label ?? '',
         blockKind: block.kind,
         index: i + 1,
+        gate,
       })
     }
 
@@ -75,7 +87,7 @@ export function RawEditor() {
     }
 
     return list
-  }, [rawText, blockRanges, blocks])
+  }, [rawText, blockRanges, blocks, options])
 
   // Scroll the selected block into view when selection changes (or when this
   // editor mounts with an existing selection from the visual view).
@@ -137,6 +149,14 @@ export function RawEditor() {
                   {seg.blockKind}
                   {seg.label ? ` · ${seg.label}` : ''}
                 </span>
+                {seg.gate && (
+                  <span
+                    title={`Gated by option: ${seg.gate}`}
+                    className="shrink-0 normal-case tracking-normal text-[9px] text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded px-1 py-px truncate max-w-[45%]"
+                  >
+                    {seg.gate}
+                  </span>
+                )}
                 <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
                   ↗
                 </span>

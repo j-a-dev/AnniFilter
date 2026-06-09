@@ -90,7 +90,6 @@ export function parse(text: string): ParseResult {
   const lines = text.split(/\r?\n/)
   const blocks: FilterBlock[] = []
   const preamble: string[] = []
-  const trailingComments: string[] = []
 
   const intro: IntroAccumulator = {
     metadata: { descriptions: [] },
@@ -110,7 +109,6 @@ export function parse(text: string): ParseResult {
     blocks,
     presets: [],
     preamble,
-    trailingComments,
     metadata: intro.metadata,
     options: intro.options,
     optionCategories: intro.optionCategories,
@@ -246,10 +244,10 @@ export function parse(text: string): ParseResult {
       continue
     }
 
-    // Comment line outside any block — accumulate as a trailing comment for now.
-    // If another block follows, this will be reclassified by the next iteration.
-    const cm = line.match(COMMENT_LINE_RE)
-    if (cm) trailingComments.push((cm[1] ?? '').trim())
+    // Comment line outside any block, after the intro. These are section
+    // banners between/after rules — the editor has no surface for them and they
+    // otherwise pile up at the end on regenerate, so drop them. Only the
+    // leading comment block (preamble) and intra-block comments are preserved.
     i++
   }
 
@@ -402,8 +400,8 @@ function parseBlockBody(
 
     // Enabled block: any blank line ends the body. Real shipped filters never
     // put blank lines inside a block, and treating blank-as-terminator avoids
-    // ambiguity over whether trailing comments belong to the last block or to
-    // the document's trailingComments[].
+    // ambiguity over whether a following comment belongs to the last block or
+    // is a between-rule banner (which is dropped).
     if (trimmed.length === 0) {
       return skipBlanks(lines, i)
     }

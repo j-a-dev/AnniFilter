@@ -28,10 +28,21 @@ export function RuleDetail() {
   )
 
   if (!block) {
+    // Side by side when the panel is wide enough (container query, not
+    // viewport), stacked otherwise. Dividers live on the wrapper so they read
+    // correctly in both orientations.
     return (
-      <div className="flex flex-col">
-        <MetadataPanel />
-        <OptionManager />
+      <div className="@container min-h-full flex flex-col">
+        <div className="flex flex-col @min-[1320px]:flex-row flex-1">
+          {/* Filter Info gets a min-width that always fits ~120 chars. */}
+          <div className="@min-[1320px]:flex-1 @min-[1320px]:min-w-[880px]">
+            <MetadataPanel />
+          </div>
+          {/* Options is fixed-compact so Filter Info absorbs all extra width. */}
+          <div className="border-t border-[#1d2128] @min-[1320px]:border-t-0 @min-[1320px]:border-l @min-[1320px]:basis-[440px] @min-[1320px]:grow-0 @min-[1320px]:shrink-0 @min-[1320px]:min-w-0">
+            <OptionManager />
+          </div>
+        </div>
       </div>
     )
   }

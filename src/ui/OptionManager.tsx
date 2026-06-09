@@ -167,7 +167,7 @@ export function OptionManager() {
   }
 
   return (
-    <div className="px-4 py-3 border-t border-[#1d2128]">
+    <div className="px-4 py-3">
       <div className="flex items-center justify-between mb-2 max-w-xl">
         <span className="text-[10px] uppercase tracking-wider text-slate-500">
           Options &amp; categories

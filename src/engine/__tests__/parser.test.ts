@@ -247,7 +247,6 @@ describe('parser', () => {
       const { document } = parse('')
       expect(document.blocks).toEqual([])
       expect(document.preamble).toEqual([])
-      expect(document.trailingComments).toEqual([])
       expect(document.presets).toEqual([])
     })
 

@@ -11,14 +11,16 @@ const inputClass =
 export function MetadataPanel() {
   const metadata = useFilterStore((s) => s.document.metadata)
   const updateMetadata = useFilterStore((s) => s.updateMetadata)
+  const preamble = useFilterStore((s) => s.document.preamble)
+  const setPreamble = useFilterStore((s) => s.setPreamble)
 
   return (
-    <div className="px-4 py-3 border-b border-[#1d2128]">
+    <div className="px-4 py-3">
       <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-3">
         Filter info
       </div>
 
-      <div className="space-y-2 max-w-xl">
+      <div className="space-y-2 max-w-4xl">
         <Field label="Name">
           <input
             type="text"
@@ -59,8 +61,22 @@ export function MetadataPanel() {
             }}
             placeholder="One line per description line shown in-game"
             spellCheck={false}
-            rows={3}
+            rows={5}
             className={`${inputClass} min-h-[4.5rem] resize-y leading-relaxed`}
+          />
+        </Field>
+        <Field label="Notes" align="start">
+          <textarea
+            value={preamble.join('\n')}
+            onChange={(e) => {
+              const v = e.target.value
+              // Each line becomes one leading `#` comment line; empty = none.
+              setPreamble(v === '' ? [] : v.split('\n'))
+            }}
+            placeholder="Comment block written at the top of the file (not shown in-game)"
+            spellCheck={false}
+            rows={15}
+            className={`${inputClass} min-h-[6.5rem] resize-y font-mono text-[11px] leading-relaxed`}
           />
         </Field>
       </div>

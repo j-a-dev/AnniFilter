@@ -83,6 +83,8 @@ type FilterState = {
 
   // Option-set mutations
   updateMetadata: (patch: Partial<FilterMetadata>) => void
+  /** Replace the leading comment block (one entry per line), edited as "Notes". */
+  setPreamble: (lines: string[]) => void
   setOptions: (options: FilterOption[]) => void
   setOptionCategories: (categories: OptionCategory[]) => void
   /** Replace options and categories together in one step (drag-to-reorder/regroup). */
@@ -100,7 +102,6 @@ const emptyDocument: FilterDocument = {
   blocks: [],
   presets: [],
   preamble: [],
-  trailingComments: [],
   metadata: { descriptions: [] },
   options: [],
   optionCategories: [],
@@ -335,6 +336,10 @@ export const useFilterStore = create<FilterState>()(
             ...doc,
             metadata: { ...doc.metadata, ...patch },
           }))
+        },
+
+        setPreamble: (lines) => {
+          applyDocPatch((doc) => ({ ...doc, preamble: lines }))
         },
 
         setOptions: (options) => {

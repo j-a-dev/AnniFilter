@@ -41,13 +41,7 @@ export function generateWithRanges(document: FilterDocument): {
     }
   }
 
-  // 0) Intro directives: metadata, options grouped by category, unknown passthrough.
-  const introLines = emitIntro(document)
-  if (introLines.length > 0) introLines.push('')
-  out.push(...introLines)
-  advance(introLines)
-
-  // 1) Preamble.
+  // 0) Preamble — the leading comment block, emitted at the very top.
   const preambleLines: string[] = []
   for (const line of document.preamble) {
     preambleLines.push(`# ${line}`)
@@ -55,6 +49,14 @@ export function generateWithRanges(document: FilterDocument): {
   if (document.preamble.length > 0) preambleLines.push('')
   out.push(...preambleLines)
   advance(preambleLines)
+
+  // 1) Intro directives (metadata, options grouped by category, unknown
+  //    passthrough) — after the preamble so they sit between the leading
+  //    comment block and the first rule.
+  const introLines = emitIntro(document)
+  if (introLines.length > 0) introLines.push('')
+  out.push(...introLines)
+  advance(introLines)
 
   // 2) Preset definitions.
   for (const preset of document.presets) {
@@ -106,16 +108,6 @@ export function generateWithRanges(document: FilterDocument): {
   }
   // Close a region still open after the last block.
   if (prevOptionId !== undefined) pushLine('@OptionEnd')
-
-  // 4) Trailing comments.
-  if (document.trailingComments.length > 0) {
-    const lines: string[] = ['']
-    for (const line of document.trailingComments) {
-      lines.push(`# ${line}`)
-    }
-    out.push(...lines)
-    advance(lines)
-  }
 
   const text = out.join('\n') + '\n'
   return { text, blockRanges }
