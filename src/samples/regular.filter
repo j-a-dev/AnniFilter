@@ -64,10 +64,10 @@
 # General Style - Append and Prepend - Ethereal, Tiers, Itemlevels etc.
 #===============================================================================================================
 
-@Name "LeNzY's Filter — Regular"
+@Name "LeNzY's Filter - Regular"
 @Author LeNzY
 @Version 0.5.4-beta
-@Description "Regular preset · Default style"
+@Description "Regular preset - Default style"
 
 Show #Shows all items in town no matter what.
 	AreaLevel == 0

@@ -64,10 +64,10 @@
 # General Style - Append and Prepend - Ethereal, Tiers, Itemlevels etc.
 #===============================================================================================================
 
-@Name "LeNzY's Filter — Strict"
+@Name "LeNzY's Filter - Strict"
 @Author LeNzY
 @Version 0.5.4-beta
-@Description "Strict preset · hides more low-value drops"
+@Description "Strict preset - hides more low-value drops"
 
 Show #Shows all items in town no matter what.
 	AreaLevel == 0
