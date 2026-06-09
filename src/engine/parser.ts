@@ -133,8 +133,10 @@ export function parse(text: string): ParseResult {
         const err = consumeIntroDirective(trimmed, i + 1, intro, issues)
         if (err) return fatal(err.line, err.code, err.message)
       } else {
-        const cm = line.match(COMMENT_LINE_RE)
-        if (cm) preamble.push((cm[1] ?? '').trim())
+        // Store the comment line verbatim (only trailing whitespace trimmed) so
+        // the exact prefix survives the round-trip — `#`, `# `, `###`, `#====`
+        // all mean different things in hand-authored note tables.
+        if (COMMENT_LINE_RE.test(line)) preamble.push(line.replace(/\s+$/, ''))
       }
     }
     i++

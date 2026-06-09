@@ -202,8 +202,8 @@ describe('parser', () => {
       const text = `# Filter for Annihilus\n# Author: lenzy\nShow\n    ItemType "Runes"\n`
       const { document } = parse(text)
       expect(document.preamble).toEqual([
-        'Filter for Annihilus',
-        'Author: lenzy',
+        '# Filter for Annihilus',
+        '# Author: lenzy',
       ])
       expect(document.blocks).toHaveLength(1)
     })

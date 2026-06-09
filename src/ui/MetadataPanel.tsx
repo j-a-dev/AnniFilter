@@ -1,8 +1,19 @@
+import { useEffect, useState } from 'react'
 import { useFilterStore } from '@/store/filterStore'
 import { useUndoGroup } from '@/hooks/useUndoGroup'
 
 const inputClass =
   'flex-1 min-w-0 bg-[#0a0a0f] text-xs text-slate-300 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a2f38] focus:border-amber-500/50 outline-none'
+
+// Notes edit the leading comment block verbatim (full `#…` lines), so tab-aligned
+// tables line up exactly as in Raw view and the exact prefix (`#`, `# `, `###`,
+// `#====`) is preserved. The only adjustment: a non-empty line the user types
+// without a leading `#` is turned into a comment, keeping the block valid.
+export const notesToDisplay = (lines: string[]): string => lines.join('\n')
+export const notesFromDisplay = (text: string): string[] =>
+  text === ''
+    ? []
+    : text.split('\n').map((l) => (l === '' || /^\s*#/.test(l) ? l : `# ${l}`))
 
 /**
  * Document-level filter metadata (`@Name`/`@Author`/`@Version`/`@Description`),
@@ -15,6 +26,17 @@ export function MetadataPanel() {
   const preamble = useFilterStore((s) => s.document.preamble)
   const setPreamble = useFilterStore((s) => s.setPreamble)
   const { edit, end } = useUndoGroup()
+
+  // Edit the comment block locally and commit on blur: auto-prefixing a bare
+  // line would otherwise jump the cursor mid-keystroke, and a single commit is
+  // naturally one undo step.
+  const [notesText, setNotesText] = useState(() => notesToDisplay(preamble))
+  useEffect(() => setNotesText(notesToDisplay(preamble)), [preamble])
+  const commitNotes = () => {
+    if (notesToDisplay(preamble) !== notesText) {
+      setPreamble(notesFromDisplay(notesText))
+    }
+  }
 
   return (
     <div className="px-4 py-3">
@@ -81,14 +103,10 @@ export function MetadataPanel() {
         </Field>
         <Field label="Notes" align="start">
           <textarea
-            value={preamble.join('\n')}
-            onChange={(e) => {
-              const v = e.target.value
-              // Each line becomes one leading `#` comment line; empty = none.
-              edit(() => setPreamble(v === '' ? [] : v.split('\n')))
-            }}
-            onBlur={end}
-            placeholder="Comment block written at the top of the file (not shown in-game)"
+            value={notesText}
+            onChange={(e) => setNotesText(e.target.value)}
+            onBlur={commitNotes}
+            placeholder="# Comment block written at the top of the file (not shown in-game)"
             spellCheck={false}
             rows={15}
             className={`${inputClass} min-h-[6.5rem] resize-y font-mono text-[11px] leading-relaxed [tab-size:4]`}

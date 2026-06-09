@@ -146,7 +146,10 @@ export type FilterMetadata = {
 export type FilterDocument = {
   blocks: FilterBlock[]
   presets: StylePreset[]
-  /** The leading comment block before the first directive/rule. Editable as "Notes" in Filter info; emitted as `#` lines at the very top. */
+  /** The leading comment block before the first directive/rule, stored verbatim
+   * (each entry is a full `#…` line). Editable as "Notes" in Filter info and
+   * emitted unchanged at the very top, so the exact prefix (`#`, `# `, `###`,
+   * `#====`) round-trips. */
   preamble: string[]
   metadata: FilterMetadata
   options: FilterOption[]

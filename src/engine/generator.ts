@@ -41,11 +41,9 @@ export function generateWithRanges(document: FilterDocument): {
     }
   }
 
-  // 0) Preamble — the leading comment block, emitted at the very top.
-  const preambleLines: string[] = []
-  for (const line of document.preamble) {
-    preambleLines.push(`# ${line}`)
-  }
+  // 0) Preamble — the leading comment block, emitted verbatim at the very top.
+  // Entries are already full `#…` lines (see FilterDocument.preamble).
+  const preambleLines: string[] = [...document.preamble]
   if (document.preamble.length > 0) preambleLines.push('')
   out.push(...preambleLines)
   advance(preambleLines)
