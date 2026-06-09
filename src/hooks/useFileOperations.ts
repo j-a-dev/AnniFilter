@@ -136,15 +136,8 @@ export function useFileOperations() {
   )
 
   const loadSample = useCallback(
-    async (name: 'regular' | 'strict') => {
-      // Bundled via lazy ?raw import rather than fetched from public/: the dev
-      // server is configured to not serve *.filter (vite.config server.watch),
-      // and dynamic import keeps the sample text in its own lazy chunk.
-      const mod =
-        name === 'regular'
-          ? await import('../samples/regular.filter?raw')
-          : await import('../samples/strict.filter?raw')
-      loadFromText(mod.default)
+    (text: string) => {
+      loadFromText(text)
       // Leave filePath unset so Save prompts for a name and never overwrites
       // the bundled sample.
       setFilePath(null)

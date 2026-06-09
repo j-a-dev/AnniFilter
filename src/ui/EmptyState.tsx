@@ -1,10 +1,15 @@
 import { useFileOperations } from '@/hooks/useFileOperations'
 import { useFilterStore } from '@/store/filterStore'
+import { SAMPLES, type Sample } from '@/samples'
 
 export function EmptyState() {
   const { openFile, loadSample } = useFileOperations()
   const addBlock = useFilterStore((s) => s.addBlock)
   const selectBlock = useFilterStore((s) => s.selectBlock)
+
+  const openSample = async (sample: Sample) => {
+    loadSample(await sample.load())
+  }
 
   const startBlank = () => {
     // Seed one rule so there's something to edit — a 0-block document is
@@ -31,26 +36,28 @@ export function EmptyState() {
           Open .filter…
         </button>
 
-        <div className="flex items-center gap-3 my-5">
-          <div className="flex-1 h-px bg-[#1d2128]" />
-          <span className="text-[10px] uppercase tracking-wider text-slate-600">
-            or load a sample
-          </span>
-          <div className="flex-1 h-px bg-[#1d2128]" />
-        </div>
+        {SAMPLES.length > 0 && (
+          <>
+            <div className="flex items-center gap-3 my-5">
+              <div className="flex-1 h-px bg-[#1d2128]" />
+              <span className="text-[10px] uppercase tracking-wider text-slate-600">
+                or load a sample
+              </span>
+              <div className="flex-1 h-px bg-[#1d2128]" />
+            </div>
 
-        <div className="flex gap-2">
-          <SampleButton
-            onClick={() => void loadSample('regular')}
-            name="Regular"
-            blurb="Shows more items"
-          />
-          <SampleButton
-            onClick={() => void loadSample('strict')}
-            name="Strict"
-            blurb="Hides low-value drops"
-          />
-        </div>
+            <div className="grid grid-cols-2 gap-2">
+              {SAMPLES.map((sample) => (
+                <SampleButton
+                  key={sample.id}
+                  onClick={() => void openSample(sample)}
+                  name={sample.name}
+                  blurb={sample.blurb}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
         <button
           onClick={startBlank}
@@ -78,7 +85,9 @@ function SampleButton({
       className="flex-1 px-3 py-2.5 rounded border border-[#2a2d32] bg-[#12161a] hover:bg-[#1a1f25] hover:border-[#3a3f48] transition-colors text-left"
     >
       <div className="text-xs font-medium text-slate-200">{name}</div>
-      <div className="text-[10px] text-slate-500 mt-0.5">{blurb}</div>
+      {blurb && (
+        <div className="text-[10px] text-slate-500 mt-0.5">{blurb}</div>
+      )}
     </button>
   )
 }
