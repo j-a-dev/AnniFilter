@@ -6,7 +6,7 @@ Browser-based loot filter editor for the Diablo 2 mod [Annihilus](https://annihi
 
 ## Status
 
-Usable today: load an Annihilus `.filter`, edit rules with live in-game previews, save back to disk. Active development — the next planned feature is a preset library.
+Usable today: load an Annihilus `.filter`, edit rules with live in-game previews, define author option toggles (in-game feature flags) that gate rule regions, and save back to disk. Active development — the next planned feature is a preset library.
 
 ## Quick start
 
