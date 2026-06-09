@@ -263,3 +263,32 @@ describe('filterStore: post-mutation invariants', () => {
     expect(reparsed.blocks[0]?.actions).toEqual(before.blocks[0]?.actions)
   })
 })
+
+describe('filterStore: undo history hygiene', () => {
+  const temporal = () => useFilterStore.temporal.getState()
+
+  beforeEach(() => {
+    reset('Show\n  SetTextColor White')
+  })
+
+  it('loadFromText leaves no undoable history (load is not an edit)', () => {
+    expect(temporal().pastStates).toHaveLength(0)
+  })
+
+  it('does not record entries for sets that do not change the filter text', () => {
+    const a = get().addBlock('Hide')
+    const baseline = temporal().pastStates.length
+    // None of these alter rawText, so none should grow the undo stack.
+    get().selectBlock(a)
+    get().selectBlock(null)
+    get().setDirty(false)
+    get().setFilePath('/tmp/x.filter')
+    expect(temporal().pastStates).toHaveLength(baseline)
+  })
+
+  it('still records an entry per real edit', () => {
+    get().addBlock('Hide')
+    get().addBlock('Show')
+    expect(temporal().pastStates).toHaveLength(2)
+  })
+})

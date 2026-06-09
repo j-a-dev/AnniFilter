@@ -16,6 +16,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import type { FilterOption, OptionCategory } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
+import { useUndoGroup } from '@/hooks/useUndoGroup'
 
 const textClass =
   'flex-1 min-w-0 bg-transparent text-xs text-slate-200 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-transparent hover:border-[#2a2f38] focus:border-amber-500/50 focus:bg-[#0a0a0f] outline-none'
@@ -84,6 +85,8 @@ export function OptionManager() {
   const removeOption = useFilterStore((s) => s.removeOption)
   const renameCategory = useFilterStore((s) => s.renameCategory)
   const removeCategory = useFilterStore((s) => s.removeCategory)
+
+  const { edit, end } = useUndoGroup()
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -223,6 +226,10 @@ export function OptionManager() {
                       indented={item.opt.categoryName !== undefined}
                       duplicate={dupLabels.has(item.opt.label)}
                       onPatch={patchOption}
+                      onEditLabel={(id, label) =>
+                        edit(() => patchOption(id, { label }))
+                      }
+                      onEndEdit={end}
                       onRemove={removeOption}
                     />
                   ),
@@ -242,6 +249,8 @@ function SortableOptionRow({
   indented,
   duplicate,
   onPatch,
+  onEditLabel,
+  onEndEdit,
   onRemove,
 }: {
   id: string
@@ -249,6 +258,8 @@ function SortableOptionRow({
   indented: boolean
   duplicate: boolean
   onPatch: (id: string, patch: Partial<FilterOption>) => void
+  onEditLabel: (id: string, label: string) => void
+  onEndEdit: () => void
   onRemove: (id: string) => void
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -271,7 +282,8 @@ function SortableOptionRow({
       <input
         type="text"
         value={opt.label}
-        onChange={(e) => onPatch(opt.id, { label: e.target.value })}
+        onChange={(e) => onEditLabel(opt.id, e.target.value)}
+        onBlur={onEndEdit}
         placeholder="Option name"
         spellCheck={false}
         title={duplicate ? 'Duplicate option name — rename to keep options distinct' : undefined}

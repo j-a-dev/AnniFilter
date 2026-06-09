@@ -164,6 +164,11 @@ export const useFilterStore = create<FilterState>()(
             selectedBlockId: null,
             loadError: null,
           })
+          // Loading a filter is an I/O boundary, not an edit: you should never
+          // be able to undo across a load back into the previous filter (or into
+          // the empty startup document on session restore). Drop the history so
+          // the freshly loaded filter is the clean baseline.
+          useFilterStore.temporal.getState().clear()
           // Simulation toggles are transient and filter-specific — clear them
           // so a freshly loaded filter starts from its declared option defaults.
           useUIStore.getState().resetOptionStates()
@@ -412,6 +417,11 @@ export const useFilterStore = create<FilterState>()(
         rawText: state.rawText,
         blockRanges: state.blockRanges,
       }),
+      // zundo records on every set() unless told the state is unchanged. rawText
+      // is regenerated from the document on every edit, so it's a faithful proxy
+      // for the undoable state — comparing it skips no-op entries from sets that
+      // don't alter the filter (selectBlock, setDirty, setFilePath, loadError).
+      equality: (a, b) => a.rawText === b.rawText,
     },
   ),
 )

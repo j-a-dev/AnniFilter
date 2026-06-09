@@ -1,4 +1,5 @@
 import { useFilterStore } from '@/store/filterStore'
+import { useUndoGroup } from '@/hooks/useUndoGroup'
 
 const inputClass =
   'flex-1 min-w-0 bg-[#0a0a0f] text-xs text-slate-300 placeholder:text-slate-500 placeholder:italic px-2 py-1 rounded border border-[#1d2128] hover:border-[#2a2f38] focus:border-amber-500/50 outline-none'
@@ -13,6 +14,7 @@ export function MetadataPanel() {
   const updateMetadata = useFilterStore((s) => s.updateMetadata)
   const preamble = useFilterStore((s) => s.document.preamble)
   const setPreamble = useFilterStore((s) => s.setPreamble)
+  const { edit, end } = useUndoGroup()
 
   return (
     <div className="px-4 py-3">
@@ -25,7 +27,10 @@ export function MetadataPanel() {
           <input
             type="text"
             value={metadata.name ?? ''}
-            onChange={(e) => updateMetadata({ name: e.target.value || undefined })}
+            onChange={(e) =>
+              edit(() => updateMetadata({ name: e.target.value || undefined }))
+            }
+            onBlur={end}
             placeholder="Filter display name"
             spellCheck={false}
             className={inputClass}
@@ -35,7 +40,10 @@ export function MetadataPanel() {
           <input
             type="text"
             value={metadata.author ?? ''}
-            onChange={(e) => updateMetadata({ author: e.target.value || undefined })}
+            onChange={(e) =>
+              edit(() => updateMetadata({ author: e.target.value || undefined }))
+            }
+            onBlur={end}
             placeholder="Your name"
             spellCheck={false}
             className={inputClass}
@@ -45,7 +53,10 @@ export function MetadataPanel() {
           <input
             type="text"
             value={metadata.version ?? ''}
-            onChange={(e) => updateMetadata({ version: e.target.value || undefined })}
+            onChange={(e) =>
+              edit(() => updateMetadata({ version: e.target.value || undefined }))
+            }
+            onBlur={end}
             placeholder="1.0"
             spellCheck={false}
             className={inputClass}
@@ -57,8 +68,11 @@ export function MetadataPanel() {
             onChange={(e) => {
               const v = e.target.value
               // Each line becomes one @Description; empty input means none.
-              updateMetadata({ descriptions: v === '' ? [] : v.split('\n') })
+              edit(() =>
+                updateMetadata({ descriptions: v === '' ? [] : v.split('\n') }),
+              )
             }}
+            onBlur={end}
             placeholder="One line per description line shown in-game"
             spellCheck={false}
             rows={5}
@@ -71,8 +85,9 @@ export function MetadataPanel() {
             onChange={(e) => {
               const v = e.target.value
               // Each line becomes one leading `#` comment line; empty = none.
-              setPreamble(v === '' ? [] : v.split('\n'))
+              edit(() => setPreamble(v === '' ? [] : v.split('\n')))
             }}
+            onBlur={end}
             placeholder="Comment block written at the top of the file (not shown in-game)"
             spellCheck={false}
             rows={15}

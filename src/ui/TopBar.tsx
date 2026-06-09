@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { useStore } from 'zustand'
 import { useFilterStore } from '@/store/filterStore'
 import { useUIStore } from '@/store/uiStore'
 import { useFileOperations } from '@/hooks/useFileOperations'
@@ -13,6 +14,8 @@ export function TopBar() {
 
   const undo = useFilterStore.temporal.getState().undo
   const redo = useFilterStore.temporal.getState().redo
+  const canUndo = useStore(useFilterStore.temporal, (s) => s.pastStates.length > 0)
+  const canRedo = useStore(useFilterStore.temporal, (s) => s.futureStates.length > 0)
   const { openFile, saveFile, saveFileAs, clearFileHandle } =
     useFileOperations()
 
@@ -58,11 +61,17 @@ export function TopBar() {
       <div className="ml-auto" />
 
       <div className="flex items-center gap-1 shrink-0">
-        <ToolButton onClick={() => undo()} label="Undo" title="Ctrl+Z" />
+        <ToolButton
+          onClick={() => undo()}
+          label="Undo"
+          title="Ctrl+Z"
+          disabled={!canUndo}
+        />
         <ToolButton
           onClick={() => redo()}
           label="Redo"
           title="Ctrl+Shift+Z"
+          disabled={!canRedo}
         />
       </div>
 
