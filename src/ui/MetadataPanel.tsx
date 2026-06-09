@@ -76,7 +76,7 @@ export function MetadataPanel() {
             placeholder="Comment block written at the top of the file (not shown in-game)"
             spellCheck={false}
             rows={15}
-            className={`${inputClass} min-h-[6.5rem] resize-y font-mono text-[11px] leading-relaxed`}
+            className={`${inputClass} min-h-[6.5rem] resize-y font-mono text-[11px] leading-relaxed [tab-size:4]`}
           />
         </Field>
       </div>

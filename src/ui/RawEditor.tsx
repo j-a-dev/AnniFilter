@@ -111,7 +111,7 @@ export function RawEditor() {
       </button>
       <div
         ref={containerRef}
-        className="h-full overflow-y-auto p-4 pr-20 space-y-3 selection:bg-amber-500/30"
+        className="h-full overflow-y-auto p-4 pr-20 space-y-3 selection:bg-amber-500/30 [tab-size:4]"
       >
         {segments.map((seg, i) => {
           if (seg.kind === 'static') {
