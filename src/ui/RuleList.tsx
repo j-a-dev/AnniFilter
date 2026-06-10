@@ -146,6 +146,7 @@ export function RuleList() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search labels and conditions…"
+              aria-label="Search rules"
               className="w-full bg-[#0a0a0f] text-slate-300 text-[11px] px-2 py-1 rounded border border-[#2a2d32] focus:border-amber-500/50 outline-none"
             />
             <div className="flex gap-1">

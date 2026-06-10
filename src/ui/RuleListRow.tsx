@@ -44,7 +44,19 @@ export function RuleListRow({ block, index, selected }: Props) {
       ref={setNodeRef}
       style={style}
       onClick={() => selectBlock(block.id)}
-      className={`relative flex items-center gap-2 h-11 pr-2 cursor-pointer border-b border-[#161a1f] hover:bg-[#15181d] ${
+      // Not a <button>: the row wraps interactive controls (drag handle,
+      // checkbox), which can't be nested inside a button. role+tabIndex+keydown
+      // give it keyboard selection without that nesting.
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          selectBlock(block.id)
+        }
+      }}
+      className={`relative flex items-center gap-2 h-11 pr-2 cursor-pointer border-b border-[#161a1f] hover:bg-[#15181d] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-amber-400 ${
         selected ? 'bg-[#1a2438] ring-1 ring-inset ring-amber-500/30' : ''
       }`}
     >
