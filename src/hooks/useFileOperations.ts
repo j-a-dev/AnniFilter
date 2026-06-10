@@ -31,8 +31,13 @@ type FilePickerWindow = Window & {
 }
 
 export function useFileOperations() {
-  const { loadFromText, toText, setFilePath, setDirty, filePath } =
-    useFilterStore()
+  // Select individually so consumers (TopBar, EmptyState) re-render only when
+  // filePath changes — not on every store update. The actions are stable refs.
+  const loadFromText = useFilterStore((s) => s.loadFromText)
+  const toText = useFilterStore((s) => s.toText)
+  const setFilePath = useFilterStore((s) => s.setFilePath)
+  const setDirty = useFilterStore((s) => s.setDirty)
+  const filePath = useFilterStore((s) => s.filePath)
 
   const openFile = useCallback(async () => {
     if (hasFileSystemAccess) {
