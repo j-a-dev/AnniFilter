@@ -5,6 +5,7 @@ import type {
   ItemDescription,
 } from './types'
 import { BASE_RARITY_ORDER, RUNEWORD_RARITY_ORDER, TIER_ORDER } from './data/spec'
+import { isRunewordContext } from './blockContext'
 
 /**
  * Test whether `item` satisfies all of `block`'s conditions.
@@ -28,12 +29,9 @@ function matchesCondition(
   switch (cond.keyword) {
     case 'Rarity': {
       if (item.rarity == null) return false
-      const isRunewordContext = block.conditions.some(
-        (c) =>
-          c.keyword === 'ItemType' &&
-          c.values.includes('Runeword Pattern'),
-      )
-      const order = isRunewordContext ? RUNEWORD_RARITY_ORDER : BASE_RARITY_ORDER
+      const order = isRunewordContext(block)
+        ? RUNEWORD_RARITY_ORDER
+        : BASE_RARITY_ORDER
       return compareOrdered(item.rarity, cond.op, cond.value, order)
     }
     case 'Tier':

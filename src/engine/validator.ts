@@ -15,6 +15,7 @@ import {
   TEMPLATE_PLACEHOLDERS_SET,
   TEXT_COLORS_SET,
 } from './data/spec'
+import { isRunewordContext } from './blockContext'
 
 const BASE_RARITY_SET: ReadonlySet<string> = new Set(BASE_RARITIES)
 const RUNEWORD_RARITY_SET: ReadonlySet<string> = new Set(RUNEWORD_RARITIES)
@@ -72,11 +73,7 @@ function validateOptions(
 }
 
 function validateBlock(block: FilterBlock, issues: ValidationIssue[]): void {
-  const inRunewordPatternContext = block.conditions.some(
-    (c) =>
-      c.keyword === 'ItemType' &&
-      c.values.includes('Runeword Pattern'),
-  )
+  const inRunewordPatternContext = isRunewordContext(block)
 
   for (let i = 0; i < block.conditions.length; i++) {
     validateCondition(

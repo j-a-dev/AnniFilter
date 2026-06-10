@@ -5,6 +5,7 @@ import type {
   ItemDescription,
 } from './types'
 import { BASE_RARITY_ORDER, RUNEWORD_RARITY_ORDER, TIER_ORDER } from './data/spec'
+import { isRunewordContext } from './blockContext'
 
 const TIER_ORDER_INV = invert(TIER_ORDER)
 const BASE_RARITY_ORDER_INV = invert(BASE_RARITY_ORDER)
@@ -26,10 +27,7 @@ export function synthesizeItem(block: FilterBlock): ItemDescription {
   const item: ItemDescription = {}
 
   // First pass: detect Runeword Pattern context for rarity ordering.
-  const inRunewordCtx = block.conditions.some(
-    (c) =>
-      c.keyword === 'ItemType' && c.values.includes('Runeword Pattern'),
-  )
+  const inRunewordCtx = isRunewordContext(block)
 
   for (const c of block.conditions) {
     applyCondition(c, item, inRunewordCtx)
