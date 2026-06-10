@@ -291,4 +291,13 @@ describe('filterStore: undo history hygiene', () => {
     get().addBlock('Show')
     expect(temporal().pastStates).toHaveLength(2)
   })
+
+  it('resumes tracking after a load (no stale pause from a mid-edit load)', () => {
+    // Simulate a load landing mid grouped-edit: useUndoGroup has zundo paused.
+    temporal().pause()
+    get().loadFromText('Show\n    ItemType "Runes"')
+    // Tracking must be live again, so the next real edit records history.
+    get().addBlock('Show')
+    expect(temporal().pastStates.length).toBeGreaterThan(0)
+  })
 })

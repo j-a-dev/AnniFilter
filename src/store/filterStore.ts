@@ -167,8 +167,13 @@ export const useFilterStore = create<FilterState>()(
           // Loading a filter is an I/O boundary, not an edit: you should never
           // be able to undo across a load back into the previous filter (or into
           // the empty startup document on session restore). Drop the history so
-          // the freshly loaded filter is the clean baseline.
-          useFilterStore.temporal.getState().clear()
+          // the freshly loaded filter is the clean baseline, and resume tracking:
+          // a load can land mid-edit (drop/sample/restore) while useUndoGroup has
+          // zundo paused, which would otherwise leave tracking suspended so later
+          // edits record no undo history.
+          const temporal = useFilterStore.temporal.getState()
+          temporal.clear()
+          temporal.resume()
           // Simulation toggles are transient and filter-specific — clear them
           // so a freshly loaded filter starts from its declared option defaults.
           useUIStore.getState().resetOptionStates()
