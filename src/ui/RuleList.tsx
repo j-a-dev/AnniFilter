@@ -56,6 +56,14 @@ export function RuleList() {
     })
   }, [blocks, search, kindFilter])
 
+  // Rows show their index in the full filter (not the filtered view). Memoize
+  // an id→index table keyed on `blocks` so scroll/search re-renders — which
+  // leave `blocks` untouched — reuse it instead of scanning the array per row.
+  const indexById = useMemo(
+    () => new Map(blocks.map((b, i) => [b.id, i])),
+    [blocks],
+  )
+
   const parentRef = useRef<HTMLDivElement>(null)
   const virtualizer = useVirtualizer({
     count: visible.length,
@@ -198,9 +206,7 @@ export function RuleList() {
                     {virtualizer.getVirtualItems().map((vRow) => {
                       const block = visible[vRow.index]
                       if (!block) return null
-                      const trueIndex = blocks.findIndex(
-                        (b) => b.id === block.id,
-                      )
+                      const trueIndex = indexById.get(block.id) ?? -1
                       return (
                         <div
                           key={block.id}
