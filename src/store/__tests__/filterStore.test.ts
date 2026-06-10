@@ -300,4 +300,9 @@ describe('filterStore: undo history hygiene', () => {
     get().addBlock('Show')
     expect(temporal().pastStates.length).toBeGreaterThan(0)
   })
+
+  it('caps undo history at the configured limit', () => {
+    for (let i = 0; i < 110; i++) get().addBlock('Show')
+    expect(temporal().pastStates.length).toBeLessThanOrEqual(100)
+  })
 })

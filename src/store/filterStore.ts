@@ -417,6 +417,12 @@ export const useFilterStore = create<FilterState>()(
       }
     },
     {
+      // Cap history so a long editing session can't grow memory without bound;
+      // 100 steps is far more undo depth than this editor needs in practice.
+      limit: 100,
+      // document/rawText/blockRanges are snapshotted together so undo restores a
+      // self-consistent triple (rawText + blockRanges must match the document, or
+      // the raw-view segment mapping desyncs). rawText also backs `equality`.
       partialize: (state) => ({
         document: state.document,
         rawText: state.rawText,
