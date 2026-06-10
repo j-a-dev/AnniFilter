@@ -4,9 +4,25 @@ Browser-based loot filter editor for the Diablo 2 mod [Annihilus](https://annihi
 
 **Live editor: https://j-a-dev.github.io/AnniFilter/**
 
+## What you can do
+
+**Open & navigate** — load a `.filter` from disk, browse a virtualized indexed rule list that handles 200+ rules, search by text, filter by kind (Show / Hide / Style), and `Ctrl+G` to jump to a rule by index.
+
+**Preview as the game would** — every rule row renders a live in-game-style nameplate using its *effective* styling (the cascade of all Style layers up to that rule, not just its own actions), with a minimap dot and drop-sound indicator. The rule detail shows the cascaded preview, the rule-alone preview, and the chat-notification message together.
+
+**Edit through typed controls** — dropdowns for enumerated values, an operator selector (`= ≠ > < ≥ ≤`), multi-value inputs for `ItemType` / `ItemName` / `HasAffix`, Yes/No toggles for booleans; RGB swatches for border/background, a palette grid for `SetTextColor`, font/blend dropdowns with live preview, a template editor with placeholder pills (`{Original}`, `{Red}`, `{Break}`, …), and a list for stacked `PlayAlertSound`. Add, duplicate, delete, drag-reorder, enable/disable, and change the kind of rules, with full undo/redo.
+
+**Author in-game option toggles** — define boolean options and categories (`@Option` / `@Category`) that gate regions of rules like feature flags, so one filter ships multiple player-selectable presets. Edit filter metadata (`@Name` / `@Author` / `@Version` / `@Description`) and the leading **Notes** block, and simulate option states to see which rules light up.
+
+**Save & resume** — Save / Save As back to disk; your last *saved* filter is restored on reload; first run shows a welcome chooser (open a file, load a bundled **Regular** or **Strict** sample, or start blank). A validator flags issues inline (errors / warnings / info), and a read-only **Raw** view shows the generated text with one-click copy.
+
 ## Status
 
-Usable today: load an Annihilus `.filter`, edit rules with live in-game previews, define author option toggles (in-game feature flags) that gate rule regions, and save back to disk. Active development — the next planned feature is a preset library.
+Usable end-to-end: load an Annihilus `.filter`, edit rules with live previews, author option toggles, and save back to disk. Both shipped community filters parse, render, and regenerate with a deep-equal AST (no data loss). Active development — next up is a **preset library** (edit one display style, apply to many rules) and **rule sections** (collapsible categorized grouping).
+
+## Data accuracy
+
+> **Annihilus is not vanilla D2.** Item names, base types, runewords, and class data diverge from Diablo II LoD and D2R, so vanilla/D2R data is **not** valid here — the mod wiki is the authoritative source. The wiki at `annihilus.net` returns 403 to automated fetches, so verifying specific syntax or item data needs a browser or a user-pasted page.
 
 ## Quick start
 
@@ -28,7 +44,8 @@ Once running, click **Open** in the app and pick `samples/lenzy's filter_regular
 | `src/engine/` | Parser, generator, validator, matcher, categorizer, AST types, spec data. |
 | `src/store/` | Zustand state (`filterStore`, `uiStore`) + memoized selectors. |
 | `src/ui/` | React components. |
-| `samples/` | Community filter fixtures (lenzy regular + strict). |
+| `src/samples/` | Bundled Regular / Strict filters loaded by the welcome chooser. |
+| `samples/` | Community filter fixtures (lenzy regular + strict) used for round-trip tests. |
 | `docs/wiki/` | Annihilus filter spec extracts ([`item-filter.md`](./docs/wiki/item-filter.md) + [`extensions-observed.md`](./docs/wiki/extensions-observed.md)) — usable as reference for any other Annihilus tooling. |
 
 ## Stack
