@@ -24,6 +24,10 @@ export function RuleDetail() {
 
   const cascadedActions = useMemo(
     () => (block ? previewActionsForBlock(document, block.id, optionStates) : []),
+    // `block` is read but intentionally keyed by `block?.id`: the block lives in
+    // `document`, so any content change already flows through the `document` dep;
+    // depending on the whole object would recompute on every unrelated edit.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [document, block?.id, optionStates],
   )
 

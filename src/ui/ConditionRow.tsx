@@ -226,6 +226,9 @@ function MultiValueTextInput({
       parsed.length === values.length &&
       parsed.every((v, i) => v === values[i])
     if (!same) setText(values.join(', '))
+    // Intentionally excludes `text`: depending on it would re-sync on every
+    // keystroke and clobber the user's in-progress raw input (see above).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values])
 
   return (
