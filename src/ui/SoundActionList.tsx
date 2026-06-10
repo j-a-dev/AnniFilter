@@ -1,6 +1,7 @@
 import type { FilterBlock } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
 import { DROP_SOUNDS } from '@/engine/data/spec'
+import { defaultActionFor } from './actionDefaults'
 
 export function SoundActionList({ block }: { block: FilterBlock }) {
   const addAction = useFilterStore((s) => s.addAction)
@@ -21,7 +22,7 @@ export function SoundActionList({ block }: { block: FilterBlock }) {
           <span className="text-[11px] text-slate-500 italic">no sound</span>
           <button
             onClick={() =>
-              addAction(block.id, { keyword: 'PlayAlertSound', soundId: 11 })
+              addAction(block.id, defaultActionFor('PlayAlertSound'))
             }
             className="text-[10px] text-amber-300/80 hover:text-amber-300 border border-dashed border-[#2a3144] rounded px-1.5 py-0.5"
           >
