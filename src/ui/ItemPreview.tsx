@@ -1,5 +1,6 @@
 import type { Action } from '@/engine/types'
 import { PALETTE_HEX, renderTemplate } from './templateRender'
+import { findFirst } from './actionLookup'
 
 const FONT_SIZE_PX: Record<string, number> = {
   Font6: 12,
@@ -16,15 +17,6 @@ const FONT_SIZE_PX: Record<string, number> = {
   FontInGameChat: 14,
   FontRidiculous: 25,
   ReallyTheLastSucker: 21,
-}
-
-function findFirst<K extends Action['keyword']>(
-  actions: Action[],
-  keyword: K,
-): (Action & { keyword: K }) | undefined {
-  return actions.find(
-    (a): a is Action & { keyword: K } => a.keyword === keyword,
-  )
 }
 
 export function ItemPreview({

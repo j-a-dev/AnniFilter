@@ -1,6 +1,8 @@
 import type { BlockKind, ComparisonOp, Condition, FilterBlock } from '@/engine/types'
 
-const PRETTY_OP: Record<ComparisonOp, string> = {
+export const COMPARISON_OPS: ComparisonOp[] = ['==', '!=', '>', '<', '>=', '<=']
+
+export const PRETTY_OP: Record<ComparisonOp, string> = {
   '==': '=',
   '!=': '≠',
   '>': '>',

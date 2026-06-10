@@ -1,13 +1,5 @@
 import type { Action } from '@/engine/types'
-
-function findFirst<K extends Action['keyword']>(
-  actions: Action[],
-  keyword: K,
-): (Action & { keyword: K }) | undefined {
-  return actions.find(
-    (a): a is Action & { keyword: K } => a.keyword === keyword,
-  )
-}
+import { findFirst } from './actionLookup'
 
 export function IndicatorLane({ actions }: { actions: Action[] }) {
   const hasSound = actions.some((a) => a.keyword === 'PlayAlertSound')

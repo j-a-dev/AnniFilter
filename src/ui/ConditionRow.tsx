@@ -10,16 +10,7 @@ import {
   RUNEWORD_RARITIES,
   TIERS,
 } from '@/engine/data/spec'
-
-const COMPARISON_OPS: ComparisonOp[] = ['==', '!=', '>', '<', '>=', '<=']
-const PRETTY_OP: Record<ComparisonOp, string> = {
-  '==': '=',
-  '!=': '≠',
-  '>': '>',
-  '<': '<',
-  '>=': '≥',
-  '<=': '≤',
-}
+import { COMPARISON_OPS, PRETTY_OP } from './ruleListUtils'
 
 type Props = {
   block: FilterBlock
