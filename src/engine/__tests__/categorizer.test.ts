@@ -3,6 +3,12 @@ import { parse } from '@/engine/parser'
 import { categorize } from '@/engine/categorizer'
 import type { FilterBlock } from '@/engine/types'
 import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+
+// Resolve relative to this file, not process.cwd(), so the tests don't break
+// if the runner is launched from a different directory.
+const SAMPLES = join(dirname(fileURLToPath(import.meta.url)), '../../../samples')
 
 function block(text: string): FilterBlock {
   const doc = parse(text).document
@@ -75,10 +81,7 @@ describe('categorizer', () => {
 
 describe('categorizer: shipped filter coverage', () => {
   it('lenzy regular: most blocks get a non-uncategorized label', () => {
-    const text = readFileSync(
-      "samples/lenzy's filter_regular.filter",
-      'utf8',
-    )
+    const text = readFileSync(join(SAMPLES, "lenzy's filter_regular.filter"), 'utf8')
     const doc = parse(text).document
     let labeled = 0
     for (const b of doc.blocks) {
