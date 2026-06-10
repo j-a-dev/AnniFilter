@@ -47,9 +47,3 @@ export const KIND_COLOR: Record<BlockKind, string> = {
   Hide: 'bg-rose-500/70',
   Style: 'bg-amber-500/70',
 }
-
-export const KIND_LABEL: Record<BlockKind, string> = {
-  Show: 'Show',
-  Hide: 'Hide',
-  Style: 'Style',
-}

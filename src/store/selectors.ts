@@ -27,24 +27,3 @@ export function useSelectedBlock(): FilterBlock | null {
     [id, blocks],
   )
 }
-
-/** Severity counts across the whole document. Cheap derive; useful for
- *  the top-bar badge once we add one. */
-export function useIssueSeverityCounts(): {
-  errors: number
-  warnings: number
-  infos: number
-} {
-  const issues = useFilterStore((s) => s.issues)
-  return useMemo(() => {
-    let errors = 0
-    let warnings = 0
-    let infos = 0
-    for (const issue of issues) {
-      if (issue.level === 'error') errors++
-      else if (issue.level === 'warning') warnings++
-      else infos++
-    }
-    return { errors, warnings, infos }
-  }, [issues])
-}

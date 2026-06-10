@@ -15,11 +15,6 @@ export const TEXT_ACTION_KEYWORDS: ActionKeyword[] = [
   'ChatNotification',
 ]
 
-export const ALERT_ACTION_KEYWORDS: ActionKeyword[] = [
-  'PlayAlertSound',
-  'MinimapIcon',
-]
-
 const DEFAULTS: Record<ActionKeyword, Action> = {
   SetTextColor: { keyword: 'SetTextColor', color: 'White' },
   SetBorderColor: { keyword: 'SetBorderColor', r: 200, g: 0, b: 200 },
