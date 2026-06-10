@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+/** Approximate visual hex for each named palette color. The actual in-game
+ *  rendering is determined by the engine; these are best-effort previews. */
 export const PALETTE_HEX: Record<string, string> = {
   White: '#e0e0e0', Red: '#cc2c2c', LightGreen: '#7fe08a',
   Blue: '#3a78d4', DarkGold: '#a08036', Grey: '#7a7a7a',

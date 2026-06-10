@@ -1,14 +1,6 @@
 import { useRef, useState } from 'react'
 import { TEMPLATE_PLACEHOLDERS, TEXT_COLORS } from '@/engine/data/spec'
-
-const PALETTE_HEX: Record<string, string> = {
-  White: '#e0e0e0', Red: '#cc2c2c', LightGreen: '#7fe08a',
-  Blue: '#3a78d4', DarkGold: '#a08036', Grey: '#7a7a7a',
-  Black: '#0a0a0a', Gold: '#d4b048', Orange: '#e08a3a',
-  Yellow: '#e8d038', DarkGreen: '#3a7a3a', Purple: '#a040a8',
-  Green: '#48a848', White2: '#e8e8e8', Black2: '#080808',
-  DarkWhite: '#b0b0b0',
-}
+import { PALETTE_HEX } from './templateRender'
 
 type Props = {
   value: string
