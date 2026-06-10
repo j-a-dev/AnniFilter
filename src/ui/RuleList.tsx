@@ -47,6 +47,12 @@ export function RuleList() {
   const [search, setSearch] = useState('')
   const [kindFilter, setKindFilter] = useState<Set<BlockKind>>(new Set())
 
+  // Reordering maps the dropped-on row to an absolute index. While a filter
+  // hides rows, that would slide a rule across invisible neighbors and silently
+  // change first-match/Style-layer order, so drag is disabled until the full
+  // list is visible.
+  const filterActive = search.trim() !== '' || kindFilter.size > 0
+
   const visible = useMemo(() => {
     return blocks.filter((b) => {
       if (kindFilter.size > 0 && !kindFilter.has(b.kind)) return false
@@ -89,6 +95,7 @@ export function RuleList() {
   )
 
   const handleDragEnd = (e: DragEndEvent) => {
+    if (filterActive) return // rows are disabled while filtered; guard anyway
     const { active, over } = e
     if (!over || active.id === over.id) return
     const target = blocks.findIndex((b) => b.id === over.id)
@@ -223,6 +230,7 @@ export function RuleList() {
                             block={block}
                             index={trueIndex}
                             selected={selectedId === block.id}
+                            dragDisabled={filterActive}
                           />
                         </div>
                       )

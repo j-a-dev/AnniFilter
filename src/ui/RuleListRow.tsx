@@ -13,9 +13,10 @@ type Props = {
   block: FilterBlock
   index: number
   selected: boolean
+  dragDisabled?: boolean
 }
 
-export function RuleListRow({ block, index, selected }: Props) {
+export function RuleListRow({ block, index, selected, dragDisabled }: Props) {
   const selectBlock = useFilterStore((s) => s.selectBlock)
   const toggleBlock = useFilterStore((s) => s.toggleBlock)
   const document = useFilterStore((s) => s.document)
@@ -31,7 +32,7 @@ export function RuleListRow({ block, index, selected }: Props) {
     : undefined
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: block.id })
+    useSortable({ id: block.id, disabled: dragDisabled })
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -60,8 +61,17 @@ export function RuleListRow({ block, index, selected }: Props) {
         {...attributes}
         {...listeners}
         onClick={(e) => e.stopPropagation()}
-        className="w-3 h-full flex items-center justify-center text-slate-600 hover:text-slate-300 cursor-grab active:cursor-grabbing select-none"
-        title="Drag to reorder"
+        disabled={dragDisabled}
+        className={`w-3 h-full flex items-center justify-center text-slate-600 select-none ${
+          dragDisabled
+            ? 'opacity-30 cursor-not-allowed'
+            : 'hover:text-slate-300 cursor-grab active:cursor-grabbing'
+        }`}
+        title={
+          dragDisabled
+            ? 'Clear search/filter to reorder rules'
+            : 'Drag to reorder'
+        }
         aria-label="Drag handle"
       >
         ⋮⋮
