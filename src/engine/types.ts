@@ -70,6 +70,8 @@ export type Action =
       template: string
     }
   | { keyword: 'PlayAlertSound'; soundId: number }
+  /** Custom sound: a quoted `.wav` filename instead of a built-in sound id. */
+  | { keyword: 'PlayAlertSound'; file: string }
   | {
       keyword: 'MinimapIcon'
       size: number

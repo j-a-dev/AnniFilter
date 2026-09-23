@@ -1,7 +1,8 @@
 import type { Action, ActionKeyword, FilterBlock } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
-import { BLEND_MODES, DROP_SOUNDS, FONTS } from '@/engine/data/spec'
+import { BLEND_MODES, FONTS } from '@/engine/data/spec'
 import { ColorSwatch } from './ColorSwatch'
+import { SoundPicker } from './SoundPicker'
 import { PaletteGrid } from './PaletteGrid'
 import { TemplateInput } from './TemplateInput'
 import { ACTION_LABELS, defaultActionFor } from './actionDefaults'
@@ -120,21 +121,7 @@ function Editor({
         />
       )
     case 'PlayAlertSound':
-      return (
-        <select
-          value={action.soundId}
-          onChange={(e) =>
-            onChange({ ...action, soundId: Number(e.target.value) })
-          }
-          className="bg-[#0a0a0f] text-slate-200 text-[11px] px-1.5 py-0.5 rounded border border-[#1d2128] flex-1"
-        >
-          {DROP_SOUNDS.map((ds) => (
-            <option key={ds.id} value={ds.id}>
-              {ds.id} - {ds.label}
-            </option>
-          ))}
-        </select>
-      )
+      return <SoundPicker action={action} onChange={onChange} />
     case 'MinimapIcon':
       return (
         <div className="flex items-center gap-2">

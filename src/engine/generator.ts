@@ -238,7 +238,9 @@ function formatAction(action: Action): string {
     case 'ChatNotification':
       return `${action.keyword} "${action.template}"`
     case 'PlayAlertSound':
-      return `PlayAlertSound ${action.soundId}`
+      return 'file' in action
+        ? `PlayAlertSound "${action.file}"`
+        : `PlayAlertSound ${action.soundId}`
     case 'MinimapIcon':
       return `MinimapIcon ${action.size} ${action.r} ${action.g} ${action.b}`
     case 'Unknown':

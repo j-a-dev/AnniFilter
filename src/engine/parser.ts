@@ -634,7 +634,11 @@ function tryParseAction(
       return { keyword, template: parseTemplate(rest, block, issues) }
     }
     case 'PlayAlertSound': {
-      const n = Number(stripQuotes(rest.trim()))
+      const t = rest.trim()
+      if (t.startsWith('"')) {
+        return { keyword: 'PlayAlertSound', file: stripQuotes(t) }
+      }
+      const n = Number(t)
       if (!Number.isFinite(n)) return null
       return { keyword: 'PlayAlertSound', soundId: n }
     }

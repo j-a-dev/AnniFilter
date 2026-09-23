@@ -87,7 +87,7 @@ describe('matcher', () => {
         (a) => a.keyword === 'PlayAlertSound',
       )
       expect(sounds).toHaveLength(3)
-      expect(sounds.map((s) => (s.keyword === 'PlayAlertSound' ? s.soundId : -1))).toEqual([16, 17, 18])
+      expect(sounds.map((s) => (s.keyword === 'PlayAlertSound' && 'soundId' in s ? s.soundId : -1))).toEqual([16, 17, 18])
     })
   })
 

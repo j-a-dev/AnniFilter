@@ -149,6 +149,18 @@ describe('parser', () => {
       ])
     })
 
+    it('parses a quoted PlayAlertSound as a custom sound file', () => {
+      const text = `Show
+    PlayAlertSound "my drop.wav"
+    PlayAlertSound 11
+`
+      const { document } = parse(text)
+      expect(document.blocks[0]?.actions).toEqual([
+        { keyword: 'PlayAlertSound', file: 'my drop.wav' },
+        { keyword: 'PlayAlertSound', soundId: 11 },
+      ])
+    })
+
     it('parses palette text color', () => {
       const text = `Show\n    SetTextColor White\n`
       const { document } = parse(text)

@@ -140,6 +140,7 @@ describe('generator', () => {
         '    PrependText "[T1] "',
         '    AppendText " #"',
         '    PlayAlertSound 11',
+        '    PlayAlertSound "my drop.wav"',
         '    MinimapIcon 2 200 0 200',
         '    ChatNotification "{Gold}{Original}"',
         '',

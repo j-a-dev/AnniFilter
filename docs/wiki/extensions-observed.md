@@ -29,6 +29,7 @@ The project stance per `docs/CONCEPT.md` was previously "wiki is canonical." Thi
 |---|---|---|
 | `ChatNotification` | `ChatNotification "<template>"` | Prints a message to chat when the item drops. Template supports the same placeholder language as `SetItemName` / `PrependText` / `AppendText` (`{Break}`, `{<ColorName>}`, `{Original}`, `{ShortItemName}` etc.). Example: `ChatNotification "{Purple}*** {Gold}[Elite] {ShortItemName} {Purple}***"`. |
 | `Beam` | `Beam [R] [G] [B]` | Draws a vertical colored beam on the dropped item on the ground. Three 0–255 byte values. Example: `Beam 255 120 40`. **Provenance:** confirmed by the user on 2026-09-24 as a new game feature; not yet seen in the wiki or the shipped filters. |
+| `PlayAlertSound` (custom file) | `PlayAlertSound "<file>.wav"` | Plays a custom sound file instead of a built-in drop sound. A quoted value is a filename; a bare number is still a built-in id (0–20). Must be `.wav`. Stacks with built-in sounds in the same block. **Provenance:** confirmed by the user on 2026-09-24; not yet seen in the wiki or the shipped filters. |
 
 ### Placeholders not in wiki spec
 

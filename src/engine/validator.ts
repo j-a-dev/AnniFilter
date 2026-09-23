@@ -188,6 +188,10 @@ function validateAction(
       }
       return
     case 'PlayAlertSound':
+      if ('file' in action) {
+        validateSoundFile(action.file, block, index, issues)
+        return
+      }
       if (!DROP_SOUND_IDS_SET.has(action.soundId)) {
         issues.push({
           level: 'info',
@@ -225,6 +229,31 @@ function validateAction(
         message: `Unknown action: ${action.raw}`,
       })
       return
+  }
+}
+
+function validateSoundFile(
+  file: string,
+  block: FilterBlock,
+  index: number,
+  issues: ValidationIssue[],
+): void {
+  if (file.trim() === '') {
+    issues.push({
+      level: 'warning',
+      blockId: block.id,
+      actionIndex: index,
+      code: 'sound-file-empty',
+      message: 'PlayAlertSound has an empty custom sound filename',
+    })
+  } else if (!/\.wav$/i.test(file.trim())) {
+    issues.push({
+      level: 'error',
+      blockId: block.id,
+      actionIndex: index,
+      code: 'sound-file-not-wav',
+      message: `Custom sound must be a .wav file; got "${file}"`,
+    })
   }
 }
 

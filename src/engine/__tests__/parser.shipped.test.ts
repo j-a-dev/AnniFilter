@@ -53,6 +53,6 @@ describe('parser: shipped filters smoke test', () => {
       (a) => a.keyword === 'PlayAlertSound',
     )
     expect(sounds).toHaveLength(4)
-    expect(sounds?.map((s) => (s.keyword === 'PlayAlertSound' ? s.soundId : -1))).toEqual([16, 17, 18, 19])
+    expect(sounds?.map((s) => (s.keyword === 'PlayAlertSound' && 'soundId' in s ? s.soundId : -1))).toEqual([16, 17, 18, 19])
   })
 })

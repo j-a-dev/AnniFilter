@@ -117,6 +117,32 @@ describe('validator', () => {
   })
 
   describe('alert sound', () => {
+    it('accepts a custom .wav file', () => {
+      const issues = validateText(`Show
+    PlayAlertSound "drop.WAV"
+`)
+      expect(issues.filter((i) => i.code.startsWith('sound-file'))).toEqual([])
+    })
+
+    it('errors on a custom sound that is not .wav', () => {
+      const issues = validateText(`Show
+    PlayAlertSound "drop.mp3"
+`)
+      expect(issues.find((i) => i.code === 'sound-file-not-wav')?.level).toBe(
+        'error',
+      )
+    })
+
+    it('warns on an empty custom sound filename', () => {
+      const issues = validateText(`Show
+    PlayAlertSound ""
+`)
+      expect(issues.find((i) => i.code === 'sound-file-empty')?.level).toBe(
+        'warning',
+      )
+      expect(issues.find((i) => i.code === 'sound-file-not-wav')).toBeUndefined()
+    })
+
     it('flags out-of-range sound id as info-level', () => {
       const issues = validateText(`Show\n    PlayAlertSound 99\n`)
       const i = issues.find((x) => x.code === 'sound-out-of-range')

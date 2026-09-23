@@ -1,17 +1,20 @@
-import type { FilterBlock } from '@/engine/types'
+import type { Action, FilterBlock } from '@/engine/types'
 import { useFilterStore } from '@/store/filterStore'
-import { DROP_SOUNDS } from '@/engine/data/spec'
 import { defaultActionFor } from './actionDefaults'
+import { SoundPicker } from './SoundPicker'
 
 export function SoundActionList({ block }: { block: FilterBlock }) {
   const addAction = useFilterStore((s) => s.addAction)
   const updateAction = useFilterStore((s) => s.updateAction)
   const removeAction = useFilterStore((s) => s.removeAction)
 
-  const sounds: Array<{ index: number; soundId: number }> = []
+  const sounds: Array<{
+    index: number
+    action: Extract<Action, { keyword: 'PlayAlertSound' }>
+  }> = []
   block.actions.forEach((a, i) => {
     if (a.keyword === 'PlayAlertSound') {
-      sounds.push({ index: i, soundId: a.soundId })
+      sounds.push({ index: i, action: a })
     }
   })
 
@@ -35,22 +38,10 @@ export function SoundActionList({ block }: { block: FilterBlock }) {
             <span className="text-[10px] tabular-nums text-slate-500 w-4">
               {slot + 1}.
             </span>
-            <select
-              value={s.soundId}
-              onChange={(e) =>
-                updateAction(block.id, s.index, {
-                  keyword: 'PlayAlertSound',
-                  soundId: Number(e.target.value),
-                })
-              }
-              className="bg-[#0a0a0f] text-slate-200 text-[11px] px-1.5 py-0.5 rounded border border-[#1d2128] flex-1"
-            >
-              {DROP_SOUNDS.map((ds) => (
-                <option key={ds.id} value={ds.id}>
-                  {ds.id} - {ds.label}
-                </option>
-              ))}
-            </select>
+            <SoundPicker
+              action={s.action}
+              onChange={(next) => updateAction(block.id, s.index, next)}
+            />
             <button
               onClick={() => removeAction(block.id, s.index)}
               className="text-slate-500 hover:text-rose-400 text-xs px-1"
