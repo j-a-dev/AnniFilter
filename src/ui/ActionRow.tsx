@@ -64,6 +64,7 @@ function Editor({
   switch (action.keyword) {
     case 'SetBorderColor':
     case 'SetBackgroundColor':
+    case 'Beam':
       return (
         <ColorSwatch
           r={action.r}

@@ -224,6 +224,7 @@ function formatAction(action: Action): string {
   switch (action.keyword) {
     case 'SetBorderColor':
     case 'SetBackgroundColor':
+    case 'Beam':
       return `${action.keyword} ${action.r} ${action.g} ${action.b}`
     case 'SetTextColor':
       return `SetTextColor "${action.color}"`

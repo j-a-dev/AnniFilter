@@ -609,7 +609,8 @@ function tryParseAction(
 ): Action | null {
   switch (keyword) {
     case 'SetBorderColor':
-    case 'SetBackgroundColor': {
+    case 'SetBackgroundColor':
+    case 'Beam': {
       const rgb = parseRGB(rest)
       if (!rgb) return null
       return { keyword, r: rgb.r, g: rgb.g, b: rgb.b }

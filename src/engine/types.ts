@@ -40,6 +40,7 @@ export type Condition =
 export type ActionKeyword =
   | 'SetBorderColor'
   | 'SetBackgroundColor'
+  | 'Beam'
   | 'SetTextColor'
   | 'SetFont'
   | 'SetBlendMode'
@@ -52,7 +53,7 @@ export type ActionKeyword =
 
 export type Action =
   | {
-      keyword: 'SetBorderColor' | 'SetBackgroundColor'
+      keyword: 'SetBorderColor' | 'SetBackgroundColor' | 'Beam'
       r: number
       g: number
       b: number

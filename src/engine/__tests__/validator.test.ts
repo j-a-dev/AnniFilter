@@ -74,6 +74,15 @@ describe('validator', () => {
       expect(err?.level).toBe('error')
     })
 
+    it('errors on out-of-range Beam', () => {
+      const issues = validateText(`Show
+    Beam 255 256 40
+`)
+      expect(issues.find((i) => i.code === 'rgb-out-of-range')?.level).toBe(
+        'error',
+      )
+    })
+
     it('accepts in-range RGB', () => {
       const issues = validateText(`Show\n    SetBorderColor 200 0 200\n`)
       expect(issues.filter((i) => i.code === 'rgb-out-of-range')).toEqual([])

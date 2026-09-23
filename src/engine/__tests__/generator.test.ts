@@ -132,6 +132,7 @@ describe('generator', () => {
         '    ItemLevel >= 75',
         '    SetBorderColor 255 255 0',
         '    SetBackgroundColor 25 25 25',
+        '    Beam 255 120 40',
         '    SetTextColor White',
         '    SetFont Font24',
         '    SetBlendMode Alpha75',

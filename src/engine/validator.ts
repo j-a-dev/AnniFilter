@@ -151,6 +151,7 @@ function validateAction(
   switch (action.keyword) {
     case 'SetBorderColor':
     case 'SetBackgroundColor':
+    case 'Beam':
       validateRGB(action.r, action.g, action.b, action.keyword, block, index, issues)
       return
     case 'SetTextColor':

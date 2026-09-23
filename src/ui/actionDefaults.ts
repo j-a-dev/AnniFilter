@@ -4,6 +4,7 @@ export const DISPLAY_ACTION_KEYWORDS: ActionKeyword[] = [
   'SetTextColor',
   'SetBorderColor',
   'SetBackgroundColor',
+  'Beam',
   'SetFont',
   'SetBlendMode',
 ]
@@ -19,6 +20,7 @@ const DEFAULTS: Record<ActionKeyword, Action> = {
   SetTextColor: { keyword: 'SetTextColor', color: 'White' },
   SetBorderColor: { keyword: 'SetBorderColor', r: 200, g: 0, b: 200 },
   SetBackgroundColor: { keyword: 'SetBackgroundColor', r: 25, g: 25, b: 25 },
+  Beam: { keyword: 'Beam', r: 255, g: 120, b: 40 },
   SetFont: { keyword: 'SetFont', font: 'Font16' },
   SetBlendMode: { keyword: 'SetBlendMode', mode: 'Normal' },
   SetItemName: { keyword: 'SetItemName', template: '{Original}' },
@@ -37,6 +39,7 @@ export const ACTION_LABELS: Record<ActionKeyword, string> = {
   SetTextColor: 'Text',
   SetBorderColor: 'Border',
   SetBackgroundColor: 'BG',
+  Beam: 'Beam',
   SetFont: 'Font',
   SetBlendMode: 'Blend',
   SetItemName: 'Name',

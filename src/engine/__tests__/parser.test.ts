@@ -139,6 +139,16 @@ describe('parser', () => {
       ])
     })
 
+    it('parses Beam as an RGB action', () => {
+      const text = `Show
+    Beam 255 120 40
+`
+      const { document } = parse(text)
+      expect(document.blocks[0]?.actions).toEqual([
+        { keyword: 'Beam', r: 255, g: 120, b: 40 },
+      ])
+    })
+
     it('parses palette text color', () => {
       const text = `Show\n    SetTextColor White\n`
       const { document } = parse(text)
