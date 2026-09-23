@@ -8,6 +8,7 @@ import { previewActionsForBlock } from '@/engine/preview'
 import { KIND_COLOR, summarizeConditions } from './ruleListUtils'
 import { ItemPreview } from './ItemPreview'
 import { IndicatorLane } from './IndicatorLane'
+import { BeamColumn } from './BeamColumn'
 
 type Props = {
   block: FilterBlock
@@ -117,6 +118,7 @@ export function RuleListRow({ block, index, selected, dragDisabled }: Props) {
         <ItemPreview actions={previewActions} label={block.label} compact />
       </div>
 
+      <BeamColumn actions={previewActions} />
       <IndicatorLane actions={previewActions} />
     </div>
   )

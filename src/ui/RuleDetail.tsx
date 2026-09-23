@@ -9,6 +9,7 @@ import { ConditionAddButton } from './ConditionAddButton'
 import { ActionRow } from './ActionRow'
 import { SoundActionList } from './SoundActionList'
 import { ItemPreview } from './ItemPreview'
+import { BeamColumn } from './BeamColumn'
 import { ChatMessagePreview } from './ChatMessagePreview'
 import { MetadataPanel } from './MetadataPanel'
 import { OptionManager } from './OptionManager'
@@ -100,6 +101,7 @@ export function RuleDetail() {
             Preview (cascaded)
           </span>
           <ItemPreview actions={cascadedActions} label={block.label} />
+          <BeamColumn actions={cascadedActions} className="h-8" />
         </div>
         <div className="flex items-center gap-4 opacity-60">
           <span
@@ -109,6 +111,7 @@ export function RuleDetail() {
             Rule alone
           </span>
           <ItemPreview actions={block.actions} label={block.label} />
+          <BeamColumn actions={block.actions} className="h-8" />
         </div>
         {(() => {
           const cascadedChat = cascadedActions.find(
